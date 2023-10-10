@@ -1,6 +1,8 @@
 /** @format */
 
 export const path = {
-    PUBLIC: "/",
-    HOME: "",
+    PUBLIC: '/',
+    HOME: '',
+    LOGIN: 'login',
+    REGISTER: 'register',
 };
