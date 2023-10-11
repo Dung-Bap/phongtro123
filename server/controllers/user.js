@@ -24,7 +24,7 @@ const register = asyncHandler(async (req, res) => {
         });
     return res.status(200).json({
         success: response[1] ? true : false,
-        result: response[1] ? 'Register Successfully !!!' : 'Phone number has been aldready used !',
+        message: response[1] ? 'Register Successfully !!!' : 'Phone number has been aldready used !',
         token: token || null,
     });
 });
@@ -34,7 +34,6 @@ const login = asyncHandler(async (req, res) => {
     if (!phone || !password) throw new Error('Missing Inputs');
     const response = await db.User.findOne({ where: { phone }, raw: true });
     const isCorrectPassword = response && bcrypt.compareSync(password, response.password);
-    console.log(response, isCorrectPassword);
     const token =
         isCorrectPassword &&
         jwt.sign({ id: response.id, phone: response.phone }, process.env.JWT_SECRET, {

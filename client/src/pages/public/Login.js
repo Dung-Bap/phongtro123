@@ -6,6 +6,10 @@ import * as yup from 'yup';
 import Button from '../../components/common/Button';
 import { Link } from 'react-router-dom';
 import { path } from '../../ultils/path';
+import { apiLogin } from '../../apis';
+import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../store/user/userSlice';
 
 const Login = () => {
     const loginSchema = yup.object({
@@ -39,6 +43,7 @@ const Login = () => {
                 }
             ),
     });
+    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
@@ -47,8 +52,12 @@ const Login = () => {
         resolver: yupResolver(loginSchema),
     });
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async data => {
+        const response = await apiLogin(data);
+        if (response?.success) {
+            dispatch(registerUser({ isLoggedIn: true, token: response.token }));
+            // searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.HOME}`);
+        } else Swal.fire('Opps!', response.message, 'error');
     };
     return (
         <div className="w-full">

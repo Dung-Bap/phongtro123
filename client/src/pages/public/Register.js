@@ -6,6 +6,8 @@ import * as yup from 'yup';
 import Button from '../../components/common/Button';
 import { Link } from 'react-router-dom';
 import { path } from '../../ultils/path';
+import { apiRegister } from '../../apis/user';
+import Swal from 'sweetalert2';
 
 const Register = () => {
     const RegisterSchema = yup.object({
@@ -43,13 +45,21 @@ const Register = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(RegisterSchema),
     });
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async data => {
+        // dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
+        const response = await apiRegister(data);
+        // dispatch(showModal({ isShowModal: false, childrenModal: null }));
+        if (response.success) {
+            Swal.fire('Congratulation', response.message, 'success').then(() => {
+                reset();
+            });
+        } else Swal.fire('Opps!', response.message, 'error').then(() => reset());
     };
     return (
         <div className="w-full">
