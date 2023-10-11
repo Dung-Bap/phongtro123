@@ -85,7 +85,7 @@ const Register = () => {
                     <div className="mt-[20px]">
                         <span>
                             Bạn đã có tài khoản?
-                            <Link to={`${path.LOGIN}`} className="text-main cursor-pointer text-sm hover:underline">
+                            <Link to={`/${path.LOGIN}`} className="text-main cursor-pointer text-sm hover:underline">
                                 Đăng nhập ngay
                             </Link>
                         </span>
