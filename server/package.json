@@ -10,7 +10,8 @@
         "mysql2": "^3.6.1",
         "nodemon": "^3.0.1",
         "sequelize": "^6.33.0",
-        "uniqid": "^5.4.0"
+        "uniqid": "^5.4.0",
+        "uuid": "^9.0.1"
     },
     "name": "server",
     "version": "1.0.0",

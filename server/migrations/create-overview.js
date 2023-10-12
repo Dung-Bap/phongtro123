@@ -3,42 +3,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Posts', {
+        await queryInterface.createTable('Overviews', {
             id: {
                 allowNull: false,
                 primaryKey: true,
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+            },
+            code: {
                 type: Sequelize.STRING,
             },
-            title: {
+            area: {
                 type: Sequelize.STRING,
             },
-            star: {
-                type: Sequelize.STRING,
-                defaultValue: '0',
-            },
-            labelCode: {
+            type: {
                 type: Sequelize.STRING,
             },
-            address: {
+            target: {
                 type: Sequelize.STRING,
             },
-            attributesId: {
+            bonus: {
                 type: Sequelize.STRING,
             },
-            categoryCode: {
-                type: Sequelize.STRING,
+            created: {
+                type: Sequelize.DATE,
             },
-            description: {
-                type: Sequelize.TEXT,
-            },
-            userId: {
-                type: Sequelize.STRING,
-            },
-            overviewId: {
-                type: Sequelize.STRING,
-            },
-            imagesId: {
-                type: Sequelize.STRING,
+            expired: {
+                type: Sequelize.DATE,
             },
             createdAt: {
                 allowNull: false,
@@ -51,6 +42,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Posts');
+        await queryInterface.dropTable('Overviews');
     },
 };

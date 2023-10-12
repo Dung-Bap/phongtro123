@@ -5,10 +5,11 @@ import logo from '../../assets/logo-phongtro.png';
 import icons from '../../ultils/icons';
 import { Link } from 'react-router-dom';
 import { path } from '../../ultils/path';
+import { useSelector } from 'react-redux';
 
 const TopHeader = () => {
-    const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle } = icons;
-
+    const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2 } = icons;
+    const { isLoggedIn } = useSelector(state => state.user);
     return (
         <div className="w-full flex justify-center">
             <div className="w-main">
@@ -23,24 +24,39 @@ const TopHeader = () => {
                             </span>
                             Yêu Thích
                         </span>
-                        <Link
-                            to={`/${path.LOGIN}`}
-                            className="flex items-center text-sm cursor-pointer hover:underline mr-[20px]"
-                        >
-                            <span className="mr-[5px]">
-                                <AiOutlineUserAdd size={20} />
-                            </span>
-                            Đăng nhập
-                        </Link>
-                        <Link
-                            to={`/${path.REGISTER}`}
-                            className="flex items-center text-sm cursor-pointer hover:underline mr-[20px]"
-                        >
-                            <span className="mr-[5px]">
-                                <AiOutlineLogout size={20} />
-                            </span>
-                            Đăng ký
-                        </Link>
+                        {isLoggedIn && (
+                            <Link
+                                //  to={`/${path.REGISTER}`}
+                                className="flex items-center text-sm cursor-pointer hover:underline mr-[20px]"
+                            >
+                                <span className="mr-[5px]">
+                                    <RiListCheck2 size={20} />
+                                </span>
+                                Quản lý tài khoản
+                            </Link>
+                        )}
+                        {!isLoggedIn && (
+                            <>
+                                <Link
+                                    to={`/${path.LOGIN}`}
+                                    className="flex items-center text-sm cursor-pointer hover:underline mr-[20px]"
+                                >
+                                    <span className="mr-[5px]">
+                                        <AiOutlineUserAdd size={20} />
+                                    </span>
+                                    Đăng nhập
+                                </Link>
+                                <Link
+                                    to={`/${path.REGISTER}`}
+                                    className="flex items-center text-sm cursor-pointer hover:underline mr-[20px]"
+                                >
+                                    <span className="mr-[5px]">
+                                        <AiOutlineLogout size={20} />
+                                    </span>
+                                    Đăng ký
+                                </Link>
+                            </>
+                        )}
                         <span className="flex items-center text-sm cursor-pointer hover:underline p-2 bg-secondary rounded-lg text-white">
                             Đăng tin mới
                             <span className="ml-[5px]">

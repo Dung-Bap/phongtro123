@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import userSlice from './user/userSlice';
+import appSlice from './app/appSlice';
 
 const persistConfig = {
     key: 'phongtro123/user',
@@ -19,6 +20,7 @@ const userConfig = {
 export const store = configureStore({
     reducer: {
         user: persistReducer(userConfig, userSlice),
+        app: appSlice,
     },
 });
 

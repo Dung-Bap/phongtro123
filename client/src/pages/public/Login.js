@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '../../components/common/Button';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { path } from '../../ultils/path';
 import { apiLogin } from '../../apis';
 import Swal from 'sweetalert2';
@@ -44,6 +44,8 @@ const Login = () => {
             ),
     });
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const {
         register,
         handleSubmit,
@@ -56,7 +58,7 @@ const Login = () => {
         const response = await apiLogin(data);
         if (response?.success) {
             dispatch(registerUser({ isLoggedIn: true, token: response.token }));
-            // searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.HOME}`);
+            searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.HOME}`);
         } else Swal.fire('Opps!', response.message, 'error');
     };
     return (

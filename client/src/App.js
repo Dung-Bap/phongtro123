@@ -2,10 +2,15 @@
 import { Route, Routes } from 'react-router-dom';
 import { path } from './ultils/path';
 import { Home, Login, Public, Register } from './pages/public';
+import Modal from './components/modal/Modal';
+import { useSelector } from 'react-redux';
 
 function App() {
+    const { isShowModal, childrenModal } = useSelector(state => state.app);
+
     return (
-        <div className="w-full font-main bg-[#f5f5f5] h-full min-h-screen overflow-y-auto">
+        <div className="font-main h-full min-h-screen relative bg-[#f5f5f5]">
+            {isShowModal && <Modal>{childrenModal}</Modal>}
             <Routes>
                 <Route path={path.PUBLIC} element={<Public />}>
                     <Route path={path.HOME} element={<Home />} />

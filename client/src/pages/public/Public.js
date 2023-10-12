@@ -1,8 +1,8 @@
 /** @format */
 
-import React from "react";
-import { TopHeader, Navigate } from "./";
-import { Outlet } from "react-router-dom";
+import React from 'react';
+import { TopHeader, Navigate } from './';
+import { Outlet } from 'react-router-dom';
 
 const Public = () => {
     return (

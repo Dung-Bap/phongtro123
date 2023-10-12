@@ -3,41 +3,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Posts', {
+        await queryInterface.createTable('Attributes', {
             id: {
                 allowNull: false,
                 primaryKey: true,
                 type: Sequelize.STRING,
             },
-            title: {
+            price: {
                 type: Sequelize.STRING,
             },
-            star: {
-                type: Sequelize.STRING,
-                defaultValue: '0',
-            },
-            labelCode: {
+            acreage: {
                 type: Sequelize.STRING,
             },
-            address: {
+            published: {
                 type: Sequelize.STRING,
             },
-            attributesId: {
-                type: Sequelize.STRING,
-            },
-            categoryCode: {
-                type: Sequelize.STRING,
-            },
-            description: {
-                type: Sequelize.TEXT,
-            },
-            userId: {
-                type: Sequelize.STRING,
-            },
-            overviewId: {
-                type: Sequelize.STRING,
-            },
-            imagesId: {
+            hashtag: {
                 type: Sequelize.STRING,
             },
             createdAt: {
@@ -51,6 +32,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Posts');
+        await queryInterface.dropTable('Attributes');
     },
 };

@@ -4,10 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '../../components/common/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { path } from '../../ultils/path';
 import { apiRegister } from '../../apis/user';
 import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { showModal } from '../../store/app/appSlice';
+import { Loading } from '../../components/modal';
 
 const Register = () => {
     const RegisterSchema = yup.object({
@@ -50,16 +53,19 @@ const Register = () => {
     } = useForm({
         resolver: yupResolver(RegisterSchema),
     });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = async data => {
-        // dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
+        dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
         const response = await apiRegister(data);
-        // dispatch(showModal({ isShowModal: false, childrenModal: null }));
-        if (response.success) {
-            Swal.fire('Congratulation', response.message, 'success').then(() => {
+        dispatch(showModal({ isShowModal: false, childrenModal: null }));
+        if (response?.success) {
+            Swal.fire('Congratulation', response?.message, 'success').then(() => {
                 reset();
+                navigate(`/${path.LOGIN}`);
             });
-        } else Swal.fire('Opps!', response.message, 'error').then(() => reset());
+        } else Swal.fire('Opps!', response?.message, 'error').then(() => reset());
     };
     return (
         <div className="w-full">

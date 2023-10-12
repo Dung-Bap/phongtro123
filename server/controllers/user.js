@@ -1,17 +1,17 @@
 const asyncHandler = require('express-async-handler');
 const db = require('../models');
-const makeId = require('uniqid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { v4 } = require('uuid');
+const { hashPassword } = require('../ultils/helpers');
 
 const register = asyncHandler(async (req, res) => {
     const { name, phone, password } = req.body;
     if (!name || !phone || !password) throw new Error('Missing Inputs');
-    const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(12));
     const response = await db.User.findOrCreate({
         where: { phone },
         defaults: {
-            id: makeId,
+            id: v4(),
             phone,
             name,
             password: hashPassword(password),
