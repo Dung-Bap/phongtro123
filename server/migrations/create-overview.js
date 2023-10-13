@@ -7,8 +7,7 @@ module.exports = {
             id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.INTEGER,
-                autoIncrement: true,
+                type: Sequelize.STRING,
             },
             code: {
                 type: Sequelize.STRING,
@@ -26,10 +25,10 @@ module.exports = {
                 type: Sequelize.STRING,
             },
             created: {
-                type: Sequelize.DATE,
+                type: Sequelize.STRING,
             },
             expired: {
-                type: Sequelize.DATE,
+                type: Sequelize.STRING,
             },
             createdAt: {
                 allowNull: false,

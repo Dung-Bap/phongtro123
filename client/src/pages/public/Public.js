@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import { TopHeader, Navigate } from './';
+import { TopHeader, Navigate, Search } from './';
 import { Outlet } from 'react-router-dom';
 
 const Public = () => {
@@ -9,6 +9,7 @@ const Public = () => {
         <div className="max-h-screen w-full flex flex-col items-center">
             <TopHeader />
             <Navigate />
+            <Search />
             <div>
                 <Outlet />
             </div>
