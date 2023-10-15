@@ -9,7 +9,7 @@ function App() {
     const { isShowModal, childrenModal } = useSelector(state => state.app);
 
     return (
-        <div className="font-main h-full min-h-screen relative bg-[#f5f5f5]">
+        <div className="font-main text-[14px] h-full min-h-screen relative bg-[#f5f5f5]">
             {isShowModal && <Modal>{childrenModal}</Modal>}
             <Routes>
                 <Route path={path.PUBLIC} element={<Public />}>

@@ -1,6 +1,13 @@
 /** @format */
 
-import { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle } from 'react-icons/ai';
+import {
+    AiOutlineHeart,
+    AiOutlineUserAdd,
+    AiOutlineLogout,
+    AiOutlinePlusCircle,
+    AiOutlineStar,
+    AiFillStar,
+} from 'react-icons/ai';
 import { RiListCheck2 } from 'react-icons/ri';
 import { BiSearchAlt } from 'react-icons/bi';
 import { MdKeyboardArrowRight } from 'react-icons/md';
@@ -19,6 +26,8 @@ const icons = {
     BsTextareaResize,
     BiSearchAlt,
     MdKeyboardArrowRight,
+    AiOutlineStar,
+    AiFillStar,
 };
 
 export default icons;

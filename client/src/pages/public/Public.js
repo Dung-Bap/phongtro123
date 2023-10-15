@@ -6,15 +6,14 @@ import { Outlet } from 'react-router-dom';
 
 const Public = () => {
     return (
-        <div className="max-h-screen w-full flex flex-col items-center">
+        <div className="min-h-screen w-full flex flex-col items-center">
             <TopHeader />
             <Navigate />
             <Search />
-            <div>
+            <div className="w-main">
                 <Outlet />
             </div>
         </div>
     );
 };
-
 export default Public;
