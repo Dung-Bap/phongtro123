@@ -7,7 +7,7 @@ const PostItem = ({ post, image }) => {
     return (
         image.length > 0 &&
         post.star > 4 && (
-            <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t-2 border-secondary">
+            <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t border-secondary">
                 <div className="relative rounded-lg overflow-hidden w-[40%] h-[240px]">
                     <img className="w-full h-full object-cover cursor-pointer" alt="" src={image[0]} />
                     <span className="absolute bottom-[10px] left-[10px] p-[2px] rounded bg-[rgba(0,0,0,.5)] text-white text-[12px]">{`${image.length} ảnh`}</span>

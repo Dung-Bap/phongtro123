@@ -3,32 +3,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Overviews', {
+        await queryInterface.createTable('Prices', {
             id: {
                 allowNull: false,
                 primaryKey: true,
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
             },
+            idPrice: {
+                type: Sequelize.INTEGER,
+            },
             code: {
                 type: Sequelize.STRING,
             },
-            area: {
-                type: Sequelize.STRING,
-            },
-            type: {
-                type: Sequelize.STRING,
-            },
-            target: {
-                type: Sequelize.STRING,
-            },
-            bonus: {
-                type: Sequelize.STRING,
-            },
-            created: {
-                type: Sequelize.STRING,
-            },
-            expired: {
+            value: {
                 type: Sequelize.STRING,
             },
             createdAt: {
@@ -42,6 +30,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Overviews');
+        await queryInterface.dropTable('Prices');
     },
 };

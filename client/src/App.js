@@ -1,7 +1,7 @@
 /** @format */
 import { Route, Routes } from 'react-router-dom';
 import { path } from './ultils/path';
-import { Home, Login, Public, Register } from './pages/public';
+import { Home, Login, MotelRoom, OfficePremises, Public, Register, RentHouse, RentalApartment } from './pages/public';
 import Modal from './components/modal/Modal';
 import { useSelector } from 'react-redux';
 
@@ -14,6 +14,10 @@ function App() {
             <Routes>
                 <Route path={path.PUBLIC} element={<Public />}>
                     <Route path={path.HOME} element={<Home />} />
+                    <Route path={path.RENT_HOUSE} element={<RentHouse />} />
+                    <Route path={path.RENTAL_APARTMENT} element={<RentalApartment />} />
+                    <Route path={path.OFFICE_PREMISES} element={<OfficePremises />} />
+                    <Route path={path.MOTEL_ROOM} element={<MotelRoom />} />
                     <Route path={path.LOGIN} element={<Login />} />
                     <Route path={path.REGISTER} element={<Register />} />
                 </Route>

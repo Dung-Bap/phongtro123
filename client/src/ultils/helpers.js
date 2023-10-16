@@ -11,3 +11,12 @@ export const renderStars = (number, size) => {
 
     return stars;
 };
+
+export const convertPath = string => {
+    return string
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .split(' ')
+        .join('-')
+        .toLowerCase();
+};

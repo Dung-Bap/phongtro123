@@ -6,8 +6,8 @@ export const path = {
     LOGIN: 'login',
     REGISTER: 'register',
 
-    MOTEL_ROOM: 'cho_thue_phong_tro',
-    RENT_HOUSE: 'nha_cho_thue',
-    RENTAL_APARTMENT: 'cho_thue_can_ho',
-    OFFICE_PREMISES: 'mat_bang_van_phong',
+    MOTEL_ROOM: 'cho-thue-phong-tro',
+    RENT_HOUSE: 'nha-cho-thue',
+    RENTAL_APARTMENT: 'cho-thue-can-ho',
+    OFFICE_PREMISES: 'cho-thue-mat-bang',
 };

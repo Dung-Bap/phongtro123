@@ -2,18 +2,17 @@
 
 import React, { useEffect } from 'react';
 import { Header, SelectProvinceItem } from '../../components/header';
-import { PostItem } from '../../components/post';
+import { AsideItem, PostItem } from '../../components/main';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../../store/app/asyncActions';
 
 const Home = () => {
-    const { posts } = useSelector(state => state.app);
-    console.log(posts);
+    const { posts, categories } = useSelector(state => state.app);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getPosts());
-    }, [dispatch]);
+    }, []);
 
     return (
         <div className="w-full">
@@ -54,7 +53,11 @@ const Home = () => {
                         <PostItem key={post.id} post={post} image={JSON.parse(post.images.image)} />
                     ))}
                 </section>
-                <section className="w-[32%] border min-h-[300px] rounded-lg overflow-hidden bg-white shadow-lg"></section>
+                <section className="w-[32%]">
+                    <AsideItem title={'Danh mục cho thuê'} contents={categories} />
+                    <AsideItem title={'Xem theo giá'} />
+                    <AsideItem title={'Xem theo diện tích'} />
+                </section>
             </main>
         </div>
     );

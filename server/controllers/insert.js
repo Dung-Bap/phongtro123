@@ -5,6 +5,7 @@ const chothuecanho = require('../../data/chothuecanho.json');
 const chothuematbang = require('../../data/chothuematbang.json');
 const chothuephongtro = require('../../data/chothuephongtro.json');
 const nhachothue = require('../../data/nhachothue.json');
+// const { dataPrice, dataAcreage } = require('../ultils/data');
 const { hashPassword, generateCode } = require('../ultils/helpers');
 
 const dataBody = nhachothue.body; // fix
@@ -23,6 +24,10 @@ const insert = asyncHandler(async (req, res) => {
             star: item?.header?.star,
             address: item?.header?.address,
             categoryCode: 'NCT', // fix
+            // priceCode: getCodePrice(Math.ceil(parseFloat(item?.header?.attributes?.price.replace(/[^\d\.]*/g, '')))),
+            // acreageCode: getCodeAcreage(
+            //     Math.ceil(parseFloat(item?.header?.attributes?.acreage.replace(/[^\d\.]*/g, '')))
+            // ),
             description: JSON.stringify(item?.mainContent?.content),
             labelCode,
             attributesId,
@@ -66,15 +71,30 @@ const insert = asyncHandler(async (req, res) => {
             password: hashPassword('123456'),
         });
     });
-    await db.Category.create({
-        // fix
-        id: v4(),
-        code: 'NCT',
-        value: 'Nhà cho thuê',
-        header: 'Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất 2022',
-        subheader:
-            'Cho thuê nhà nguyên căn - Kênh đăng tin cho thuê nhà số 1: giá rẻ, chính chủ, miễn trung gian, đầy đủ tiện nghi, mức giá, diện tích cho thuê khác nhau.',
-    });
+    // await db.Category.create({
+    //     // fix
+    //     id: v4(),
+    //     code: 'NCT',
+    //     value: 'Nhà cho thuê',
+    //     header: 'Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất 2022',
+    //     subheader:
+    //         'Cho thuê nhà nguyên căn - Kênh đăng tin cho thuê nhà số 1: giá rẻ, chính chủ, miễn trung gian, đầy đủ tiện nghi, mức giá, diện tích cho thuê khác nhau.',
+    // });
+    // dataPrice.forEach(async (item, index) => {
+    //     await db.Price.create({
+    //         idPrice: +index + 1,
+    //         code: item?.code,
+    //         value: item?.value,
+    //     });
+    // });
+    // dataAcreage.forEach(async (item, index) => {
+    //     await db.Acreage.create({
+    //         idAcreage: +index + 1,
+    //         code: item?.code,
+    //         value: item?.value,
+    //     });
+    // });
+
     return res.json('Done hihi');
 });
 

@@ -17,7 +17,15 @@ const generateCode = value => {
         output += merge.charAt(index);
         length = index;
     }
-    return `${value.charAt(0)}${output}`.toUpperCase();
+    return `${value.charAt(2)}${output}`.toUpperCase(); // để chartAt 0 với 1 thì bị trùng :))
 };
+
+// const getCodePrice = price => {
+//     dataPrice.find(item => item.max >= price && item.min <= price)?.code;
+// };
+
+// const getCodeAcreage = acreage => {
+//     dataPrice.find(item => item.max >= acreage && item.min <= acreage)?.code;
+// };
 
 module.exports = { hashPassword, generateCode };
