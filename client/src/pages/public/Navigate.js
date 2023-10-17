@@ -1,21 +1,12 @@
 /** @format */
 
-import React, { useEffect } from 'react';
+import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../../store/app/asyncActions';
+
 import { convertPath } from '../../ultils/helpers';
 import { path } from '../../ultils/path';
 
-const Navigate = () => {
-    const { categories } = useSelector(state => state.app);
-    console.log(categories);
-
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getCategories());
-    }, [dispatch]);
-
+const Navigate = ({ categories }) => {
     return (
         <div className="w-full bg-main flex justify-center">
             <div className="w-main flex items-center">
@@ -47,4 +38,4 @@ const Navigate = () => {
     );
 };
 
-export default Navigate;
+export default memo(Navigate);

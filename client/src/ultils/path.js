@@ -2,7 +2,7 @@
 
 export const path = {
     PUBLIC: '/',
-    HOME: '',
+    HOME: '/',
     LOGIN: 'login',
     REGISTER: 'register',
 

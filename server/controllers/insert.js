@@ -5,10 +5,15 @@ const chothuecanho = require('../../data/chothuecanho.json');
 const chothuematbang = require('../../data/chothuematbang.json');
 const chothuephongtro = require('../../data/chothuephongtro.json');
 const nhachothue = require('../../data/nhachothue.json');
-// const { dataPrice, dataAcreage } = require('../ultils/data');
-const { hashPassword, generateCode } = require('../ultils/helpers');
+const { dataPrice, dataAcreage } = require('../ultils/data');
+const {
+    hashPassword,
+    generateCode,
+    convertStringToNumberAcreage,
+    convertStringToNumberPrice,
+} = require('../ultils/helpers');
 
-const dataBody = nhachothue.body; // fix
+const dataBody = chothuephongtro.body; // fix
 
 const insert = asyncHandler(async (req, res) => {
     dataBody?.forEach(async item => {
@@ -18,16 +23,16 @@ const insert = asyncHandler(async (req, res) => {
         let userId = v4();
         let imagesId = v4();
         let overviewId = v4();
+        let priceNumber = convertStringToNumberPrice(item?.header?.attributes?.price);
+        let acreageNumber = convertStringToNumberAcreage(item?.header?.attributes?.acreage);
         await db.Post.create({
             id: postId,
             title: item?.header?.title,
             star: item?.header?.star,
             address: item?.header?.address,
-            categoryCode: 'NCT', // fix
-            // priceCode: getCodePrice(Math.ceil(parseFloat(item?.header?.attributes?.price.replace(/[^\d\.]*/g, '')))),
-            // acreageCode: getCodeAcreage(
-            //     Math.ceil(parseFloat(item?.header?.attributes?.acreage.replace(/[^\d\.]*/g, '')))
-            // ),
+            categoryCode: 'CTPT', // fix
+            priceCode: dataPrice.find(item => item.min <= priceNumber && item.max >= priceNumber)?.code,
+            acreageCode: dataAcreage.find(item => item.min <= acreageNumber && item.max >= acreageNumber)?.code,
             description: JSON.stringify(item?.mainContent?.content),
             labelCode,
             attributesId,
@@ -80,20 +85,20 @@ const insert = asyncHandler(async (req, res) => {
     //     subheader:
     //         'Cho thuê nhà nguyên căn - Kênh đăng tin cho thuê nhà số 1: giá rẻ, chính chủ, miễn trung gian, đầy đủ tiện nghi, mức giá, diện tích cho thuê khác nhau.',
     // });
-    // dataPrice.forEach(async (item, index) => {
-    //     await db.Price.create({
-    //         idPrice: +index + 1,
-    //         code: item?.code,
-    //         value: item?.value,
-    //     });
-    // });
-    // dataAcreage.forEach(async (item, index) => {
-    //     await db.Acreage.create({
-    //         idAcreage: +index + 1,
-    //         code: item?.code,
-    //         value: item?.value,
-    //     });
-    // });
+    dataPrice.forEach(async (item, index) => {
+        await db.Price.create({
+            idPrice: +index + 1,
+            code: item?.code,
+            value: item?.value,
+        });
+    });
+    dataAcreage.forEach(async (item, index) => {
+        await db.Acreage.create({
+            idAcreage: +index + 1,
+            code: item?.code,
+            value: item?.value,
+        });
+    });
 
     return res.json('Done hihi');
 });

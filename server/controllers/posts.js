@@ -2,7 +2,14 @@ const asyncHandle = require('express-async-handler');
 const db = require('../models');
 
 const getPosts = asyncHandle(async (req, res) => {
-    const response = await db.Post.findAll({
+    const queries = { ...req.query };
+    const { page, ...q } = queries;
+    const limit = +req.query.limit || +process.env.LIMIT_PRODUCT;
+    const offset = (+page - 1) * limit || 0;
+    const response = await db.Post.findAndCountAll({
+        offset,
+        limit,
+        where: q,
         raw: true,
         nest: true,
         include: [

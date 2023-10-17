@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 const SelectProvinceItem = ({ title, image }) => {
     return (
@@ -9,4 +9,4 @@ const SelectProvinceItem = ({ title, image }) => {
     );
 };
 
-export default SelectProvinceItem;
+export default memo(SelectProvinceItem);

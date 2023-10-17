@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import icons from '../../ultils/icons';
 import { renderStars } from '../../ultils/helpers';
 
 const PostItem = ({ post, image }) => {
     const { AiOutlineHeart } = icons;
     return (
-        image.length > 0 &&
-        post.star > 4 && (
+        image.length > 0 && (
             <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t border-secondary">
                 <div className="relative rounded-lg overflow-hidden w-[40%] h-[240px]">
                     <img className="w-full h-full object-cover cursor-pointer" alt="" src={image[0]} />
@@ -59,4 +58,4 @@ const PostItem = ({ post, image }) => {
     );
 };
 
-export default PostItem;
+export default memo(PostItem);

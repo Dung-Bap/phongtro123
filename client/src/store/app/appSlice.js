@@ -6,7 +6,7 @@ export const appSlice = createSlice({
     initialState: {
         isShowModal: false,
         childrenModal: null,
-        posts: [],
+        posts: null,
         categories: [],
     },
 

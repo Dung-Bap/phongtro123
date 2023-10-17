@@ -1,17 +1,17 @@
 /** @format */
 
-import React from 'react';
+import React, { memo } from 'react';
 import logo from '../../assets/logo-phongtro.png';
 import icons from '../../ultils/icons';
 import { Link } from 'react-router-dom';
 import { path } from '../../ultils/path';
 import { useSelector } from 'react-redux';
 
-const TopHeader = () => {
+const TopHeader = ({ currentPageRef }) => {
     const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2 } = icons;
     const { isLoggedIn } = useSelector(state => state.user);
     return (
-        <div className="w-full flex justify-center">
+        <div ref={currentPageRef} className="w-full flex justify-center">
             <div className="w-main">
                 <div className="flex justify-between">
                     <Link to={`${path.HOME}`}>
@@ -70,4 +70,4 @@ const TopHeader = () => {
     );
 };
 
-export default TopHeader;
+export default memo(TopHeader);

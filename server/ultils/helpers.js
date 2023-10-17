@@ -20,12 +20,12 @@ const generateCode = value => {
     return `${value.charAt(2)}${output}`.toUpperCase(); // để chartAt 0 với 1 thì bị trùng :))
 };
 
-// const getCodePrice = price => {
-//     dataPrice.find(item => item.max >= price && item.min <= price)?.code;
-// };
+const convertStringToNumberAcreage = string => {
+    return Math.ceil(string.match(/\d+/)[0]);
+};
+const convertStringToNumberPrice = string => {
+    if (string.search('đồng/tháng') !== -1) return Math.ceil(parseFloat(string.replace(/[^\d\.]*/g, ''))) / 1000;
+    return Math.ceil(parseFloat(string.replace(/[^\d\.]*/g, '')));
+};
 
-// const getCodeAcreage = acreage => {
-//     dataPrice.find(item => item.max >= acreage && item.min <= acreage)?.code;
-// };
-
-module.exports = { hashPassword, generateCode };
+module.exports = { hashPassword, generateCode, convertStringToNumberAcreage, convertStringToNumberPrice };

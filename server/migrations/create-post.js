@@ -31,6 +31,12 @@ module.exports = {
             description: {
                 type: Sequelize.TEXT,
             },
+            acreageCode: {
+                type: Sequelize.STRING,
+            },
+            priceCode: {
+                type: Sequelize.STRING,
+            },
             userId: {
                 type: Sequelize.STRING,
             },
