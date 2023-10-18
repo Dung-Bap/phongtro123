@@ -30,6 +30,7 @@ const getPosts = asyncHandle(async (req, res) => {
             },
         ],
         attributes: ['id', 'title', 'star', 'description', 'address'],
+        order: [['star', 'DESC']],
     });
 
     return res.status(200).json({

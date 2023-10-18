@@ -12,3 +12,15 @@ export const getCategories = createAsyncThunk('app/getCategories', async (data, 
     if (!response.success) return rejectWithValue(response);
     return response;
 });
+
+export const getPrices = createAsyncThunk('app/getPrices', async (data, { rejectWithValue }) => {
+    const response = await apis.apiGetPrices();
+    if (!response.success) return rejectWithValue(response);
+    return response;
+});
+
+export const getAcreages = createAsyncThunk('app/getAcreages', async (data, { rejectWithValue }) => {
+    const response = await apis.apiGetAcreages();
+    if (!response.success) return rejectWithValue(response);
+    return response;
+});

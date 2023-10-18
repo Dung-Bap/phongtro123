@@ -5,7 +5,7 @@ import { Header, SelectProvinceItem } from '../../components/header';
 import { AsideItem, PostItem } from '../../components/main';
 import { TopHeader, Navigate, Search } from './';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories, getPosts } from '../../store/app/asyncActions';
+import { getAcreages, getCategories, getPosts, getPrices } from '../../store/app/asyncActions';
 import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { convertPath } from '../../ultils/helpers';
 import Pagination from 'rc-pagination';
@@ -15,15 +15,14 @@ const Home = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { MdKeyboardArrowRight, MdKeyboardArrowLeft } = icons;
-    const { posts, categories } = useSelector(state => state.app);
+    const { posts, categories, prices, acreages } = useSelector(state => state.app);
     const [params] = useSearchParams();
     const [categoryCode, setCategoryCode] = useState('');
     const [update, setUpdate] = useState(false);
     const location = useLocation();
     const currentPageRef = useRef();
     // eslint-disable-next-line no-unused-vars
-    const [perPage, setPerPage] = useState(6);
-    const [size, setSize] = useState(perPage);
+    const [size, setSize] = useState(6);
     const [current, setCurrent] = useState(1);
     // Pagination
     const PerPageChange = value => {
@@ -34,37 +33,32 @@ const Home = () => {
         }
     };
 
-    // const getData = (current, pageSize) => {
-    //     // Normally you should get the data from the server
-    //     return posts.slice((current - 1) * pageSize, current * pageSize);
-    // };
-
     const PaginationChange = (page, pageSize) => {
         setCurrent(page);
         setSize(pageSize);
+        const queries = Object.fromEntries([...params]);
+        queries.page = page;
+        navigate({
+            pathname: location.pathname,
+            search: createSearchParams(queries).toString(),
+        });
     };
 
     const PrevNextArrow = (current, type, originalElement) => {
-        if (type === 'prev') {
-            return (
-                <button>
-                    <MdKeyboardArrowLeft size={20} />
-                </button>
-            );
-        }
-        if (type === 'next') {
-            return (
-                <button>
-                    <MdKeyboardArrowRight size={20} />
-                </button>
-            );
-        }
+        if (type === 'prev')
+            <button>
+                <MdKeyboardArrowLeft size={20} />
+            </button>;
+        if (type === 'next')
+            <button>
+                <MdKeyboardArrowRight size={20} />
+            </button>;
         return originalElement;
     };
     //
     useEffect(() => {
         setCategoryCode(categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.code);
-    }, [categories, location]);
+    }, [categories, location.pathname]);
 
     useEffect(() => {
         currentPageRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
@@ -74,20 +68,14 @@ const Home = () => {
 
         dispatch(getPosts(queries));
         dispatch(getCategories());
+        dispatch(getAcreages());
+        dispatch(getPrices());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categoryCode, params, update]);
 
     useEffect(() => {
-        navigate({
-            pathname: location.pathname,
-            search: createSearchParams({ page: current }).toString(),
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [current]);
-
-    useEffect(() => {
         setCurrent(1);
-    }, [categoryCode]);
+    }, [categoryCode, update]);
 
     return (
         <div className="w-full">
@@ -153,8 +141,20 @@ const Home = () => {
                     </section>
                     <section className="w-[32%]">
                         <AsideItem setUpdate={setUpdate} title={'Danh mục cho thuê'} contents={categories} />
-                        <AsideItem setUpdate={setUpdate} title={'Xem theo giá'} />
-                        <AsideItem setUpdate={setUpdate} title={'Xem theo diện tích'} />
+                        <AsideItem
+                            custom
+                            setUpdate={setUpdate}
+                            type="priceCode"
+                            title={'Xem theo giá'}
+                            contents={prices}
+                        />
+                        <AsideItem
+                            custom
+                            setUpdate={setUpdate}
+                            type="acreageCode"
+                            title={'Xem theo diện tích'}
+                            contents={acreages}
+                        />
                     </section>
                 </main>
             </div>

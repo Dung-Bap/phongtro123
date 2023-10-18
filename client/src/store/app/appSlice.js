@@ -8,6 +8,8 @@ export const appSlice = createSlice({
         childrenModal: null,
         posts: null,
         categories: [],
+        prices: [],
+        acreages: [],
     },
 
     reducers: {
@@ -29,6 +31,20 @@ export const appSlice = createSlice({
         builder.addCase(actions.getCategories.fulfilled, (state, action) => {
             state.isLoading = false;
             state.categories = action.payload.result;
+        });
+
+        builder.addCase(actions.getPrices.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.prices = action.payload.result.sort(function (a, b) {
+                return +a.idPrice - +b.idPrice; // db k đều nên sort id theo index
+            });
+        });
+
+        builder.addCase(actions.getAcreages.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.acreages = action.payload.result.sort(function (a, b) {
+                return +a.idAcreage - +b.idAcreage;
+            });
         });
 
         builder.addCase(actions.getPosts.rejected, (state, action) => {
