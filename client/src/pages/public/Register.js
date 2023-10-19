@@ -68,7 +68,7 @@ const Register = () => {
         } else Swal.fire('Opps!', response?.message, 'error').then(() => reset());
     };
     return (
-        <div className="w-full">
+        <div className="w-full flex justify-center">
             <div className="w-main p-[20px] flex justify-center">
                 <form
                     method="POST"

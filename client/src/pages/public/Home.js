@@ -1,25 +1,24 @@
 /** @format */
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import Pagination from 'rc-pagination';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
+
 import { Header, SelectProvinceItem } from '../../components/header';
 import { AsideItem, PostItem } from '../../components/main';
-import { TopHeader, Navigate, Search } from './';
-import { useDispatch, useSelector } from 'react-redux';
+import { Search } from './';
 import { getAcreages, getCategories, getPosts, getPrices } from '../../store/app/asyncActions';
-import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { convertPath } from '../../ultils/helpers';
-import Pagination from 'rc-pagination';
 import icons from '../../ultils/icons';
+import withBaseComp from '../../hocs/withBaseComp';
 
-const Home = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+const Home = ({ dispatch, navigate, location }) => {
     const { MdKeyboardArrowRight, MdKeyboardArrowLeft } = icons;
     const { posts, categories, prices, acreages } = useSelector(state => state.app);
     const [params] = useSearchParams();
     const [categoryCode, setCategoryCode] = useState('');
     const [update, setUpdate] = useState(false);
-    const location = useLocation();
     const currentPageRef = useRef();
     // eslint-disable-next-line no-unused-vars
     const [size, setSize] = useState(6);
@@ -64,24 +63,22 @@ const Home = () => {
         currentPageRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
         const queries = Object.fromEntries([...params]);
-        if (categoryCode) queries.categoryCode = categoryCode;
-
+        if (categoryCode) {
+            queries.categoryCode = categoryCode;
+        }
         dispatch(getPosts(queries));
         dispatch(getCategories());
         dispatch(getAcreages());
         dispatch(getPrices());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [categoryCode, params, update]);
+    }, [categoryCode, dispatch, params, update]);
 
     useEffect(() => {
-        setCurrent(1);
-    }, [categoryCode, update]);
+        setCurrent(+params.get('page') || 1);
+    }, [categoryCode, params, update]);
 
     return (
         <div className="w-full">
-            <TopHeader currentPageRef={currentPageRef} />
-            <Navigate categories={categories} />
-            <Search />
+            <Search currentPageRef={currentPageRef} />
             <Header
                 title={
                     categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.header ||
@@ -162,4 +159,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default withBaseComp(Home);

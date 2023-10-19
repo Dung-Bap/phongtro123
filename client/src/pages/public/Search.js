@@ -2,11 +2,11 @@ import React, { memo } from 'react';
 import { Filter } from '../../components/filter';
 import icons from '../../ultils/icons';
 
-const Search = () => {
+const Search = ({ currentPageRef }) => {
     const { BsHouseHeart, IoLocationOutline, IoPricetagsOutline, BsTextareaResize, BiSearchAlt, MdKeyboardArrowRight } =
         icons;
     return (
-        <div className="w-full flex justify-center">
+        <div ref={currentPageRef} className="w-full flex justify-center">
             <div className="w-main mt-[10px] mb-[15px] flex items-center justify-around p-[8px] bg-[#febb02] rounded-lg shadow-xl">
                 <Filter
                     iconRight={<MdKeyboardArrowRight />}

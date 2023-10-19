@@ -58,11 +58,11 @@ const Login = () => {
         const response = await apiLogin(data);
         if (response?.success) {
             dispatch(registerUser({ isLoggedIn: true, token: response.token }));
-            searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.HOME}`);
+            searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`${path.HOME}`);
         } else Swal.fire('Opps!', response.message, 'error');
     };
     return (
-        <div className="w-full">
+        <div className="w-full flex justify-center">
             <div className="w-main p-[20px] flex justify-center">
                 <form
                     method="POST"

@@ -1,13 +1,11 @@
 import React, { memo } from 'react';
 import icons from '../../ultils/icons';
-import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { createSearchParams } from 'react-router-dom';
 import { convertPath } from '../../ultils/helpers';
+import withBaseComp from '../../hocs/withBaseComp';
 
-const AsideItem = ({ title, contents, setUpdate, custom, type }) => {
+const AsideItem = ({ navigate, location, title, contents, setUpdate, custom, type }) => {
     const { MdKeyboardArrowRight } = icons;
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [params] = useSearchParams();
 
     const handleOnClick = path => {
         navigate(`/${path}`);
@@ -15,7 +13,7 @@ const AsideItem = ({ title, contents, setUpdate, custom, type }) => {
     };
 
     const handleChoose = code => {
-        const queries = Object.fromEntries([...params]);
+        const queries = {};
         queries.page = 1;
         navigate({
             pathname: location.pathname,
@@ -57,4 +55,4 @@ const AsideItem = ({ title, contents, setUpdate, custom, type }) => {
     );
 };
 
-export default memo(AsideItem);
+export default withBaseComp(memo(AsideItem));

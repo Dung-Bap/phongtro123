@@ -5,8 +5,10 @@ import { NavLink } from 'react-router-dom';
 
 import { convertPath } from '../../ultils/helpers';
 import { path } from '../../ultils/path';
+import { useSelector } from 'react-redux';
 
-const Navigate = ({ categories }) => {
+const Navigate = () => {
+    const { categories } = useSelector(state => state.app);
     return (
         <div className="w-full bg-main flex justify-center">
             <div className="w-main flex items-center">

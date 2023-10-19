@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom';
 import { path } from '../../ultils/path';
 import { useSelector } from 'react-redux';
 
-const TopHeader = ({ currentPageRef }) => {
+const TopHeader = () => {
     const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2 } = icons;
     const { isLoggedIn } = useSelector(state => state.user);
     return (
-        <div ref={currentPageRef} className="w-full flex justify-center">
+        <div className="w-full flex justify-center">
             <div className="w-main">
                 <div className="flex justify-between">
                     <Link to={`${path.HOME}`}>
