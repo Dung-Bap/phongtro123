@@ -11,6 +11,7 @@ function Button({
     children,
     primary = false,
     secondary = false,
+    full = false,
     type,
     ...passProps
 }) {
@@ -37,8 +38,10 @@ function Button({
     return (
         <Comp
             className={clsx(
-                primary && 'w-full bg-main text-white hover:underline rounded-md min-h-[40px]',
-                secondary && 'w-full bg-secondary text-white hover:underline rounded-md min-h-[40px]'
+                primary &&
+                    `${full ? 'w-full' : 'w-[200px]'} bg-main text-white hover:underline rounded-md min-h-[40px]`,
+                secondary &&
+                    `${full ? 'w-full' : 'w-[200px]'} bg-secondary text-white hover:underline rounded-md min-h-[40px]`
             )}
             {...props}
         >

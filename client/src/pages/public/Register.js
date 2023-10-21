@@ -97,7 +97,9 @@ const Register = () => {
                         errorName={errors.password?.message}
                         withFull
                     />
-                    <Button primary> Tạo tài khoản </Button>
+                    <Button full primary>
+                        Tạo tài khoản
+                    </Button>
                     <div className="mt-[20px]">
                         <span>
                             Bạn đã có tài khoản?

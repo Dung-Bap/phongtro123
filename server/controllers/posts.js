@@ -39,6 +39,34 @@ const getPosts = asyncHandle(async (req, res) => {
     });
 });
 
+const getNews = asyncHandle(async (req, res) => {
+    const response = await db.Post.findAll({
+        raw: true,
+        nest: true,
+        limit: +process.env.LIMIT_NEWS,
+        include: [
+            {
+                model: db.Image,
+                as: 'images',
+                attributes: ['image'],
+            },
+            {
+                model: db.Attribute,
+                as: 'attributes',
+                attributes: ['price', 'published'],
+            },
+        ],
+        attributes: ['id', 'title'],
+        order: [['createdAt', 'DESC']],
+    });
+
+    return res.status(200).json({
+        success: response ? true : false,
+        result: response ? response : 'Something went wrong !',
+    });
+});
+
 module.exports = {
     getPosts,
+    getNews,
 };

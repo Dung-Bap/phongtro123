@@ -4,6 +4,7 @@ const categoryRouter = require('./category');
 const AcreagesRouter = require('./acreage');
 const pricesRouter = require('./price');
 const postsRouter = require('./posts');
+const provinceRouter = require('./provinces');
 const { notFound, errHandler } = require('../middlewares/errorHandle');
 
 const initRoutes = app => {
@@ -13,6 +14,7 @@ const initRoutes = app => {
     app.use('/api/posts', postsRouter);
     app.use('/api/prices', pricesRouter);
     app.use('/api/acreages', AcreagesRouter);
+    app.use('/api/provinces', provinceRouter);
 
     // hứng lỗi ở cuối cùng
     app.use(notFound);

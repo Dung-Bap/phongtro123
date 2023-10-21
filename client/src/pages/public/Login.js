@@ -84,7 +84,9 @@ const Login = () => {
                         errorName={errors.password?.message}
                         withFull
                     />
-                    <Button primary> Đăng nhập </Button>
+                    <Button primary full>
+                        Đăng nhập
+                    </Button>
                     <div className="flex justify-between items-center mt-[20px]">
                         <span className="text-main cursor-pointer text-sm hover:underline">Bạn quên mật khẩu</span>
                         <Link to={`/${path.REGISTER}`} className="text-main cursor-pointer text-sm hover:underline">

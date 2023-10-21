@@ -10,6 +10,8 @@ export const appSlice = createSlice({
         categories: [],
         prices: [],
         acreages: [],
+        news: [],
+        provinces: [],
     },
 
     reducers: {
@@ -45,6 +47,16 @@ export const appSlice = createSlice({
             state.acreages = action.payload.result.sort(function (a, b) {
                 return +a.idAcreage - +b.idAcreage;
             });
+        });
+
+        builder.addCase(actions.getNews.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.news = action.payload.result;
+        });
+
+        builder.addCase(actions.getProvinces.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.provinces = action.payload.result;
         });
 
         builder.addCase(actions.getPosts.rejected, (state, action) => {

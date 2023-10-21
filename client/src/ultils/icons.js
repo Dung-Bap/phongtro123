@@ -8,7 +8,7 @@ import {
     AiOutlineStar,
     AiFillStar,
 } from 'react-icons/ai';
-import { RiListCheck2 } from 'react-icons/ri';
+import { RiListCheck2, RiDeleteBack2Line } from 'react-icons/ri';
 import { BiSearchAlt } from 'react-icons/bi';
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 import { BsHouseHeart, BsTextareaResize } from 'react-icons/bs';
@@ -29,6 +29,7 @@ const icons = {
     MdKeyboardArrowLeft,
     AiOutlineStar,
     AiFillStar,
+    RiDeleteBack2Line,
 };
 
 export default icons;

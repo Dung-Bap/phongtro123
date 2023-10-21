@@ -6,9 +6,9 @@ import Pagination from 'rc-pagination';
 import { createSearchParams, useSearchParams } from 'react-router-dom';
 
 import { Header, SelectProvinceItem } from '../../components/header';
-import { AsideItem, PostItem } from '../../components/main';
+import { AsideItem, News, PostItem } from '../../components/main';
 import { Search } from './';
-import { getAcreages, getCategories, getPosts, getPrices } from '../../store/app/asyncActions';
+import { getAcreages, getCategories, getPosts, getPrices, getProvinces } from '../../store/app/asyncActions';
 import { convertPath } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
 import withBaseComp from '../../hocs/withBaseComp';
@@ -70,6 +70,7 @@ const Home = ({ dispatch, navigate, location }) => {
         dispatch(getCategories());
         dispatch(getAcreages());
         dispatch(getPrices());
+        dispatch(getProvinces());
     }, [categoryCode, dispatch, params, update]);
 
     useEffect(() => {
@@ -152,6 +153,7 @@ const Home = ({ dispatch, navigate, location }) => {
                             title={'Xem theo diện tích'}
                             contents={acreages}
                         />
+                        <News />
                     </section>
                 </main>
             </div>

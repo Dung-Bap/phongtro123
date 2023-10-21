@@ -6,3 +6,9 @@ export const apiGetPosts = params =>
         method: 'get',
         params,
     });
+
+export const apiGetNews = () =>
+    axios({
+        url: '/posts/news',
+        method: 'get',
+    });
