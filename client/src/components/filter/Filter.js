@@ -4,7 +4,10 @@ import React from 'react';
 const Filter = ({ title, icon, iconRight, checkValue, setCheckValue, type }) => {
     const handleReset = e => {
         e.stopPropagation();
-        setCheckValue(prev => ({ ...prev, [type]: '' }));
+        setCheckValue(prev => {
+            const { [type]: current, ...newValue } = prev;
+            return newValue;
+        });
     };
 
     return (

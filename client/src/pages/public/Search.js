@@ -5,8 +5,9 @@ import withBaseComp from '../../hocs/withBaseComp';
 import { showModal } from '../../store/app/appSlice';
 import { ModalSearch } from '../../components/modal';
 import { useSelector } from 'react-redux';
+import { createSearchParams } from 'react-router-dom';
 
-const Search = ({ currentPageRef, dispatch }) => {
+const Search = ({ currentPageRef, dispatch, navigate, location, setUpdate }) => {
     const {
         BsHouseHeart,
         IoLocationOutline,
@@ -16,15 +17,14 @@ const Search = ({ currentPageRef, dispatch }) => {
         MdKeyboardArrowRight,
         RiDeleteBack2Line,
     } = icons;
-    const { categories, provinces } = useSelector(state => state.app);
+    const { categories, provinces, prices, acreages } = useSelector(state => state.app);
     const [checkValue, setCheckValue] = useState({
         categoryCode: 'CTPT',
-        provinceCode: '',
     });
     const checkValueCategory = categories.find(item => item.code === checkValue.categoryCode)?.value;
     const checkValueProvince = provinces.find(item => item.code === checkValue.provinceCode)?.value;
-
-    console.log(checkValue);
+    const checkValuePrice = prices.find(item => item.code === checkValue.priceCode)?.value;
+    const checkValueAcreage = acreages.find(item => item.code === checkValue.acreageCode)?.value;
 
     const handleClickSearch = (e, value) => {
         e.stopPropagation();
@@ -39,6 +39,7 @@ const Search = ({ currentPageRef, dispatch }) => {
                             title={'CHỌN LOẠI BẤT ĐỘNG SẢN'}
                             type={'categoryCode'}
                             checkValue={checkValueCategory}
+                            currentValue={checkValue}
                         />
                     ),
                 })
@@ -60,6 +61,46 @@ const Search = ({ currentPageRef, dispatch }) => {
                 })
             );
         }
+        if (value === 'giá') {
+            dispatch(
+                showModal({
+                    isShowModal: true,
+                    childrenModal: (
+                        <ModalSearch
+                            setCheckValue={setCheckValue}
+                            contents={prices}
+                            title={'GIÁ'}
+                            type={'priceCode'}
+                            checkValue={checkValuePrice}
+                        />
+                    ),
+                })
+            );
+        }
+        if (value === 'diện tích') {
+            dispatch(
+                showModal({
+                    isShowModal: true,
+                    childrenModal: (
+                        <ModalSearch
+                            setCheckValue={setCheckValue}
+                            contents={acreages}
+                            title={'DIỆN TÍCH'}
+                            type={'acreageCode'}
+                            checkValue={checkValueAcreage}
+                        />
+                    ),
+                })
+            );
+        }
+    };
+
+    const handleSearchParams = () => {
+        navigate({
+            pathname: location.pathname,
+            search: createSearchParams(checkValue).toString(),
+        });
+        setUpdate(prev => !prev);
     };
 
     return (
@@ -99,25 +140,44 @@ const Search = ({ currentPageRef, dispatch }) => {
                 </div>
                 <div onClick={e => handleClickSearch(e, 'giá')}>
                     <Filter
-                        iconRight={<MdKeyboardArrowRight />}
+                        iconRight={
+                            prices.some(item => item.code === checkValue.priceCode) ? (
+                                <RiDeleteBack2Line />
+                            ) : (
+                                <MdKeyboardArrowRight />
+                            )
+                        }
                         icon={<IoPricetagsOutline size={12} />}
-                        title={'Chọn giá'}
+                        title={checkValuePrice || 'Chọn giá'}
+                        checkValue={checkValuePrice}
+                        setCheckValue={setCheckValue}
+                        type={'priceCode'}
                     />
                 </div>
                 <div onClick={e => handleClickSearch(e, 'diện tích')}>
                     <Filter
-                        iconRight={<MdKeyboardArrowRight />}
+                        iconRight={
+                            acreages.some(item => item.code === checkValue.acreageCode) ? (
+                                <RiDeleteBack2Line />
+                            ) : (
+                                <MdKeyboardArrowRight />
+                            )
+                        }
                         icon={<BsTextareaResize size={12} />}
-                        title={'Chọn diện tích'}
+                        title={checkValueAcreage || 'Chọn diện tích'}
+                        checkValue={checkValueAcreage}
+                        setCheckValue={setCheckValue}
+                        type={'acreageCode'}
                     />
                 </div>
-                <div className="min-w-[208px] flex items-center justify-center bg-main p-[8px] rounded-md hover:shadow-xl cursor-pointer text-white">
+                <div
+                    onClick={handleSearchParams}
+                    className="min-w-[208px] flex items-center justify-center bg-main p-[8px] rounded-md hover:shadow-xl cursor-pointer text-white"
+                >
                     <div className="flex items-center">
                         <span className="mr-[5px]">{<BiSearchAlt />}</span>
                         <span className="text-[14px]">Tìm kiếm</span>
                     </div>
-                    <span></span>
-                    <span></span>
                 </div>
             </div>
         </div>

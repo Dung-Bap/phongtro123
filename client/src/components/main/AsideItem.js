@@ -1,11 +1,14 @@
 import React, { memo } from 'react';
 import icons from '../../ultils/icons';
-import { createSearchParams } from 'react-router-dom';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 import { convertPath } from '../../ultils/helpers';
 import withBaseComp from '../../hocs/withBaseComp';
+import clsx from 'clsx';
 
 const AsideItem = ({ navigate, location, title, contents, setUpdate, custom, type }) => {
     const { MdKeyboardArrowRight } = icons;
+    const [params] = useSearchParams();
+    const param = Object.fromEntries([...params]);
 
     const handleOnClick = path => {
         navigate(`/${path}`);
@@ -33,7 +36,14 @@ const AsideItem = ({ navigate, location, title, contents, setUpdate, custom, typ
                         className="flex items-center gap-2 py-2 border-gray-100 border-b"
                     >
                         <MdKeyboardArrowRight color="gray" />
-                        <span className="cursor-pointer hover:text-secondary">{content.value}</span>
+                        <span
+                            className={clsx(
+                                `/${convertPath(content?.value)}` === location.pathname && 'text-secondary',
+                                'cursor-pointer hover:text-secondary'
+                            )}
+                        >
+                            {content.value}
+                        </span>
                     </div>
                 ))}
             <div className="flex w-full flex-wrap">
@@ -47,7 +57,14 @@ const AsideItem = ({ navigate, location, title, contents, setUpdate, custom, typ
                             <span>
                                 <MdKeyboardArrowRight color="gray" />
                             </span>
-                            <span className="cursor-pointer hover:text-secondary">{content.value}</span>
+                            <span
+                                className={clsx(
+                                    param[type] === content.code && 'text-secondary',
+                                    'cursor-pointer hover:text-secondary'
+                                )}
+                            >
+                                {content.value}
+                            </span>
                         </div>
                     ))}
             </div>

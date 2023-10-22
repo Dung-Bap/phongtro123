@@ -46,7 +46,23 @@ const login = asyncHandler(async (req, res) => {
     });
 });
 
+const getCurrent = asyncHandler(async (req, res) => {
+    const { id } = req.user;
+    const user = await db.User.findOne({
+        where: { id },
+        raw: true,
+        attributes: {
+            exclude: ['password'],
+        },
+    });
+    return res.status(200).json({
+        success: user ? true : false,
+        user: user ? user : 'User Not Found',
+    });
+});
+
 module.exports = {
     register,
     login,
+    getCurrent,
 };

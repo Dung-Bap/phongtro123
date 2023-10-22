@@ -6,7 +6,6 @@ import { SelectRadio } from '../input';
 
 const ModalSearch = ({ title, dispatch, contents, setCheckValue, type, checkValue }) => {
     const { MdKeyboardArrowLeft } = icons;
-
     return (
         <div
             onClick={e => e.stopPropagation()}

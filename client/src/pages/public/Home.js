@@ -20,6 +20,7 @@ const Home = ({ dispatch, navigate, location }) => {
     const [categoryCode, setCategoryCode] = useState('');
     const [update, setUpdate] = useState(false);
     const currentPageRef = useRef();
+    const pageRef = useRef();
     // eslint-disable-next-line no-unused-vars
     const [size, setSize] = useState(6);
     const [current, setCurrent] = useState(1);
@@ -77,9 +78,14 @@ const Home = ({ dispatch, navigate, location }) => {
         setCurrent(+params.get('page') || 1);
     }, [categoryCode, params, update]);
 
+    useEffect(() => {
+        pageRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params.get('page'), update]);
+
     return (
         <div className="w-full">
-            <Search currentPageRef={currentPageRef} />
+            <Search currentPageRef={currentPageRef} setUpdate={setUpdate} />
             <Header
                 title={
                     categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.header ||
@@ -105,7 +111,7 @@ const Home = ({ dispatch, navigate, location }) => {
                 />
             </div>
             <div className="w-full flex justify-center">
-                <main className="w-main flex gap-4">
+                <main ref={pageRef} className="w-main flex gap-4">
                     <section className="w-[68%]">
                         <div className="border min-h-[300px] rounded-lg overflow-hidden bg-white shadow-lg">
                             <div className="w-full p-[20px]">
@@ -138,7 +144,12 @@ const Home = ({ dispatch, navigate, location }) => {
                         </div>
                     </section>
                     <section className="w-[32%]">
-                        <AsideItem setUpdate={setUpdate} title={'Danh mục cho thuê'} contents={categories} />
+                        <AsideItem
+                            setUpdate={setUpdate}
+                            title={'Danh mục cho thuê'}
+                            contents={categories}
+                            categoryCode={categoryCode}
+                        />
                         <AsideItem
                             custom
                             setUpdate={setUpdate}
