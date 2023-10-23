@@ -4,6 +4,7 @@ import { path } from './ultils/path';
 import { Home, Login, Public, Register } from './pages/public';
 import Modal from './components/modal/Modal';
 import { useSelector } from 'react-redux';
+import { ManageLayout, ManagePost, NewPost, Personal, Wishlist } from './pages/manage';
 
 function App() {
     const { isShowModal, childrenModal } = useSelector(state => state.app);
@@ -20,6 +21,12 @@ function App() {
                     <Route path={path.MOTEL_ROOM} element={<Home />} />
                     <Route path={path.LOGIN} element={<Login />} />
                     <Route path={path.REGISTER} element={<Register />} />
+                </Route>
+                <Route path={path.MANAGE} element={<ManageLayout />}>
+                    <Route path={path.NEW_POST} element={<NewPost />} />
+                    <Route path={path.MANAGE_POST} element={<ManagePost />} />
+                    <Route path={path.PERSONAL} element={<Personal />} />
+                    <Route path={path.WISHLIST} element={<Wishlist />} />
                 </Route>
             </Routes>
         </div>

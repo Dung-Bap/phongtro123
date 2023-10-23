@@ -9,9 +9,9 @@ import {
     AiFillStar,
 } from 'react-icons/ai';
 import { RiListCheck2, RiDeleteBack2Line } from 'react-icons/ri';
-import { BiSearchAlt } from 'react-icons/bi';
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
-import { BsHouseHeart, BsTextareaResize } from 'react-icons/bs';
+import { BiSearchAlt, BiUserPin, BiLogOut } from 'react-icons/bi';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdOutlineManageSearch } from 'react-icons/md';
+import { BsHouseHeart, BsTextareaResize, BsPostcardHeart, BsBalloonHeart } from 'react-icons/bs';
 import { IoLocationOutline, IoPricetagsOutline } from 'react-icons/io5';
 
 const icons = {
@@ -30,6 +30,11 @@ const icons = {
     AiOutlineStar,
     AiFillStar,
     RiDeleteBack2Line,
+    BsPostcardHeart,
+    MdOutlineManageSearch,
+    BiUserPin,
+    BsBalloonHeart,
+    BiLogOut,
 };
 
 export default icons;

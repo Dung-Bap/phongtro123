@@ -7,6 +7,7 @@ const News = ({ dispatch }) => {
     const { news } = useSelector(state => state.app);
     useEffect(() => {
         dispatch(getNews());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <div className=" border rounded-lg overflow-hidden bg-white shadow-lg p-[20px] mb-[20px]">

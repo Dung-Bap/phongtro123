@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import * as actions from './asyncActions';
 
 export const userSlice = createSlice({
     name: 'user',
@@ -6,6 +7,7 @@ export const userSlice = createSlice({
         isLoggedIn: false,
         token: null,
         isLoading: false,
+        dataUser: null,
     },
 
     reducers: {
@@ -18,6 +20,16 @@ export const userSlice = createSlice({
             state.token = null;
             state.isLoading = false;
         },
+    },
+    extraReducers: builder => {
+        // builder.addCase(getPosts.pending, state => {
+        //     state.isLoading = true;
+        // });
+
+        builder.addCase(actions.getCurrent.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.dataUser = action.payload.user;
+        });
     },
 });
 
