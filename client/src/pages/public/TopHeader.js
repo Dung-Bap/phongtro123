@@ -12,6 +12,7 @@ import clxs from 'clsx';
 import withBaseComp from '../../hocs/withBaseComp';
 import { logout } from '../../store/user/userSlice';
 import { getCurrent } from '../../store/user/asyncActions';
+import Swal from 'sweetalert2';
 
 const TopHeader = ({ dispatch }) => {
     const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2, BiLogOut } = icons;
@@ -26,6 +27,23 @@ const TopHeader = ({ dispatch }) => {
             clearTimeout(dispatchUser);
         };
     }, [dispatch]);
+    const handleLogout = () => {
+        setIsShowMenu(false);
+        Swal.fire({
+            title: 'Bạn chắc chứ ?',
+            text: 'Bạn muốn đăng xuất !',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý !',
+        }).then(rs => {
+            if (rs.isConfirmed) {
+                dispatch(logout());
+                setIsShowMenu(false);
+            }
+        });
+    };
 
     return (
         <div className="w-full flex justify-center">
@@ -36,12 +54,12 @@ const TopHeader = ({ dispatch }) => {
                     </Link>
                     <div className="flex items-center">
                         {isLoggedIn && (
-                            <div className="flex items-center text-sm cursor-pointer hover:underline mr-[20px]">
+                            <div className="flex items-center text-sm mr-[20px]">
                                 <img
-                                    className="w-[30px] h-[30px] rounded-full object-cover mr-[10px]"
+                                    className="min-w-[30px] h-[30px] rounded-full object-cover mr-[10px]"
                                     alt=""
                                     src={
-                                        'https://e7.pngegg.com/pngimages/223/244/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-rectangle.png'
+                                        'https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2023/10/22/img-1641_1697968197.jpg'
                                     }
                                 />
                                 <span>
@@ -83,10 +101,7 @@ const TopHeader = ({ dispatch }) => {
                                                     </Link>
                                                 ))}
                                                 <div
-                                                    onClick={() => {
-                                                        dispatch(logout());
-                                                        setIsShowMenu(false);
-                                                    }}
+                                                    onClick={handleLogout}
                                                     className={clxs(
                                                         'py-[10px]  hover:text-secondary flex items-center gap-3 cursor-pointer'
                                                     )}

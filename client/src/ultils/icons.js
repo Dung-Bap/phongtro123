@@ -13,6 +13,7 @@ import { BiSearchAlt, BiUserPin, BiLogOut } from 'react-icons/bi';
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdOutlineManageSearch } from 'react-icons/md';
 import { BsHouseHeart, BsTextareaResize, BsPostcardHeart, BsBalloonHeart } from 'react-icons/bs';
 import { IoLocationOutline, IoPricetagsOutline } from 'react-icons/io5';
+import { FcHome } from 'react-icons/fc';
 
 const icons = {
     AiOutlineHeart,
@@ -35,6 +36,7 @@ const icons = {
     BiUserPin,
     BsBalloonHeart,
     BiLogOut,
+    FcHome,
 };
 
 export default icons;
