@@ -17,7 +17,7 @@ const SelectRadio = ({ des, value, setCheckValue, type, dispatch, checkValue }) 
     return (
         <div className="p-[12px] border-b cursor-pointer hover:text-main">
             <input
-                className="focus:ring-blue-500"
+                className="focus:ring-blue-500 "
                 type="radio"
                 onChange={e => handleSetValue(e.target.value)}
                 id={value}

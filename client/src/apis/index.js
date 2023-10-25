@@ -4,3 +4,4 @@ export * from './posts';
 export * from './acreage';
 export * from './price';
 export * from './province';
+export * from './getProvinces';

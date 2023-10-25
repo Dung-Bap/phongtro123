@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React from 'react';
 
 const InputFileds = ({
@@ -10,19 +11,21 @@ const InputFileds = ({
     label,
     invalidRed,
     multiple,
+    onChange,
+    readOnly,
 }) => {
     return (
         <div className={` mb-[20px] flex flex-col `}>
-            <label>{label}</label>
+            <label className="font-semibold">{label}</label>
             <input
-                className={`form-input ${
-                    withFull ? 'w-full' : 'w-[400px]'
-                } px-[6px] text-[14px] py-[4px] placeholder:text-[14px] bg-blue-100 rounded-md min-h-[45px] text-[#1c1d1d] placeholder:border-none focus:outline-none`}
+                className={clsx(readOnly && 'bg-[#e2e3e5]', 'form-input')}
                 {...registername}
                 placeholder={placeholder}
                 type={type ? type : 'text'}
                 defaultValue={defaultValue}
                 multiple={multiple}
+                onChange={onChange}
+                readOnly={readOnly}
             />
             <span
                 className={`${withFull ? 'w-full' : 'w-[400px]'} ${
