@@ -9,24 +9,43 @@ const InputFileds = ({
     withFull,
     defaultValue,
     label,
-    invalidRed,
     multiple,
     onChange,
     readOnly,
+    des,
+    note,
 }) => {
     return (
         <div className={` mb-[20px] flex flex-col `}>
             <label className="font-semibold">{label}</label>
-            <input
-                className={clsx(readOnly && 'bg-[#e2e3e5]', 'form-input')}
-                {...registername}
-                placeholder={placeholder}
-                type={type ? type : 'text'}
-                defaultValue={defaultValue}
-                multiple={multiple}
-                onChange={onChange}
-                readOnly={readOnly}
-            />
+            {!note && (
+                <input
+                    className={clsx(readOnly && 'bg-[#e2e3e5]', 'form-input rounded-md')}
+                    {...registername}
+                    placeholder={placeholder}
+                    type={type ? type : 'text'}
+                    defaultValue={defaultValue}
+                    multiple={multiple}
+                    onChange={onChange}
+                    readOnly={readOnly}
+                />
+            )}
+            {note && (
+                <div className="flex ">
+                    <input
+                        className={clsx(readOnly && 'bg-[#e2e3e5]', 'form-input rounded-l-md')}
+                        {...registername}
+                        placeholder={placeholder}
+                        type={type ? type : 'text'}
+                        defaultValue={defaultValue}
+                        multiple={multiple}
+                        onChange={onChange}
+                        readOnly={readOnly}
+                    />
+                    {<span className="p-[6px] rounded-r-md bg-gray-200 ">{note}</span>}
+                </div>
+            )}
+            {des && <span className="text-[11px] text-gray-500">{des}</span>}
             <span
                 className={`${withFull ? 'w-full' : 'w-[400px]'} ${
                     withFull ? 'text-[12px]' : 'text-sm'

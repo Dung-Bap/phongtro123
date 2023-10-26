@@ -17,7 +17,6 @@ import Swal from 'sweetalert2';
 const TopHeader = ({ dispatch }) => {
     const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2, BiLogOut } = icons;
     const { isLoggedIn, dataUser } = useSelector(state => state.user);
-    console.log(dataUser);
     const [isShowMenu, setIsShowMenu] = useState(false);
     useEffect(() => {
         const dispatchUser = setTimeout(() => {

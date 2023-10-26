@@ -26,8 +26,8 @@ const SelectRadio = ({ des, value, setCheckValue, type, dispatch, checkValue }) 
             />
              
             <label
-                className={clsx(checkValue === des && 'text-main', 'font-medium ml-[10px] cursor-pointer')}
                 htmlFor={value}
+                className={clsx(checkValue === des && 'text-main', 'font-medium ml-[10px] cursor-pointer')}
             >
                 {des}
             </label>

@@ -29,3 +29,14 @@ export const MENUMANAGE = [
         path: `/${path.MANAGE}/${path.WISHLIST}`,
     },
 ];
+
+export const gender = [
+    {
+        code: 'Nam',
+        value: 'Nam',
+    },
+    {
+        code: 'Nữ',
+        value: 'Nữ',
+    },
+];

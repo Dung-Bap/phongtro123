@@ -28,4 +28,19 @@ const convertStringToNumberPrice = string => {
     return Math.ceil(parseFloat(string.replace(/[^\d\.]*/g, '')));
 };
 
-module.exports = { hashPassword, generateCode, convertStringToNumberAcreage, convertStringToNumberPrice };
+const convertNumberToString = number => {
+    if (Number(number) === number && number % 1 === 0) return `${number} triệu/tháng`;
+    if (Number(number) === number && number % 1 !== 0 && number < 1) {
+        return `${number * Math.pow(10, 6)} đồng/tháng`;
+    } else {
+        return `${number} triệu/tháng`;
+    }
+};
+
+module.exports = {
+    hashPassword,
+    generateCode,
+    convertStringToNumberAcreage,
+    convertStringToNumberPrice,
+    convertNumberToString,
+};

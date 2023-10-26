@@ -20,3 +20,17 @@ export const convertPath = string => {
         .join('-')
         .toLowerCase();
 };
+
+export const convertToBase64 = file => {
+    if (!file) return '';
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result);
+        };
+        fileReader.onerror = error => {
+            reject(error);
+        };
+    });
+};

@@ -43,14 +43,14 @@ const SelectFileds = ({
                             ? option.province_name
                             : type === 'district'
                             ? option.district_name
-                            : option.code}
+                            : option.value}
                     </option>
                 ))}
             </select>
             <span
-                className={`${withFull ? 'w-full' : 'w-[400px]'} ${withFull ? 'text-[12px]' : 'text-sm'} font-light  ${
-                    invalidRed ? 'text-main' : 'text-white'
-                }`}
+                className={`${withFull ? 'w-full' : 'w-[400px]'} ${
+                    withFull ? 'text-[12px]' : 'text-sm'
+                } font-light text-secondary`}
             >
                 {errorName}
             </span>

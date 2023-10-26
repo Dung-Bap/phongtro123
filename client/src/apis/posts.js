@@ -12,3 +12,10 @@ export const apiGetNews = () =>
         url: '/posts/news',
         method: 'get',
     });
+
+export const apiCreatePost = data =>
+    axios({
+        url: '/posts/create',
+        method: 'post',
+        data,
+    });

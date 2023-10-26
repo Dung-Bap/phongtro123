@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { HashLoader } from 'react-spinners';
+import { Hearts } from 'react-loader-spinner';
 
 const Loading = () => {
     const voteModalRef = useRef();
@@ -8,7 +8,15 @@ const Loading = () => {
     }, []);
     return (
         <div ref={voteModalRef}>
-            <HashLoader color="#ee3131" />;
+            <Hearts
+                height="100"
+                width="100"
+                color="#fa383e"
+                ariaLabel="hearts-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+            />
         </div>
     );
 };

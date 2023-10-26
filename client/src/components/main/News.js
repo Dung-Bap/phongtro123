@@ -25,8 +25,10 @@ const News = ({ dispatch }) => {
                         <div className="flex flex-col gap-1">
                             <span className="line-clamp-2 text-[#055699]">{item.title}</span>
                             <div className="flex items-center justify-between">
-                                <span className="text-price font-semibold">{item.attributes.price}</span>
-                                <span className="text-[12px] text-gray-400">{item.attributes.published}</span>
+                                <span className="text-price font-semibold w-[120px]">{item.attributes.price}</span>
+                                <span className="text-[12px] text-gray-400 line-clamp-1">
+                                    {item.attributes.published}
+                                </span>
                             </div>
                         </div>
                     </div>
