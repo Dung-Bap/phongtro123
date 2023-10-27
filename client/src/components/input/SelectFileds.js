@@ -16,7 +16,7 @@ const SelectFileds = ({
         <div className={`w-full flex flex-col`}>
             <label className="font-semibold">{label}</label>
             <select
-                className="form-select"
+                className="form-select rounded-md"
                 {...registername}
                 defaultValue={defaultValue}
                 onChange={onChange} // Using setValue

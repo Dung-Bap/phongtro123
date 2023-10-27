@@ -14,6 +14,7 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdOutlineManageSearch } from
 import { BsHouseHeart, BsTextareaResize, BsPostcardHeart, BsBalloonHeart } from 'react-icons/bs';
 import { IoLocationOutline, IoPricetagsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
+import { CiSquareRemove } from 'react-icons/ci';
 
 const icons = {
     AiOutlineHeart,
@@ -37,6 +38,7 @@ const icons = {
     BsBalloonHeart,
     BiLogOut,
     FcHome,
+    CiSquareRemove,
 };
 
 export default icons;

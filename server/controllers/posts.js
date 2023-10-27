@@ -133,7 +133,7 @@ const createNewPost = asyncHandle(async (req, res) => {
     });
     const response = await db.Province.findOrCreate({
         where: {
-            value: addressFix.split(',')?.slice(-1)[0].trim(),
+            code: provinceCode,
         },
         defaults: {
             code: provinceCode,
@@ -142,7 +142,7 @@ const createNewPost = asyncHandle(async (req, res) => {
     });
     return res.status(200).json({
         success: response ? true : false,
-        message: response ? 'Create post successfully !!!' : 'Somthing went wrong !',
+        message: response ? 'Tạo mới bài đăng thành công !!!' : 'Có gì đó sai sai !',
     });
 });
 

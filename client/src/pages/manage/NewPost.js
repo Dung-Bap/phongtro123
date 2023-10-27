@@ -23,7 +23,9 @@ const NewPost = ({ dispatch, navigate }) => {
     const [province, setProvince] = useState();
     const [district, setDistrict] = useState();
     const [address, setAddress] = useState('');
-    const [previewImage, setPreviewImage] = useState([]);
+    const [previewImage, setPreviewImage] = useState({
+        images: [],
+    });
 
     const newPostSchema = yup.object({
         province: yup.string().required('Chưa chọn Tỉnh/Thành Phố'),
@@ -31,8 +33,9 @@ const NewPost = ({ dispatch, navigate }) => {
         categoryCode: yup.string().required('Chưa chọn loại chuyên mục'),
         title: yup.string().required('Tiêu đề không được để trống'),
         description: yup.string().required('Bạn chưa nhập nội dung'),
-        price: yup.string().required('Bạn chưa nhập giá phòng'),
-        acreage: yup.string().required('Bạn chưa nhập diện tích'),
+        price: yup.number().typeError('Bạn chưa nhập giá phòng, hãy nhập số !').min(100000, 'Tối thiểu là 100.000đ'),
+        acreage: yup.number().typeError('Bạn chưa nhập diện tích, hãy nhập số !').min(10, 'Tối thiểu là 10 m2'),
+
         images: yup.mixed().test('file', 'You need to provide a file', value => {
             if (value.length > 0) {
                 return true;
@@ -63,7 +66,7 @@ const NewPost = ({ dispatch, navigate }) => {
                 reviewImages.push(response);
             }
         }
-        setPreviewImage(prev => ({ ...prev, reviewImages }));
+        setPreviewImage(prev => ({ ...prev, images: reviewImages }));
     };
 
     useEffect(() => {
@@ -256,7 +259,7 @@ const NewPost = ({ dispatch, navigate }) => {
                         <input multiple {...register('images')} type="file" id="images" hidden />
 
                         <div className="flex gap-3 flex-wrap mt-[10px]">
-                            {previewImage?.map((image, index) => (
+                            {previewImage?.images?.map((image, index) => (
                                 <img key={index} src={image} alt="" className="h-[200px] object-contain"></img>
                             ))}
                         </div>

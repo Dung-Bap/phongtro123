@@ -113,7 +113,7 @@ const Home = ({ dispatch, navigate, location }) => {
             <div className="w-full flex justify-center">
                 <main ref={pageRef} className="w-main flex gap-4">
                     <section className="w-[68%]">
-                        <div className="border min-h-[300px] rounded-lg overflow-hidden bg-white shadow-lg">
+                        <div className="border  rounded-lg overflow-hidden bg-white shadow-lg">
                             <div className="w-full p-[20px]">
                                 <h1 className="mb-[8px] text-[18px] font-semibold">{`Tổng ${posts?.count} kết quả`}</h1>
                                 <div className="flex items-center">
@@ -125,23 +125,31 @@ const Home = ({ dispatch, navigate, location }) => {
                                     </div>
                                 </div>
                             </div>
-                            {posts?.rows?.map(post => (
-                                <PostItem key={post.id} post={post} image={JSON.parse(post.images.image)} />
-                            ))}
+                            {posts?.count <= 0 && (
+                                <span className="flex justify-center items-center min-h-[200px] font-medium text-[16px]">
+                                    Hiện tại chưa có bài đăng nào phù hợp với thông tin của bạn !!!
+                                </span>
+                            )}
+                            {posts?.count > 0 &&
+                                posts?.rows?.map(post => (
+                                    <PostItem key={post.id} post={post} image={JSON.parse(post.images.image)} />
+                                ))}
                         </div>
-                        <div className="w-full flex justify-center p-[20px]">
-                            <Pagination
-                                className="pagination-data"
-                                showTotal={(total, range) => `Kết quả ${range[0]}-${range[1]} của ${total}`}
-                                onChange={PaginationChange}
-                                total={posts?.count}
-                                current={current}
-                                pageSize={size}
-                                showSizeChanger={false}
-                                itemRender={PrevNextArrow}
-                                onShowSizeChange={PerPageChange}
-                            />
-                        </div>
+                        {posts?.count > 0 && (
+                            <div className="w-full flex justify-center p-[20px]">
+                                <Pagination
+                                    className="pagination-data"
+                                    showTotal={(total, range) => `Kết quả ${range[0]}-${range[1]} của ${total}`}
+                                    onChange={PaginationChange}
+                                    total={posts?.count}
+                                    current={current}
+                                    pageSize={size}
+                                    showSizeChanger={false}
+                                    itemRender={PrevNextArrow}
+                                    onShowSizeChange={PerPageChange}
+                                />
+                            </div>
+                        )}
                     </section>
                     <section className="w-[32%]">
                         <AsideItem

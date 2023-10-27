@@ -5,7 +5,7 @@ const TextareaFields = ({ label, registername, onChange, errorName, withFull }) 
         <div className={`w-full flex flex-col`}>
             <label className="font-semibold">{label}</label>
             <textarea
-                className="border border-gray-300 rounded-md min-h-[200px] text-[14px]"
+                className="textarea border border-gray-300 rounded-md min-h-[200px] text-[14px]"
                 {...registername}
                 onChange={onChange}
             />
