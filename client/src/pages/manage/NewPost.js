@@ -15,7 +15,7 @@ import { Loading } from '../../components/modal';
 import Swal from 'sweetalert2';
 import { path } from '../../ultils/path';
 
-const NewPost = ({ dispatch, navigate }) => {
+const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const { categories } = useSelector(state => state.app);
     const { dataUser } = useSelector(state => state.user);
     const [provinces, setProvinces] = useState([]);
@@ -50,6 +50,7 @@ const NewPost = ({ dispatch, navigate }) => {
         watch,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         mode: 'onChange',
@@ -97,6 +98,14 @@ const NewPost = ({ dispatch, navigate }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [province]);
 
+    useEffect(() => {
+        reset({
+            province: '01',
+        });
+
+        console.log(valueEditPost);
+    }, [valueEditPost]);
+
     const onSubmit = async data => {
         data.address = `${address} ${districts?.find(item => item.district_id === district)?.district_name}, ${
             provinces?.find(item => item.province_id === province)?.province_name
@@ -137,7 +146,9 @@ const NewPost = ({ dispatch, navigate }) => {
 
     return (
         <div className="w-full p-[40px]">
-            <p className="py-[10px] border-b text-[30px]">Đăng tin mới</p>
+            <p className="py-[10px] border-b text-[30px]">
+                {valueEditPost ? `Sửa tin đăng (Mã tin: ${valueEditPost.overviews.code})` : 'Đăng tin mới'}
+            </p>
             <form method="POST" onSubmit={handleSubmit(onSubmit)} className="w-full flex">
                 <div className="w-[69%] mr-[30px]">
                     <p className="text-[20px] my-[30px] font-semibold">Địa chỉ cho thuê</p>
@@ -146,12 +157,15 @@ const NewPost = ({ dispatch, navigate }) => {
                             <SelectFileds
                                 registername={register('province')}
                                 errorName={errors.province?.message}
-                                onChange={e => setProvince(e.target.value)}
+                                onChange={e => {
+                                    setValue('province', e.target.value, { shouldValidate: true });
+                                    setProvince(e.target.value);
+                                }}
                                 withFull
                                 defaultOption={'-- Chọn Tỉnh/TP --'}
                                 label={'Tỉnh/Thành Phố'}
                                 options={provinces}
-                                type={'provine'}
+                                type={'province'}
                             />
                         </div>
                         <div className="w-[50%]">

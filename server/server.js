@@ -5,6 +5,9 @@ require('dotenv').config();
 const cors = require('cors');
 const dbConnect = require('./config/db.connect');
 const initRoutes = require('./routes');
+const { formatCreateTime } = require('./ultils/helpers');
+
+console.log(formatCreateTime());
 
 const app = express();
 const port = process.env.PORT || 8888;

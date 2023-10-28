@@ -37,10 +37,20 @@ const convertNumberToString = number => {
     }
 };
 
+const formatCreateTime = () => {
+    const day = new Date();
+    const dayCurrent = day.getDay() === 0 ? 'Chủ Nhật' : `Thứ ${day.getDay() + 1}`;
+    const time = `${day.getHours()}:${(day.getMinutes() < 10 ? '0' : '') + day.getMinutes()}`;
+    const fullDay = `${day.getDate()}/${day.getMonth()}/${day.getFullYear()}`;
+
+    return `${dayCurrent}, ${time} ${fullDay}`;
+};
+
 module.exports = {
     hashPassword,
     generateCode,
     convertStringToNumberAcreage,
     convertStringToNumberPrice,
     convertNumberToString,
+    formatCreateTime,
 };

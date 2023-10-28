@@ -18,28 +18,28 @@ const SelectFileds = ({
             <select
                 className="form-select rounded-md"
                 {...registername}
-                defaultValue={defaultValue}
                 onChange={onChange} // Using setValue
+                defaultValue={defaultValue}
             >
                 <option value="">{defaultOption}</option>
                 {options?.map(option => (
                     <option
                         key={
-                            type === 'provine'
+                            type === 'province'
                                 ? option.province_id
                                 : type === 'district'
                                 ? option.district_id
                                 : option.code
                         }
                         value={
-                            type === 'provine'
+                            type === 'province'
                                 ? option.province_id
                                 : type === 'district'
                                 ? option.district_id
                                 : option.code
                         }
                     >
-                        {type === 'provine'
+                        {type === 'province'
                             ? option.province_name
                             : type === 'district'
                             ? option.district_name

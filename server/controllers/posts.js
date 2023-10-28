@@ -1,8 +1,7 @@
 const asyncHandle = require('express-async-handler');
 const db = require('../models');
 const { dataPrice, dataAcreage } = require('../ultils/data');
-const { generateCode, convertNumberToString } = require('../ultils/helpers');
-const moment = require('moment/moment');
+const { generateCode, convertNumberToString, formatCreateTime } = require('../ultils/helpers');
 const { v4 } = require('uuid');
 
 const getPosts = asyncHandle(async (req, res) => {
@@ -43,6 +42,45 @@ const getPosts = asyncHandle(async (req, res) => {
     });
 });
 
+const getPostsManage = asyncHandle(async (req, res) => {
+    const { id } = req.user;
+    const queries = { ...req.query };
+    const { page, ...q } = queries;
+    const limit = +req.query.limit || +process.env.LIMIT_PRODUCT;
+    const offset = (+page - 1) * limit || 0;
+    const response = await db.Post.findAndCountAll({
+        offset,
+        limit,
+        where: { ...q, userId: id },
+        raw: true,
+        nest: true,
+        include: [
+            {
+                model: db.Image,
+                as: 'images',
+                attributes: ['image'],
+            },
+            {
+                model: db.Attribute,
+                as: 'attributes',
+                attributes: ['price', 'published'],
+            },
+            {
+                model: db.Overview,
+                as: 'overviews',
+                attributes: ['code'],
+            },
+        ],
+        // attributes: ['id', 'title', 'address'],
+        order: [['createdAt', 'DESC']],
+    });
+
+    return res.status(200).json({
+        success: response ? true : false,
+        result: response ? response : 'Something went wrong !',
+    });
+});
+
 const getNews = asyncHandle(async (req, res) => {
     const response = await db.Post.findAll({
         raw: true,
@@ -71,8 +109,8 @@ const getNews = asyncHandle(async (req, res) => {
 });
 
 const createNewPost = asyncHandle(async (req, res) => {
-    const { title, address, categoryCode, price, acreage, description, labelBody, area, category, gender, userId } =
-        req.body;
+    const { id } = req.user;
+    const { title, address, categoryCode, price, acreage, description, labelBody, area, category, gender } = req.body;
     const images = req?.files?.images?.map(el => el.path);
     if (images) req.body.images = images;
     if (!(title && address && categoryCode && price && acreage && description && labelBody && area && category))
@@ -98,7 +136,7 @@ const createNewPost = asyncHandle(async (req, res) => {
         labelCode,
         provinceCode,
         attributesId,
-        userId,
+        userId: id,
         overviewId,
         imagesId,
     });
@@ -106,7 +144,7 @@ const createNewPost = asyncHandle(async (req, res) => {
         id: attributesId,
         price: convertNumberToString(priceNumber),
         acreage: `${acreage}m2`,
-        published: moment(Date.now()).format('dddd, Do MM YYYY'),
+        published: formatCreateTime(),
         hashtag,
     });
     await db.Image.create({
@@ -120,7 +158,7 @@ const createNewPost = asyncHandle(async (req, res) => {
         type: category,
         target: gender,
         bonus: 'Tin VIP nổi bật',
-        created: moment(Date.now()).format('dddd, Do MM YYYY'),
+        created: formatCreateTime(),
     });
     await db.Label.findOrCreate({
         where: {
@@ -150,4 +188,5 @@ module.exports = {
     getPosts,
     getNews,
     createNewPost,
+    getPostsManage,
 };
