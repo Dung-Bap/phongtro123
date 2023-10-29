@@ -2,6 +2,16 @@ import icons from './icons';
 
 const { AiOutlineStar, AiFillStar } = icons;
 
+export const convertStringToNumberAcreage = string => {
+    return Math.ceil(string.match(/\d+/)[0]);
+};
+
+export const convertStringToNumberPrice = string => {
+    if (string.search('triệu/tháng') !== -1)
+        return Math.ceil(parseFloat(string.replace(/[^\d\.]*/g, ''))) * Math.pow(10, 6);
+    return Math.ceil(parseFloat(string.replace(/[^\d\.]*/g, '')));
+};
+
 export const renderStars = (number, size) => {
     if (!Number(number)) return;
     const stars = [];

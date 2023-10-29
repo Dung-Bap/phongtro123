@@ -7,10 +7,7 @@ import { SelectRadio } from '../input';
 const ModalSearch = ({ title, dispatch, contents, setCheckValue, type, checkValue }) => {
     const { MdKeyboardArrowLeft } = icons;
     return (
-        <div
-            onClick={e => e.stopPropagation()}
-            className="min-w-[700px] min-h-[400px] overflow-y-auto bg-white rounded-lg shadow-lg"
-        >
+        <div onClick={e => e.stopPropagation()} className="min-w-[700px] bg-white rounded-lg shadow-lg">
             <div className="flex justify-center relative border-b">
                 <h1 className="font-semibold p-[12px]">{title}</h1>
                 <span
@@ -20,7 +17,7 @@ const ModalSearch = ({ title, dispatch, contents, setCheckValue, type, checkValu
                     <MdKeyboardArrowLeft size={30} />
                 </span>
             </div>
-            <div className="px-[20px]">
+            <div className="px-[20px] h-[400px] overflow-y-auto">
                 {contents?.map(content => (
                     <SelectRadio
                         key={content.code}

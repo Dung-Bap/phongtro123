@@ -7,6 +7,13 @@ export const apiGetPosts = params =>
         params,
     });
 
+export const apiUpdatePost = data =>
+    axios({
+        url: '/posts/update',
+        method: 'put',
+        data,
+    });
+
 export const apiGetPostsManage = params =>
     axios({
         url: '/posts/manage',

@@ -7,5 +7,6 @@ router.get('/', ctrls.getPosts);
 router.get('/news', ctrls.getNews);
 router.post('/create', [verifyToken], uploader.fields([{ name: 'images', maxCount: 10 }]), ctrls.createNewPost);
 router.get('/manage', [verifyToken], ctrls.getPostsManage);
+router.put('/update', [verifyToken], uploader.fields([{ name: 'images', maxCount: 10 }]), ctrls.updatePost);
 
 module.exports = router;

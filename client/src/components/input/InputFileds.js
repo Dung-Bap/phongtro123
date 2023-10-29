@@ -14,6 +14,8 @@ const InputFileds = ({
     readOnly,
     des,
     note,
+    value,
+    hidden,
 }) => {
     return (
         <div className={` mb-[20px] flex flex-col `}>
@@ -28,6 +30,7 @@ const InputFileds = ({
                     multiple={multiple}
                     onChange={onChange}
                     readOnly={readOnly}
+                    value={value}
                 />
             )}
             {note && (

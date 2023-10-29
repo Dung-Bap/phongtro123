@@ -58,17 +58,17 @@ const getPostsManage = asyncHandle(async (req, res) => {
             {
                 model: db.Image,
                 as: 'images',
-                attributes: ['image'],
+                attributes: ['image', 'id'],
             },
             {
                 model: db.Attribute,
                 as: 'attributes',
-                attributes: ['price', 'published'],
+                attributes: ['price', 'published', 'acreage', 'id'],
             },
             {
                 model: db.Overview,
                 as: 'overviews',
-                attributes: ['code'],
+                attributes: ['code', 'target', 'id'],
             },
         ],
         // attributes: ['id', 'title', 'address'],
@@ -113,7 +113,20 @@ const createNewPost = asyncHandle(async (req, res) => {
     const { title, address, categoryCode, price, acreage, description, labelBody, area, category, gender } = req.body;
     const images = req?.files?.images?.map(el => el.path);
     if (images) req.body.images = images;
-    if (!(title && address && categoryCode && price && acreage && description && labelBody && area && category))
+    if (
+        !(
+            title &&
+            address &&
+            categoryCode &&
+            price &&
+            acreage &&
+            description &&
+            labelBody &&
+            area &&
+            category &&
+            images
+        )
+    )
         throw new Error('Missing Inputs');
 
     let addressFix = address.replace('Thành phố', '').replace('Tỉnh', '');
@@ -128,7 +141,7 @@ const createNewPost = asyncHandle(async (req, res) => {
     await db.Post.create({
         id: postId,
         title: title,
-        address: addressFix,
+        address: address,
         categoryCode: categoryCode,
         priceCode: dataPrice.find(item => item.min <= priceNumber && item.max >= priceNumber)?.code,
         acreageCode: dataAcreage.find(item => item.min <= acreage && item.max >= acreage)?.code,
@@ -184,9 +197,111 @@ const createNewPost = asyncHandle(async (req, res) => {
     });
 });
 
+const updatePost = asyncHandle(async (req, res) => {
+    const {
+        title,
+        address,
+        categoryCode,
+        price,
+        acreage,
+        description,
+        labelBody,
+        area,
+        category,
+        gender,
+        postId,
+        attributeId,
+        imagesId,
+        overviewId,
+    } = req.body;
+    const images = req?.files?.images?.map(el => el.path);
+    if (images) req.body.images = images;
+
+    if (!(title && address && categoryCode && price && acreage && description && labelBody && area && category))
+        throw new Error('Missing Inputs');
+
+    let addressFix = address.replace('Thành phố', '').replace('Tỉnh', '');
+    let labelCode = generateCode(labelBody).trim();
+    let provinceCode = generateCode(addressFix.split(',')?.slice(-1)[0]).trim();
+    let priceNumber = price / Math.pow(10, 6);
+    await db.Post.update(
+        {
+            title: title,
+            address: address,
+            categoryCode: categoryCode,
+            priceCode: dataPrice.find(item => item.min <= priceNumber && item.max >= priceNumber)?.code,
+            acreageCode: dataAcreage.find(item => item.min <= acreage && item.max >= acreage)?.code,
+            description: JSON.stringify(description),
+            labelCode,
+            provinceCode,
+        },
+        {
+            where: {
+                id: postId,
+            },
+        }
+    );
+    await db.Attribute.update(
+        {
+            price: convertNumberToString(priceNumber),
+            acreage: `${acreage}m2`,
+        },
+        {
+            where: {
+                id: attributeId,
+            },
+        }
+    );
+    await db.Image.update(
+        {
+            image: JSON.stringify(images),
+        },
+        {
+            where: {
+                id: imagesId,
+            },
+        }
+    );
+    await db.Overview.update(
+        {
+            area: area,
+            type: category,
+            target: gender,
+        },
+        {
+            where: {
+                id: overviewId,
+            },
+        }
+    );
+    await db.Label.findOrCreate({
+        where: {
+            code: labelCode,
+        },
+        defaults: {
+            code: labelCode,
+            value: labelBody,
+        },
+    });
+    const response = await db.Province.findOrCreate({
+        where: {
+            code: provinceCode,
+        },
+        defaults: {
+            code: provinceCode,
+            value: addressFix.split(',')?.slice(-1)[0].trim(),
+        },
+    });
+    return res.status(200).json({
+        success: response ? true : false,
+        message: response ? 'Cập nhật thành công !!!' : 'Có gì đó sai sai !',
+    });
+});
+
 module.exports = {
     getPosts,
     getNews,
     createNewPost,
     getPostsManage,
+    updatePost,
 };

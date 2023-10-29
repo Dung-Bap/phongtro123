@@ -4,25 +4,26 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Button from '../../components/common/Button';
-import { apiCreatePost, getDistricts, getProvinces } from '../../apis';
+import { apiCreatePost, apiUpdatePost, getDistricts, getProvinces } from '../../apis';
 import { useSelector } from 'react-redux';
 import withBaseComp from '../../hocs/withBaseComp';
 import { getCategories } from '../../store/app/asyncActions';
 import { gender } from '../../ultils/contants';
-import { convertToBase64 } from '../../ultils/helpers';
+import { convertStringToNumberAcreage, convertStringToNumberPrice, convertToBase64 } from '../../ultils/helpers';
 import { showModal } from '../../store/app/appSlice';
 import { Loading } from '../../components/modal';
 import Swal from 'sweetalert2';
 import { path } from '../../ultils/path';
 
 const NewPost = ({ dispatch, navigate, valueEditPost }) => {
+    // console.log(valueEditPost);
     const { categories } = useSelector(state => state.app);
     const { dataUser } = useSelector(state => state.user);
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [province, setProvince] = useState();
     const [district, setDistrict] = useState();
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useState();
     const [previewImage, setPreviewImage] = useState({
         images: [],
     });
@@ -35,13 +36,6 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
         description: yup.string().required('Bạn chưa nhập nội dung'),
         price: yup.number().typeError('Bạn chưa nhập giá phòng, hãy nhập số !').min(100000, 'Tối thiểu là 100.000đ'),
         acreage: yup.number().typeError('Bạn chưa nhập diện tích, hãy nhập số !').min(10, 'Tối thiểu là 10 m2'),
-
-        images: yup.mixed().test('file', 'You need to provide a file', value => {
-            if (value.length > 0) {
-                return true;
-            }
-            return false;
-        }),
         gender: yup.string(),
     });
 
@@ -50,12 +44,85 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
         watch,
         handleSubmit,
         reset,
-        setValue,
         formState: { errors },
     } = useForm({
         mode: 'onChange',
         resolver: yupResolver(newPostSchema),
     });
+
+    useEffect(() => {
+        dispatch(getCategories());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        const fechApiProvince = async () => {
+            const response = await getProvinces();
+            if (response) setProvinces(response);
+        };
+        fechApiProvince();
+    }, []);
+
+    useEffect(() => {
+        const fechApiDistrict = async () => {
+            if (valueEditPost) {
+                const addressEdit = valueEditPost?.address?.split(',');
+                const provinceEdit = addressEdit[addressEdit?.length - 1].trim();
+                const response = await getDistricts(
+                    provinces?.find(item => item.province_name === provinceEdit)?.province_id
+                );
+                if (response) setDistricts(response);
+            }
+        };
+        fechApiDistrict();
+    }, [valueEditPost, provinces]);
+
+    useEffect(() => {
+        const fechApiDistrict = async () => {
+            const response = await getDistricts(province);
+            if (response) setDistricts(response);
+        };
+        fechApiDistrict();
+        setDistrict(null);
+    }, [province]);
+
+    useEffect(() => {
+        if (valueEditPost) {
+            const addressEdit = valueEditPost?.address?.split(',');
+            const provinceEdit = addressEdit[addressEdit?.length - 1].trim();
+            reset({
+                province: provinces?.find(item => item.province_name === provinceEdit)?.province_id,
+            });
+        }
+    }, [valueEditPost, provinces, reset]);
+
+    useEffect(() => {
+        if (valueEditPost) {
+            const addressEdit = valueEditPost?.address?.split(',');
+            const districtEdit = addressEdit[addressEdit?.length - 2].trim();
+
+            reset({
+                district: districts?.find(item => item.district_name === districtEdit)?.district_id,
+            });
+        }
+    }, [valueEditPost, districts, reset]);
+
+    useEffect(() => {
+        if (valueEditPost) {
+            const imageEdit = JSON.parse(valueEditPost?.images?.image);
+            setPreviewImage({
+                images: imageEdit,
+            });
+            reset({
+                categoryCode: valueEditPost?.categoryCode,
+                title: valueEditPost?.title,
+                description: JSON.parse(valueEditPost?.description),
+                price: convertStringToNumberPrice(valueEditPost?.attributes?.price),
+                acreage: convertStringToNumberAcreage(valueEditPost?.attributes?.acreage),
+                gender: valueEditPost?.overviews?.target,
+            });
+        }
+    }, [reset, valueEditPost]);
 
     const handleReviewImages = async files => {
         const reviewImages = [];
@@ -71,45 +138,19 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     };
 
     useEffect(() => {
-        handleReviewImages(watch('images'));
-        // eslint-disable-next-line react-hooks/exhaustive-deps,
+        if (watch('images')?.length > 0) handleReviewImages(watch('images'));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watch('images')]);
 
-    useEffect(() => {
-        dispatch(getCategories());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        const fechApiProvince = async () => {
-            const response = await getProvinces();
-            if (response) setProvinces(response);
-        };
-
-        fechApiProvince();
-    }, []);
-
-    useEffect(() => {
-        const fechApiDistrict = async () => {
-            const response = await getDistricts(province);
-            if (response) setDistricts(response);
-        };
-        fechApiDistrict();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [province]);
-
-    useEffect(() => {
-        reset({
-            province: '01',
-        });
-
-        console.log(valueEditPost);
-    }, [valueEditPost]);
-
     const onSubmit = async data => {
-        data.address = `${address} ${districts?.find(item => item.district_id === district)?.district_name}, ${
-            provinces?.find(item => item.province_id === province)?.province_name
+        data.address = `${address || valueEditPost?.address?.split(',')[0].trim()}, ${
+            districts?.find(item => item.district_id === district)?.district_name ||
+            valueEditPost?.address?.split(',')[valueEditPost?.address?.split(',').length - 2].trim()
+        }, ${
+            provinces?.find(item => item.province_id === province)?.province_name ||
+            valueEditPost?.address?.split(',')[valueEditPost?.address?.split(',').length - 1].trim()
         }`;
+
         data.labelBody = `${categories.find(item => item.code === data.categoryCode).value} ${
             districts.find(item => item.district_id === data.district).district_name
         }`;
@@ -118,13 +159,20 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
         }`;
         data.category = `${categories.find(item => item.code === data.categoryCode).value}`;
         data.userId = dataUser.id;
+
+        data.postId = valueEditPost?.id;
+        data.attributeId = valueEditPost?.attributes?.id;
+        data.imagesId = valueEditPost?.images?.id;
+        data.overviewId = valueEditPost?.overviews?.id;
+
         const formData = new FormData();
+        data.images = data.images.length === 0 ? previewImage.images : data.images;
+        for (let image of data.images) if (data.images.length > 0) formData.append('images', image);
+
+        // delete data.images;
         for (let i of Object.entries(data)) formData.append(i[0], i[1]);
-        if (data.images) {
-            for (let image of data.images) formData.append('images', image);
-        }
         dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
-        const response = await apiCreatePost(formData);
+        const response = valueEditPost ? await apiUpdatePost(formData) : await apiCreatePost(formData);
         dispatch(showModal({ isShowModal: false, childrenModal: null }));
         if (response.success) {
             Swal.fire({
@@ -157,10 +205,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                             <SelectFileds
                                 registername={register('province')}
                                 errorName={errors.province?.message}
-                                onChange={e => {
-                                    setValue('province', e.target.value, { shouldValidate: true });
-                                    setProvince(e.target.value);
-                                }}
+                                onChange={e => setProvince(e.target.value)}
                                 withFull
                                 defaultOption={'-- Chọn Tỉnh/TP --'}
                                 label={'Tỉnh/Thành Phố'}
@@ -182,19 +227,61 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                         </div>
                     </div>
                     <div className="w-[25%]">
-                        <InputFileds label={'Số nhà'} withFull onChange={e => setAddress(e.target.value)} />
+                        <InputFileds
+                            label={'Số nhà'}
+                            withFull
+                            defaultValue={valueEditPost ? valueEditPost?.address?.split(',')[0].trim() : ''}
+                            onChange={e => setAddress(e.target.value)}
+                        />
                     </div>
                     <div className="w-full">
                         <InputFileds
                             label={'Địa chỉ chính xác'}
                             withFull
                             readOnly
-                            defaultValue={
-                                province &&
-                                district &&
-                                `${address} ${districts?.find(item => item.district_id === district)?.district_name}, ${
-                                    provinces?.find(item => item.province_id === province)?.province_name
-                                }`
+                            hidden
+                            value={
+                                valueEditPost
+                                    ? `${
+                                          address
+                                              ? `${address}`
+                                              : `${address}` === ''
+                                              ? `${address}`
+                                              : `${valueEditPost?.address?.split(',')[0].trim()}`
+                                      } ${
+                                          district
+                                              ? `${
+                                                    districts?.find(item => item.district_id === district)
+                                                        ?.district_name
+                                                },`
+                                              : `${valueEditPost?.address
+                                                    ?.split(',')
+                                                    [valueEditPost?.address?.split(',').length - 2].trim()},`
+                                      } ${
+                                          province
+                                              ? `${
+                                                    provinces?.find(item => item.province_id === province)
+                                                        ?.province_name
+                                                }`
+                                              : `${valueEditPost?.address
+                                                    ?.split(',')
+                                                    [valueEditPost?.address?.split(',').length - 1].trim()}`
+                                      }`
+                                    : `${address ? `${address}` : ''} ${
+                                          district
+                                              ? `${
+                                                    districts?.find(item => item.district_id === district)
+                                                        ?.district_name
+                                                },`
+                                              : ''
+                                      } ${
+                                          province
+                                              ? `${
+                                                    provinces?.find(item => item.province_id === province)
+                                                        ?.province_name
+                                                }`
+                                              : ''
+                                      }`
                             }
                         />
                     </div>
@@ -279,7 +366,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                         </div>
                     </div>
 
-                    <Button primary>Tiếp tục</Button>
+                    <Button primary>{valueEditPost ? 'Cập nhật' : 'Tiếp tục'}</Button>
                 </div>
                 <div className="w-[31%]">Map</div>
             </form>
