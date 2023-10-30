@@ -298,10 +298,21 @@ const updatePost = asyncHandle(async (req, res) => {
     });
 });
 
+const destroyPost = asyncHandle(async (req, res) => {
+    const { id } = req.body;
+    if (!id) throw new Error('Missing inputs !');
+    const response = await db.Post.destroy({ where: { id } });
+    return res.status(200).json({
+        success: response ? true : false,
+        message: response ? 'Xoá bài đăng thành công !' : 'Có gì đó sai sai !',
+    });
+});
+
 module.exports = {
     getPosts,
     getNews,
     createNewPost,
     getPostsManage,
     updatePost,
+    destroyPost,
 };

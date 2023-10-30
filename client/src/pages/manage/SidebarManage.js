@@ -42,7 +42,10 @@ const SidebarManage = ({ dispatch }) => {
                 <img
                     className="min-w-[50px] h-[50px] rounded-full object-cover mr-[5px]"
                     alt=""
-                    src={'https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2023/10/22/img-1641_1697968197.jpg'}
+                    src={`${
+                        dataUser?.avatar ||
+                        'https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2023/10/22/img-1641_1697968197.jpg'
+                    }`}
                 />
                 <div className="flex flex-col">
                     <span className="font-semibold ml-[5px] text-[16px]">{dataUser?.name}</span>

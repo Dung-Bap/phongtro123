@@ -16,7 +16,6 @@ import Swal from 'sweetalert2';
 import { path } from '../../ultils/path';
 
 const NewPost = ({ dispatch, navigate, valueEditPost }) => {
-    // console.log(valueEditPost);
     const { categories } = useSelector(state => state.app);
     const { dataUser } = useSelector(state => state.user);
     const [provinces, setProvinces] = useState([]);
@@ -100,7 +99,6 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
         if (valueEditPost) {
             const addressEdit = valueEditPost?.address?.split(',');
             const districtEdit = addressEdit[addressEdit?.length - 2].trim();
-
             reset({
                 district: districts?.find(item => item.district_name === districtEdit)?.district_id,
             });

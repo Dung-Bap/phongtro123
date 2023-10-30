@@ -21,7 +21,7 @@ const TopHeader = ({ dispatch }) => {
     useEffect(() => {
         const dispatchUser = setTimeout(() => {
             dispatch(getCurrent());
-        }, 300);
+        }, 1000);
         return () => {
             clearTimeout(dispatchUser);
         };
@@ -57,9 +57,10 @@ const TopHeader = ({ dispatch }) => {
                                 <img
                                     className="min-w-[30px] h-[30px] rounded-full object-cover mr-[10px]"
                                     alt=""
-                                    src={
+                                    src={`${
+                                        dataUser?.avartar ||
                                         'https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2023/10/22/img-1641_1697968197.jpg'
-                                    }
+                                    }`}
                                 />
                                 <span>
                                     Xin Chào,

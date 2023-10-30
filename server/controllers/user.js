@@ -61,8 +61,26 @@ const getCurrent = asyncHandler(async (req, res) => {
     });
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+    const { phone, name, zalo, fbUrl } = req.body;
+    if (!(phone || name || zalo || fbUrl)) throw new Error('Missing inputs');
+    const data = { phone, name, zalo, fbUrl };
+    if (req.file) data.avatar = req.file.path;
+    const { id } = req.user;
+    const response = await db.User.update(data, {
+        where: {
+            id,
+        },
+    });
+    res.status(200).json({
+        success: response ? true : false,
+        message: response ? 'Cập nhật thông tin thành công !' : 'Có gì đó sai sai !',
+    });
+});
+
 module.exports = {
     register,
     login,
     getCurrent,
+    updateUser,
 };

@@ -1,12 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import { apiGetPostsManage } from '../../apis';
+import { apiDestroyPost, apiGetPostsManage } from '../../apis';
 import icons from '../../ultils/icons';
 import NewPost from './NewPost';
+import Button from '../../components/common/Button';
+import withBaseComp from '../../hocs/withBaseComp';
+import { showModal } from '../../store/app/appSlice';
+import { Loading } from '../../components/modal';
+import Swal from 'sweetalert2';
 
-const ManagePost = () => {
+const ManagePost = ({ dispatch }) => {
     const { GrFormEdit } = icons;
     const [managePosts, setManagePosts] = useState([]);
     const [valueEditPost, setValueEditPost] = useState();
+    const [selectedPost, setSelectedPost] = useState([]);
+    const [updated, setUpdated] = useState(false);
+
+    const handleChange = (e, data) => {
+        const { name, checked } = e.target;
+        if (checked) {
+            if (name === 'allSelect') {
+                setSelectedPost(managePosts);
+            } else {
+                setSelectedPost([...selectedPost, data]);
+            }
+        } else {
+            if (name === 'allSelect') {
+                setSelectedPost([]);
+            } else {
+                let temppost = selectedPost.filter(item => item.id !== data.id);
+                setSelectedPost(temppost);
+            }
+        }
+    };
+
+    const handleDestroyPost = async () => {
+        const id = selectedPost.map(item => item.id);
+        Swal.fire({
+            title: 'Bạn chắc chứ ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xoá !',
+        }).then(async result => {
+            if (result.isConfirmed) {
+                dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
+                const response = await apiDestroyPost({ id });
+                dispatch(showModal({ isShowModal: false, childrenModal: null }));
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.message,
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                    setUpdated(prev => !prev);
+                    setSelectedPost([]);
+                }
+            }
+        });
+    };
 
     useEffect(() => {
         const fetchApiGetPosts = async () => {
@@ -15,7 +68,7 @@ const ManagePost = () => {
         };
 
         fetchApiGetPosts();
-    }, []);
+    }, [updated]);
 
     return (
         <>
@@ -23,48 +76,13 @@ const ManagePost = () => {
                 <div className="w-full p-[40px]">
                     <p className="py-[10px] border-b text-[30px]">Quản lý tin đăng</p>
                     <div className="relative pt-[20px] overflow-x-auto shadow-md sm:rounded-lg">
-                        <div className="flex items-center justify-between pb-4 bg-white">
-                            <div>
-                                <button
-                                    id="dropdownActionButton"
-                                    data-dropdown-toggle="dropdownAction"
-                                    className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5-700-600-700"
-                                    type="button"
-                                >
-                                    <span className="sr-only">Action button</span>
-                                    Hành động
-                                    <svg
-                                        className="w-2.5 h-2.5 ml-2.5"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 10 6"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="m1 1 4 4 4-4"
-                                        />
-                                    </svg>
-                                </button>
-                                {/* <!-- Dropdown menu --> */}
-                                <div
-                                    id="dropdownAction"
-                                    className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
-                                >
-                                    <ul className="py-1 text-sm text-gray-700" aria-labelledby="dropdownActionButton">
-                                        <li>ahihi</li>
-                                    </ul>
-                                    <div className="py-1">
-                                        <span>ahuhu</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <label for="table-search" className="sr-only">
-                                Search
-                            </label>
+                        <div className="flex items-center justify-between p-4 bg-white">
+                            {selectedPost.length > 0 && (
+                                <Button onClick={handleDestroyPost} deleted>
+                                    Xoá
+                                </Button>
+                            )}
+
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <svg
@@ -76,9 +94,9 @@ const ManagePost = () => {
                                     >
                                         <path
                                             stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
                                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                                         />
                                     </svg>
@@ -97,11 +115,14 @@ const ManagePost = () => {
                                     <th scope="col" className="p-4">
                                         <div className="flex items-center">
                                             <input
+                                                name="allSelect"
+                                                checked={selectedPost?.length === managePosts?.length}
+                                                onChange={e => handleChange(e, managePosts)}
                                                 id="checkbox-all-search"
                                                 type="checkbox"
                                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500-600-800-gray-800 focus:ring-2 "
                                             />
-                                            <label for="checkbox-all-search" className="sr-only">
+                                            <label htmlFor="checkbox-all-search" className="sr-only">
                                                 checkbox
                                             </label>
                                         </div>
@@ -131,11 +152,13 @@ const ManagePost = () => {
                                             <td className="w-4 p-4">
                                                 <div className="flex items-center">
                                                     <input
+                                                        checked={selectedPost.some(item => item?.id === managePost.id)}
+                                                        onChange={e => handleChange(e, managePost)}
                                                         id="checkbox-table-search-1"
                                                         type="checkbox"
                                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 "
                                                     />
-                                                    <label for="checkbox-table-search-1" className="sr-only">
+                                                    <label htmlFor="checkbox-table-search-1" className="sr-only">
                                                         checkbox
                                                     </label>
                                                 </div>
@@ -183,4 +206,4 @@ const ManagePost = () => {
     );
 };
 
-export default ManagePost;
+export default withBaseComp(ManagePost);

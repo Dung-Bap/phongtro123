@@ -21,3 +21,10 @@ export const apiGetCurrent = () =>
         url: '/user/current',
         method: 'get',
     });
+
+export const apiUpdateUser = data =>
+    axios({
+        url: '/user/update',
+        method: 'put',
+        data,
+    });

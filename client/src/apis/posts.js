@@ -14,6 +14,13 @@ export const apiUpdatePost = data =>
         data,
     });
 
+export const apiDestroyPost = data =>
+    axios({
+        url: '/posts/destroy',
+        method: 'delete',
+        data,
+    });
+
 export const apiGetPostsManage = params =>
     axios({
         url: '/posts/manage',

@@ -10,6 +10,7 @@ function Button({
     rightIcon = false,
     children,
     primary = false,
+    deleted = false,
     secondary = false,
     full = false,
     type,
@@ -41,7 +42,9 @@ function Button({
                 primary &&
                     `${full ? 'w-full' : 'w-[200px]'} bg-main text-white hover:underline rounded-md min-h-[40px]`,
                 secondary &&
-                    `${full ? 'w-full' : 'w-[200px]'} bg-secondary text-white hover:underline rounded-md min-h-[40px]`
+                    `${full ? 'w-full' : 'w-[200px]'} bg-secondary text-white hover:underline rounded-md min-h-[40px]`,
+                deleted &&
+                    `${full ? 'w-full' : 'w-[50px]'} bg-secondary text-white hover:underline rounded-md min-h-[30px]`
             )}
             {...props}
         >

@@ -15,10 +15,9 @@ const InputFileds = ({
     des,
     note,
     value,
-    hidden,
 }) => {
     return (
-        <div className={` mb-[20px] flex flex-col `}>
+        <div className={clsx(withFull ? 'w-[550px]' : '', 'mb-[20px] flex flex-col')}>
             <label className="font-semibold">{label}</label>
             {!note && (
                 <input
