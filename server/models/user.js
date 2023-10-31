@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             zalo: DataTypes.STRING,
             password: DataTypes.STRING,
             fbUrl: DataTypes.STRING,
-            avatar: DataTypes.BLOB,
+            avatar: DataTypes.STRING,
         },
         {
             sequelize,

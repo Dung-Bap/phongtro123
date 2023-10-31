@@ -1,23 +1,22 @@
+import Swal from 'sweetalert2';
 import React, { useEffect, useState } from 'react';
-import { InputFileds } from '../../components/input';
 import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
+import { InputFileds } from '../../components/input';
 import Button from '../../components/common/Button';
 import icons from '../../ultils/icons';
 import { apiUpdateUser } from '../../apis';
 import withBaseComp from '../../hocs/withBaseComp';
 import { showModal } from '../../store/app/appSlice';
 import { Loading } from '../../components/modal';
-import Swal from 'sweetalert2';
 import { getCurrent } from '../../store/user/asyncActions';
 import { convertToBase64 } from '../../ultils/helpers';
 
 const Personal = ({ dispatch }) => {
     const { dataUser } = useSelector(state => state.user);
-    console.log(dataUser);
-    // console.log(URL.createObjectURL(dataUser.avatar));
     const { BsFillCameraFill } = icons;
     const [updated, setUpdated] = useState(false);
     const [previewAvatar, setPreviewAvatar] = useState({

@@ -1,31 +1,34 @@
 /** @format */
 
 import React, { memo, useEffect, useState } from 'react';
-import logo from '../../assets/logo-phongtro.png';
-import icons from '../../ultils/icons';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import { path } from '../../ultils/path';
 import { useSelector } from 'react-redux';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { MENUMANAGE } from '../../ultils/contants';
 import clxs from 'clsx';
+
+import logo from '../../assets/logo-phongtro.png';
+import icons from '../../ultils/icons';
+import { path } from '../../ultils/path';
+import { MENUMANAGE } from '../../ultils/contants';
 import withBaseComp from '../../hocs/withBaseComp';
 import { logout } from '../../store/user/userSlice';
 import { getCurrent } from '../../store/user/asyncActions';
-import Swal from 'sweetalert2';
 
 const TopHeader = ({ dispatch }) => {
     const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2, BiLogOut } = icons;
     const { isLoggedIn, dataUser } = useSelector(state => state.user);
     const [isShowMenu, setIsShowMenu] = useState(false);
+
     useEffect(() => {
         const dispatchUser = setTimeout(() => {
             dispatch(getCurrent());
-        }, 1000);
+        }, 300);
         return () => {
             clearTimeout(dispatchUser);
         };
     }, [dispatch]);
+
     const handleLogout = () => {
         setIsShowMenu(false);
         Swal.fire({
@@ -55,12 +58,12 @@ const TopHeader = ({ dispatch }) => {
                         {isLoggedIn && (
                             <div className="flex items-center text-sm mr-[20px]">
                                 <img
+                                    src={
+                                        dataUser?.avatar ||
+                                        'https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2023/10/22/img-1641_1697968197.jpg'
+                                    }
                                     className="min-w-[30px] h-[30px] rounded-full object-cover mr-[10px]"
                                     alt=""
-                                    src={`${
-                                        dataUser?.avartar ||
-                                        'https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2023/10/22/img-1641_1697968197.jpg'
-                                    }`}
                                 />
                                 <span>
                                     Xin Chào,

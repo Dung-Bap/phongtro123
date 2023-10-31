@@ -25,7 +25,8 @@ module.exports = {
                 type: Sequelize.STRING,
             },
             avatar: {
-                type: Sequelize.BLOB('long'), // để avatar có dung lượng ảnh tốt hơn
+                // type: Sequelize.BLOB('long'), // để avatar có dung lượng ảnh tốt hơn
+                type: Sequelize.STRING,
             },
             createdAt: {
                 allowNull: false,

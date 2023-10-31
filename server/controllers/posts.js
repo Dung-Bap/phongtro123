@@ -4,6 +4,45 @@ const { dataPrice, dataAcreage } = require('../ultils/data');
 const { generateCode, convertNumberToString, formatCreateTime } = require('../ultils/helpers');
 const { v4 } = require('uuid');
 
+const getPost = asyncHandle(async (req, res) => {
+    const { id } = req.params;
+    if (!id) throw new Error('Missing Input');
+    const response = await db.Post.findOne({
+        where: { id },
+        include: [
+            {
+                model: db.Image,
+                as: 'images',
+                attributes: ['image'],
+            },
+            {
+                model: db.Attribute,
+                as: 'attributes',
+                attributes: ['price', 'acreage', 'published', 'hashtag'],
+            },
+            {
+                model: db.User,
+                as: 'user',
+                attributes: ['name', 'phone', 'zalo'],
+            },
+            {
+                model: db.Overview,
+                as: 'overviews',
+                attributes: ['code', 'area', 'type', 'target', 'bonus'],
+            },
+            // {
+            //     model: db.Label,
+            //     as: 'lables',
+            //     attributes: ['code', 'value'],
+            // },
+        ],
+    });
+    return res.status(200).json({
+        success: response ? true : false,
+        post: response ? response : 'Something went wrong!',
+    });
+});
+
 const getPosts = asyncHandle(async (req, res) => {
     const queries = { ...req.query };
     const { page, ...q } = queries;
@@ -309,6 +348,7 @@ const destroyPost = asyncHandle(async (req, res) => {
 });
 
 module.exports = {
+    getPost,
     getPosts,
     getNews,
     createNewPost,

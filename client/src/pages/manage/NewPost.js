@@ -1,18 +1,19 @@
-import { InputFileds, SelectFileds, TextareaFields } from '../../components/input';
+import Swal from 'sweetalert2';
 import React, { memo, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { useSelector } from 'react-redux';
+
+import { InputFileds, SelectFileds, TextareaFields } from '../../components/input';
 import Button from '../../components/common/Button';
 import { apiCreatePost, apiUpdatePost, getDistricts, getProvinces } from '../../apis';
-import { useSelector } from 'react-redux';
 import withBaseComp from '../../hocs/withBaseComp';
 import { getCategories } from '../../store/app/asyncActions';
 import { gender } from '../../ultils/contants';
 import { convertStringToNumberAcreage, convertStringToNumberPrice, convertToBase64 } from '../../ultils/helpers';
 import { showModal } from '../../store/app/appSlice';
 import { Loading } from '../../components/modal';
-import Swal from 'sweetalert2';
 import { path } from '../../ultils/path';
 
 const NewPost = ({ dispatch, navigate, valueEditPost }) => {
@@ -22,7 +23,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const [districts, setDistricts] = useState([]);
     const [province, setProvince] = useState();
     const [district, setDistrict] = useState();
-    const [address, setAddress] = useState();
+    const [address, setAddress] = useState('');
     const [previewImage, setPreviewImage] = useState({
         images: [],
     });
@@ -35,6 +36,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
         description: yup.string().required('Bạn chưa nhập nội dung'),
         price: yup.number().typeError('Bạn chưa nhập giá phòng, hãy nhập số !').min(100000, 'Tối thiểu là 100.000đ'),
         acreage: yup.number().typeError('Bạn chưa nhập diện tích, hãy nhập số !').min(10, 'Tối thiểu là 10 m2'),
+        housenumber: yup.string().required('Bạn chưa nhập số nhà !'),
         gender: yup.string(),
     });
 
@@ -226,6 +228,8 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                     </div>
                     <div className="w-[25%]">
                         <InputFileds
+                            registername={register('housenumber')}
+                            errorName={errors.housenumber?.message}
                             label={'Số nhà'}
                             withFull
                             defaultValue={valueEditPost ? valueEditPost?.address?.split(',')[0].trim() : ''}
@@ -240,13 +244,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                             hidden
                             value={
                                 valueEditPost
-                                    ? `${
-                                          address
-                                              ? `${address}`
-                                              : `${address}` === ''
-                                              ? `${address}`
-                                              : `${valueEditPost?.address?.split(',')[0].trim()}`
-                                      } ${
+                                    ? `${address ? `${address}` : `${valueEditPost?.address?.split(',')[0].trim()},`} ${
                                           district
                                               ? `${
                                                     districts?.find(item => item.district_id === district)
@@ -265,7 +263,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                                                     ?.split(',')
                                                     [valueEditPost?.address?.split(',').length - 1].trim()}`
                                       }`
-                                    : `${address ? `${address}` : ''} ${
+                                    : `${address ? `${address},` : ''} ${
                                           district
                                               ? `${
                                                     districts?.find(item => item.district_id === district)

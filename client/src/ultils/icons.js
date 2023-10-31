@@ -7,6 +7,7 @@ import {
     AiOutlinePlusCircle,
     AiOutlineStar,
     AiFillStar,
+    AiOutlineFieldTime,
 } from 'react-icons/ai';
 import { RiListCheck2, RiDeleteBack2Line } from 'react-icons/ri';
 import { BiSearchAlt, BiUserPin, BiLogOut } from 'react-icons/bi';
@@ -15,7 +16,8 @@ import { BsHouseHeart, BsTextareaResize, BsPostcardHeart, BsBalloonHeart, BsFill
 import { IoLocationOutline, IoPricetagsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
 import { GrFormEdit } from 'react-icons/gr';
-import { CiSquareRemove, CiEdit } from 'react-icons/ci';
+import { CiSquareRemove, CiEdit, CiHashtag } from 'react-icons/ci';
+import { LuMapPin } from 'react-icons/lu';
 
 const icons = {
     AiOutlineHeart,
@@ -43,6 +45,9 @@ const icons = {
     CiEdit,
     GrFormEdit,
     BsFillCameraFill,
+    LuMapPin,
+    AiOutlineFieldTime,
+    CiHashtag,
 };
 
 export default icons;

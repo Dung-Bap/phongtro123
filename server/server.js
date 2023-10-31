@@ -16,8 +16,8 @@ app.use(
     })
 );
 
-app.use(express.json()); // đọc data của client
-app.use(express.urlencoded({ extended: true })); // đọc được url encode
+app.use(express.json({ limit: '10mb' })); // đọc data của client
+app.use(express.urlencoded({ extended: true, limit: '10mb' })); // đọc được url encode, do gửi image là blob nên để dung lượng cao thì mới lưu đc
 
 dbConnect();
 

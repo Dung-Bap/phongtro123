@@ -10,6 +10,7 @@ export const path = {
     RENT_HOUSE: 'nha-cho-thue',
     RENTAL_APARTMENT: 'cho-thue-can-ho',
     OFFICE_PREMISES: 'cho-thue-mat-bang',
+    DETAIL_POST_TITLE_ID: '/:title/:id',
 
     //member
     MANAGE: 'quan-ly',

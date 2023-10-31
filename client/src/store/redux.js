@@ -22,6 +22,10 @@ export const store = configureStore({
         user: persistReducer(userConfig, userSlice),
         app: appSlice,
     },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });
 
 export const persistor = persistStore(store);

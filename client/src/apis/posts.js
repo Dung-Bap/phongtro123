@@ -1,5 +1,11 @@
 import axios from '../axios';
 
+export const apiGetPost = id =>
+    axios({
+        url: '/posts/' + id,
+        method: 'get',
+    });
+
 export const apiGetPosts = params =>
     axios({
         url: '/posts',

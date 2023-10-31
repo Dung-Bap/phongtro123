@@ -1,21 +1,28 @@
 import React, { memo } from 'react';
 import icons from '../../ultils/icons';
 import { renderStars } from '../../ultils/helpers';
+import { Link } from 'react-router-dom';
 
 const PostItem = ({ post, image }) => {
     const { AiOutlineHeart } = icons;
     return (
         image.length > 0 && (
             <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t border-secondary">
-                <div className="relative rounded-lg overflow-hidden w-[40%] h-[240px]">
+                <Link
+                    to={`/${post?.title.replaceAll('/', '')}/${post?.id}`}
+                    className="relative rounded-lg overflow-hidden w-[40%] h-[240px]"
+                >
                     <img className="w-full h-full object-cover cursor-pointer" alt="" src={image[0]} />
                     <span className="absolute bottom-[10px] left-[10px] p-[2px] rounded bg-[rgba(0,0,0,.5)] text-white text-[12px]">{`${image.length} ảnh`}</span>
                     <span className="absolute bottom-[10px] right-[10px] cursor-pointer ">
                         <AiOutlineHeart color="white" size={28} />
                     </span>
-                </div>
+                </Link>
                 <div className="flex flex-col w-[60%]">
-                    <span className="uppercase text-[14px] text-secondary font-semibold line-clamp-3 hover:underline mb-[10px] cursor-pointer">
+                    <Link
+                        to={`/${post?.title.replaceAll('/', '')}/${post?.id}`}
+                        className="uppercase text-[14px] text-secondary font-semibold line-clamp-3 hover:underline mb-[10px] cursor-pointer"
+                    >
                         <span className="flex items-center">
                             {renderStars(post.star, 15)?.map((el, index) => (
                                 <span className="gap-1" key={index}>
@@ -24,7 +31,7 @@ const PostItem = ({ post, image }) => {
                             ))}
                         </span>
                         {post.address}
-                    </span>
+                    </Link>
                     <div className="flex items-center mb-[10px]">
                         <span className="mr-[20px] text-price font-semibold">{post.attributes.price}</span>
                         <span>{post.attributes.acreage}</span>

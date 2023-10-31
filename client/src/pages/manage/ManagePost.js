@@ -37,6 +37,7 @@ const ManagePost = ({ dispatch }) => {
         const id = selectedPost.map(item => item.id);
         Swal.fire({
             title: 'Bạn chắc chứ ?',
+            text: 'Bài đăng đã xoá sẽ không khôi phục được đâu nha !',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -176,11 +177,13 @@ const ManagePost = ({ dispatch }) => {
                                                     <span className="text-[#055699] font-semibold line-clamp-1">
                                                         {managePost?.title}
                                                     </span>
-                                                    <div className="flex items-center line-clamp-1">
-                                                        <span className="text-[13px] font-medium mr-[5px]">
-                                                            Địa chỉ:{' '}
+                                                    <div className="flex items-center">
+                                                        <span className="text-[13px] min-w-[50px] font-medium mr-[5px]">
+                                                            Địa chỉ:
                                                         </span>
-                                                        <span className="text-[13px]">{managePost?.address}</span>
+                                                        <span className="text-[13px] line-clamp-1">
+                                                            {managePost?.address}
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <span
@@ -191,7 +194,9 @@ const ManagePost = ({ dispatch }) => {
                                                     Sửa tin
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 text-price">{managePost?.attributes?.price}</td>
+                                            <td className="px-6 py-4">
+                                                <span className="text-price">{managePost?.attributes?.price}</span>
+                                            </td>
                                             <td className="px-6 py-4">{managePost?.attributes?.published}</td>
                                         </tr>
                                     );

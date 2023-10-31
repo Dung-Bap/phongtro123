@@ -1,7 +1,7 @@
 /** @format */
 import { Route, Routes } from 'react-router-dom';
 import { path } from './ultils/path';
-import { Home, Login, Public, Register } from './pages/public';
+import { DetailPost, Home, Login, Public, Register } from './pages/public';
 import Modal from './components/modal/Modal';
 import { useSelector } from 'react-redux';
 import { ManageLayout, ManagePost, NewPost, Personal, Wishlist } from './pages/manage';
@@ -19,6 +19,7 @@ function App() {
                     <Route path={path.RENTAL_APARTMENT} element={<Home />} />
                     <Route path={path.OFFICE_PREMISES} element={<Home />} />
                     <Route path={path.MOTEL_ROOM} element={<Home />} />
+                    <Route path={path.DETAIL_POST_TITLE_ID} element={<DetailPost />} />
                     <Route path={path.LOGIN} element={<Login />} />
                     <Route path={path.REGISTER} element={<Register />} />
                 </Route>

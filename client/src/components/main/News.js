@@ -2,6 +2,7 @@ import React, { memo, useEffect } from 'react';
 import withBaseComp from '../../hocs/withBaseComp';
 import { useSelector } from 'react-redux';
 import { getNews } from '../../store/app/asyncActions';
+import { Link } from 'react-router-dom';
 
 const News = ({ dispatch }) => {
     const { news } = useSelector(state => state.app);
@@ -16,7 +17,11 @@ const News = ({ dispatch }) => {
             {news?.map(item => {
                 const image = JSON.parse(item.images.image);
                 return (
-                    <div key={item.id} className="flex gap-4 py-2 border-gray-200 border-b">
+                    <Link
+                        to={`/${item?.title.replaceAll('/', '')}/${item?.id}`}
+                        key={item.id}
+                        className="flex gap-4 py-2 border-gray-200 border-b cursor-pointer"
+                    >
                         <img
                             className="min-w-[65px] h-[65px] rounded-md overflow-hidden object-cover"
                             alt=""
@@ -31,7 +36,7 @@ const News = ({ dispatch }) => {
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 );
             })}
         </div>
