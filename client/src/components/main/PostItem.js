@@ -40,7 +40,7 @@ const PostItem = ({ post, image }) => {
                         <span className="hover:underline cursor-pointer">
                             {post.address.split(',').splice(-2).join(',')}
                         </span>
-                        <span className="text-gray-400">{post.attributes.published}</span>
+                        <span className="text-gray-400">{post?.overviews?.created.split(',')[1]}</span>
                     </div>
                     <p className="line-clamp-3 text-gray-500 mb-[10px]">{JSON.parse(post.description)}</p>
                     <div className="flex justify-between items-center">

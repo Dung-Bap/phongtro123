@@ -23,7 +23,7 @@ const getPost = asyncHandle(async (req, res) => {
             {
                 model: db.User,
                 as: 'user',
-                attributes: ['name', 'phone', 'zalo'],
+                attributes: ['name', 'phone', 'zalo', 'avatar'],
             },
             {
                 model: db.Overview,
@@ -70,8 +70,13 @@ const getPosts = asyncHandle(async (req, res) => {
                 as: 'user',
                 attributes: ['name', 'phone', 'zalo'],
             },
+            {
+                model: db.Overview,
+                as: 'overviews',
+                attributes: ['created'],
+            },
         ],
-        attributes: ['id', 'title', 'star', 'description', 'address'],
+        attributes: ['id', 'title', 'star', 'description', 'address', 'createdAt'],
         order: [['star', 'DESC']],
     });
 
@@ -136,8 +141,13 @@ const getNews = asyncHandle(async (req, res) => {
                 as: 'attributes',
                 attributes: ['price', 'published'],
             },
+            {
+                model: db.Overview,
+                as: 'overviews',
+                attributes: ['created'],
+            },
         ],
-        attributes: ['id', 'title'],
+        attributes: ['id', 'title', 'createdAt'],
         order: [['createdAt', 'DESC']],
     });
 

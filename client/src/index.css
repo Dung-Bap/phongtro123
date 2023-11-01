@@ -210,3 +210,31 @@
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 }
+
+/* slick */
+button.slick-next {
+    width: 80px;
+    height: 80px;
+    right: 20px;
+    top: 50%;
+}
+
+button.slick-next::before {
+    color: rgb(183, 40, 40);
+    content: '\276F';
+    font-size: 30px;
+}
+
+button.slick-prev {
+    width: 80px;
+    height: 80px;
+    left: 20px;
+    top: 50%;
+    z-index: 1;
+}
+
+button.slick-prev::before {
+    color: rgb(183, 40, 40);
+    content: '\276E';
+    font-size: 30px;
+}

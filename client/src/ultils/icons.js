@@ -18,6 +18,9 @@ import { FcHome } from 'react-icons/fc';
 import { GrFormEdit } from 'react-icons/gr';
 import { CiSquareRemove, CiEdit, CiHashtag } from 'react-icons/ci';
 import { LuMapPin } from 'react-icons/lu';
+import { FiPhoneCall } from 'react-icons/fi';
+import { SiZalo } from 'react-icons/si';
+import { GoDotFill } from 'react-icons/go';
 
 const icons = {
     AiOutlineHeart,
@@ -48,6 +51,9 @@ const icons = {
     LuMapPin,
     AiOutlineFieldTime,
     CiHashtag,
+    FiPhoneCall,
+    SiZalo,
+    GoDotFill,
 };
 
 export default icons;

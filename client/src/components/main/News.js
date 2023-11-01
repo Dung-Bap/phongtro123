@@ -3,9 +3,11 @@ import withBaseComp from '../../hocs/withBaseComp';
 import { useSelector } from 'react-redux';
 import { getNews } from '../../store/app/asyncActions';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const News = ({ dispatch }) => {
     const { news } = useSelector(state => state.app);
+    console.log(news);
     useEffect(() => {
         dispatch(getNews());
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,14 +27,14 @@ const News = ({ dispatch }) => {
                         <img
                             className="min-w-[65px] h-[65px] rounded-md overflow-hidden object-cover"
                             alt=""
-                            src={image[0]}
+                            src={image[0] || 'https://www.iconpacks.net/icons/3/free-icon-no-image-6663.png'}
                         />
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col justify-between gap-1 min-w-[220px] ">
                             <span className="line-clamp-2 text-[#055699]">{item.title}</span>
                             <div className="flex items-center justify-between">
-                                <span className="text-price font-semibold w-[120px]">{item.attributes.price}</span>
+                                <span className="text-price font-semibold line-clamp-1">{item.attributes.price}</span>
                                 <span className="text-[12px] text-gray-400 line-clamp-1">
-                                    {item.attributes.published}
+                                    {item?.overviews?.created.split(',')[1]}
                                 </span>
                             </div>
                         </div>
