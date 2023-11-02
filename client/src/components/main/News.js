@@ -3,11 +3,9 @@ import withBaseComp from '../../hocs/withBaseComp';
 import { useSelector } from 'react-redux';
 import { getNews } from '../../store/app/asyncActions';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 
 const News = ({ dispatch }) => {
     const { news } = useSelector(state => state.app);
-    console.log(news);
     useEffect(() => {
         dispatch(getNews());
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,7 +25,10 @@ const News = ({ dispatch }) => {
                         <img
                             className="min-w-[65px] h-[65px] rounded-md overflow-hidden object-cover"
                             alt=""
-                            src={image[0] || 'https://www.iconpacks.net/icons/3/free-icon-no-image-6663.png'}
+                            src={
+                                image[0] ||
+                                'https://www.kuleuven.be/communicatie/congresbureau/fotos-en-afbeeldingen/no-image.png/image'
+                            }
                         />
                         <div className="flex flex-col justify-between gap-1 min-w-[220px] ">
                             <span className="line-clamp-2 text-[#055699]">{item.title}</span>

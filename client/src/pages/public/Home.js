@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Pagination from 'rc-pagination';
-import { createSearchParams, useSearchParams } from 'react-router-dom';
+import { createSearchParams, useLocation, useSearchParams } from 'react-router-dom';
 
 import { Header, SelectProvinceItem } from '../../components/header';
 import { AsideItem, News, PostItem } from '../../components/main';
@@ -12,6 +12,8 @@ import { getAcreages, getCategories, getPosts, getPrices, getProvinces } from '.
 import { convertPath } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
 import withBaseComp from '../../hocs/withBaseComp';
+import clsx from 'clsx';
+import { path } from '../../ultils/path';
 
 const Home = ({ dispatch, navigate, location }) => {
     const { MdKeyboardArrowRight, MdKeyboardArrowLeft } = icons;
@@ -24,6 +26,8 @@ const Home = ({ dispatch, navigate, location }) => {
     // eslint-disable-next-line no-unused-vars
     const [size, setSize] = useState(6);
     const [current, setCurrent] = useState(1);
+    const [searchProvince, setSearchProvince] = useState();
+    const [created, setCreated] = useState('star');
     // Pagination
     const PerPageChange = value => {
         setSize(value);
@@ -32,6 +36,8 @@ const Home = ({ dispatch, navigate, location }) => {
             setCurrent(newPerPage);
         }
     };
+    const { state } = useLocation();
+    console.log(state);
 
     const PaginationChange = (page, pageSize) => {
         setCurrent(page);
@@ -55,6 +61,26 @@ const Home = ({ dispatch, navigate, location }) => {
             </button>;
         return originalElement;
     };
+
+    useEffect(() => {
+        const queries = {};
+        if (searchProvince) {
+            queries.provinceCode = searchProvince.cateCode;
+            navigate(
+                {
+                    pathname: path.HOME,
+                    search: createSearchParams(queries).toString(),
+                },
+                {
+                    state: {
+                        title: `${searchProvince.title}, Nhà Trọ Giá Rẻ, Mới Nhất 2023`,
+                        des: `${searchProvince.title}, nhà trọ giá rẻ mới nhất năm 2023: mới xây, không chung chủ, vệ sinh riêng. Tìm phòng trọ ở Hồ Chí Minh với nhiều diện tích, mức giá khác nhau.`,
+                    },
+                }
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchProvince]);
     //
     useEffect(() => {
         setCategoryCode(categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.code);
@@ -64,6 +90,7 @@ const Home = ({ dispatch, navigate, location }) => {
         currentPageRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
         const queries = Object.fromEntries([...params]);
+        queries.order = [created, 'DESC'];
         if (categoryCode) {
             queries.categoryCode = categoryCode;
         }
@@ -72,7 +99,8 @@ const Home = ({ dispatch, navigate, location }) => {
         dispatch(getAcreages());
         dispatch(getPrices());
         dispatch(getProvinces());
-    }, [categoryCode, dispatch, params, update]);
+        setSearchProvince(null);
+    }, [categoryCode, dispatch, params, update, created]);
 
     useEffect(() => {
         setCurrent(+params.get('page') || 1);
@@ -86,30 +114,43 @@ const Home = ({ dispatch, navigate, location }) => {
     return (
         <div className="w-full">
             <Search currentPageRef={currentPageRef} setUpdate={setUpdate} />
-            <Header
-                title={
-                    categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.header ||
-                    'Kênh thông tin Phòng Trọ số 1 Việt Nam'
-                }
-                des={
-                    categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.subheader ||
-                    'Kênh thông tin Phòng Trọ số 1 Việt Nam - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng.'
-                }
-            />
-            <div className="w-full flex justify-center gap-4 mb-[25px]">
-                <SelectProvinceItem
-                    title={'Phòng trọ Hồ Chí Minh'}
-                    image={'https://phongtro123.com/images/location_hcm.jpg'}
-                />
-                <SelectProvinceItem
-                    title={'Phòng trọ Hà Nội'}
-                    image={'https://phongtro123.com/images/location_hn.jpg'}
-                />
-                <SelectProvinceItem
-                    title={'Phòng trọ Đà Nẵng'}
-                    image={'https://phongtro123.com/images/location_dn.jpg'}
-                />
-            </div>
+            {!state && (
+                <>
+                    <Header
+                        title={
+                            categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.header ||
+                            'Kênh thông tin Phòng Trọ số 1 Việt Nam'
+                        }
+                        des={
+                            categories?.find(item => `/${convertPath(item?.value)}` === location.pathname)?.subheader ||
+                            'Kênh thông tin Phòng Trọ số 1 Việt Nam - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng.'
+                        }
+                    />
+                    <div className="w-full flex justify-center gap-4 mb-[25px]">
+                        <SelectProvinceItem
+                            title={'Phòng trọ Hồ Chí Minh'}
+                            image={'https://phongtro123.com/images/location_hcm.jpg'}
+                            setSearchProvince={setSearchProvince}
+                            cateCode={'CHMN'}
+                        />
+
+                        <SelectProvinceItem
+                            title={'Phòng trọ Hà Nội'}
+                            image={'https://phongtro123.com/images/location_hn.jpg'}
+                            setSearchProvince={setSearchProvince}
+                            cateCode={'NNIT'}
+                        />
+
+                        <SelectProvinceItem
+                            title={'Phòng trọ Đà Nẵng'}
+                            image={'https://phongtro123.com/images/location_dn.jpg'}
+                            setSearchProvince={setSearchProvince}
+                            cateCode={'NONG'}
+                        />
+                    </div>
+                </>
+            )}
+            {state && <Header title={state.title} des={state.des} />}
             <div className="w-full flex justify-center">
                 <main ref={pageRef} className="w-main flex gap-4">
                     <section className="w-[68%]">
@@ -119,9 +160,24 @@ const Home = ({ dispatch, navigate, location }) => {
                                 <div className="flex items-center">
                                     <span className="mr-[10px] text-[14px]">Sắp xếp:</span>
                                     <div className="flex items-center gap-2">
-                                        <span className="p-[4px] bg-gray-100 rounded-md text-[14px]">Mặc định</span>
-                                        <span className="p-[4px] bg-gray-100 rounded-md text-[14px]">Mới nhất</span>
-                                        <span className="p-[4px] bg-gray-100 rounded-md text-[14px]">Có video</span>
+                                        <span
+                                            onClick={() => setCreated('star')}
+                                            className={clsx(
+                                                created === 'star' && 'text-secondary border border-secondary',
+                                                'p-[4px] bg-gray-100 rounded-md text-[14px] cursor-pointer border'
+                                            )}
+                                        >
+                                            Mặc định
+                                        </span>
+                                        <span
+                                            onClick={() => setCreated('createdAt')}
+                                            className={clsx(
+                                                created === 'createdAt' && 'text-secondary border border-secondary',
+                                                'p-[4px] bg-gray-100 rounded-md text-[14px] cursor-pointer border'
+                                            )}
+                                        >
+                                            Mới nhất
+                                        </span>
                                     </div>
                                 </div>
                             </div>

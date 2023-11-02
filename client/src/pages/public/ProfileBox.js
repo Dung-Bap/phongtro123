@@ -24,15 +24,23 @@ const ProfileBox = ({ dataUser }) => {
                 <span className="mr-[5px]">
                     <FiPhoneCall size={20} />
                 </span>
-                <span className="text-[20px]">{dataUser?.user?.phone}</span>
+                <a target="_blank" href={`tel:${dataUser?.user?.phone}`} className="text-[20px]" rel="noreferrer">
+                    {dataUser?.user?.phone}
+                </a>
             </div>
             <div className="flex items-center w-full border bg-white rounded-lg p-2 justify-center mb-[10px]">
                 <span className="mr-[5px]">
                     <SiZalo size={20} />
                 </span>
-                <span>{dataUser?.user?.zalo || dataUser?.user?.phone}</span>
+                <a
+                    target="_blank"
+                    href={`https://zalo.me/${dataUser?.user?.zalo || dataUser?.user?.phone}`}
+                    rel="noreferrer"
+                >
+                    {dataUser?.user?.zalo || dataUser?.user?.phone}
+                </a>
             </div>
-            <div className="flex items-center w-full border bg-white rounded-lg p-2 justify-center">
+            <div className="flex items-center w-full border bg-white rounded-lg p-2 justify-center cursor-pointer">
                 <span className="mr-[5px]">
                     <AiOutlineHeart size={20} />
                 </span>

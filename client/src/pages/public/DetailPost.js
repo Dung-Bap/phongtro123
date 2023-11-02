@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { createSearchParams, useParams } from 'react-router-dom';
 import { apiGetPost } from '../../apis';
 import { renderStars } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
@@ -8,8 +8,9 @@ import withBaseComp from '../../hocs/withBaseComp';
 import { getCategories } from '../../store/app/asyncActions';
 import { News } from '../../components/main';
 import { ProfileBox } from '../../pages/public';
+import { path } from '../../ultils/path';
 
-const DetailPost = ({ dispatch }) => {
+const DetailPost = ({ dispatch, navigate }) => {
     const { LuMapPin, IoPricetagsOutline, BsTextareaResize, AiOutlineFieldTime, CiHashtag } = icons;
     const [count, setCount] = useState(1);
     const { id } = useParams();
@@ -27,6 +28,28 @@ const DetailPost = ({ dispatch }) => {
         afterChange: e => {
             setCount(e + 1);
         },
+    };
+
+    const handleSearchDistrict = (code, value) => {
+        const queries = {};
+        if (code) {
+            queries.labelCode = code;
+            navigate(
+                {
+                    pathname: path.HOME,
+                    search: createSearchParams(queries).toString(),
+                },
+                {
+                    state: {
+                        title: `${value}, Nhà Trọ Giá Rẻ, Mới Nhất 2023`,
+                        des: `${value}, nhà trọ giá rẻ mới nhất năm 2023: mới xây, không chung chủ, vệ sinh riêng. Tìm phòng trọ Quận Bình Thạnh nhiều diện tích, mức giá khác nhau.`,
+                    },
+                }
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        //
     };
 
     useEffect(() => {
@@ -68,8 +91,11 @@ const DetailPost = ({ dispatch }) => {
                         </div>
                         <div className="flex items-center mb-[6px]">
                             <span className="mr-[5px]">Chuyên mục: </span>
-                            <span className=" text-main underline cursor-pointer hover:text-secondary font-semibold">
-                                {post?.overviews?.area}
+                            <span
+                                onClick={() => handleSearchDistrict(post?.labels?.code, post?.labels?.value)}
+                                className=" text-main underline cursor-pointer hover:text-secondary font-semibold"
+                            >
+                                {post?.labels?.value}
                             </span>
                         </div>
                         <div className="flex items-center mb-[6px]">
@@ -95,7 +121,7 @@ const DetailPost = ({ dispatch }) => {
                                 <span className="mr-[5px]">
                                     <AiOutlineFieldTime />
                                 </span>
-                                <span>{post?.attributes?.published}</span>
+                                <span>{post?.overviews?.created}</span>
                             </div>
                             <div className="flex items-center">
                                 <span className="mr-[5px]">
@@ -142,7 +168,7 @@ const DetailPost = ({ dispatch }) => {
                                     </tr>
                                     <tr>
                                         <td className="w-[25%] p-[10px]">Ngày đăng:</td>
-                                        <td>{post?.attributes?.published}</td>
+                                        <td>{post?.overviews?.created}</td>
                                     </tr>
                                 </tbody>
                             </table>

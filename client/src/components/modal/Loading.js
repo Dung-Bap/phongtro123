@@ -7,7 +7,11 @@ const Loading = () => {
         voteModalRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }, []);
     return (
-        <div ref={voteModalRef}>
+        <div
+            onClick={e => e.stopPropagation()}
+            className="w-full h-full flex justify-center items-center"
+            ref={voteModalRef}
+        >
             <Hearts
                 height="100"
                 width="100"

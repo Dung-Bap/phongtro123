@@ -7,6 +7,7 @@ import withBaseComp from '../../hocs/withBaseComp';
 import { showModal } from '../../store/app/appSlice';
 import { Loading } from '../../components/modal';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const ManagePost = ({ dispatch }) => {
     const { GrFormEdit } = icons;
@@ -166,17 +167,26 @@ const ManagePost = ({ dispatch }) => {
                                             </td>
                                             <td className="px-6 py-4">{managePost?.overviews?.code}</td>
                                             <td className="px-6 py-4">
-                                                <img
-                                                    className="min-w-[100px] h-[100px] object-cover"
-                                                    alt=""
-                                                    src={imagePost[0]}
-                                                />
+                                                <Link
+                                                    to={`/${managePost?.title.replaceAll('/', '')}/${managePost?.id}`}
+                                                >
+                                                    <img
+                                                        className="min-w-[100px] h-[100px] object-cover"
+                                                        alt=""
+                                                        src={imagePost[0]}
+                                                    />
+                                                </Link>
                                             </td>
                                             <td className="px-6 py-4 flex flex-col gap-3">
                                                 <div className="flex flex-col">
-                                                    <span className="text-[#055699] font-semibold line-clamp-1">
+                                                    <Link
+                                                        to={`/${managePost?.title.replaceAll('/', '')}/${
+                                                            managePost?.id
+                                                        }`}
+                                                        className="text-[#055699] font-semibold line-clamp-1"
+                                                    >
                                                         {managePost?.title}
-                                                    </span>
+                                                    </Link>
                                                     <div className="flex items-center">
                                                         <span className="text-[13px] min-w-[50px] font-medium mr-[5px]">
                                                             Địa chỉ:

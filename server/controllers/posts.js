@@ -28,13 +28,13 @@ const getPost = asyncHandle(async (req, res) => {
             {
                 model: db.Overview,
                 as: 'overviews',
-                attributes: ['code', 'area', 'type', 'target', 'bonus'],
+                attributes: ['code', 'area', 'type', 'target', 'bonus', 'created'],
             },
-            // {
-            //     model: db.Label,
-            //     as: 'lables',
-            //     attributes: ['code', 'value'],
-            // },
+            {
+                model: db.Label,
+                as: 'labels',
+                attributes: ['code', 'value'],
+            },
         ],
     });
     return res.status(200).json({
@@ -45,7 +45,7 @@ const getPost = asyncHandle(async (req, res) => {
 
 const getPosts = asyncHandle(async (req, res) => {
     const queries = { ...req.query };
-    const { page, ...q } = queries;
+    const { page, order, ...q } = queries;
     const limit = +req.query.limit || +process.env.LIMIT_PRODUCT;
     const offset = (+page - 1) * limit || 0;
     const response = await db.Post.findAndCountAll({
@@ -77,7 +77,7 @@ const getPosts = asyncHandle(async (req, res) => {
             },
         ],
         attributes: ['id', 'title', 'star', 'description', 'address', 'createdAt'],
-        order: [['star', 'DESC']],
+        order: [order],
     });
 
     return res.status(200).json({

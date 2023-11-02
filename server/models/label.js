@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Label.hasOne(models.Post, { foreignKey: 'labelCode', as: 'labels' }); // Do là quan hệ 1/1, và scraping data nên dùng hasOne
+            Label.hasMany(models.Post, { foreignKey: 'labelCode', as: 'labels' }); // Do code có thể trùng với nhiều bài post nên dùng hasMany
         }
     }
     Label.init(
