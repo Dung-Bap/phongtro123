@@ -17,7 +17,7 @@ const InputFileds = ({
     value,
 }) => {
     return (
-        <div className={clsx(withFull ? 'w-[550px]' : '', 'mb-[20px] flex flex-col')}>
+        <div className={clsx(withFull ? 'w-full' : 'min-w-[550px]', 'mb-[20px] flex flex-col')}>
             <label className="font-semibold">{label}</label>
             {!note && (
                 <input

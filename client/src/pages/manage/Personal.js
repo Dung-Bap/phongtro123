@@ -124,25 +124,25 @@ const Personal = ({ dispatch }) => {
                     <div className="flex items-center justify-between">
                         <span>Số điện thoại</span>
                         <div>
-                            <InputFileds withFull registername={register('phone')} errorName={errors.phone?.message} />
+                            <InputFileds registername={register('phone')} errorName={errors.phone?.message} />
                         </div>
                     </div>
                     <div className="flex items-center justify-between">
                         <span>Tên hiển thị</span>
                         <div>
-                            <InputFileds withFull registername={register('name')} errorName={errors.name?.message} />
+                            <InputFileds registername={register('name')} errorName={errors.name?.message} />
                         </div>
                     </div>
                     <div className="flex items-center justify-between">
                         <span>Số Zalo</span>
                         <div>
-                            <InputFileds withFull registername={register('zalo')} />
+                            <InputFileds registername={register('zalo')} />
                         </div>
                     </div>
                     <div className="flex items-center justify-between mb-10">
                         <span>Facebook</span>
                         <div>
-                            <InputFileds withFull registername={register('fbUrl')} />
+                            <InputFileds registername={register('fbUrl')} />
                         </div>
                     </div>
                     <Button primary>Lưu & Cập nhật</Button>

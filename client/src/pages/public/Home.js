@@ -18,12 +18,12 @@ import { path } from '../../ultils/path';
 const Home = ({ dispatch, navigate, location }) => {
     const { MdKeyboardArrowRight, MdKeyboardArrowLeft } = icons;
     const { posts, categories, prices, acreages } = useSelector(state => state.app);
+    const { state } = useLocation();
+    const currentPageRef = useRef();
+    const pageRef = useRef();
     const [params] = useSearchParams();
     const [categoryCode, setCategoryCode] = useState('');
     const [update, setUpdate] = useState(false);
-    const currentPageRef = useRef();
-    const pageRef = useRef();
-    // eslint-disable-next-line no-unused-vars
     const [size, setSize] = useState(6);
     const [current, setCurrent] = useState(1);
     const [searchProvince, setSearchProvince] = useState();
@@ -36,8 +36,6 @@ const Home = ({ dispatch, navigate, location }) => {
             setCurrent(newPerPage);
         }
     };
-    const { state } = useLocation();
-    console.log(state);
 
     const PaginationChange = (page, pageSize) => {
         setCurrent(page);
@@ -107,7 +105,7 @@ const Home = ({ dispatch, navigate, location }) => {
     }, [categoryCode, params, update]);
 
     useEffect(() => {
-        pageRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        pageRef.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.get('page'), update]);
 
@@ -152,7 +150,7 @@ const Home = ({ dispatch, navigate, location }) => {
             )}
             {state && <Header title={state.title} des={state.des} />}
             <div className="w-full flex justify-center">
-                <main ref={pageRef} className="w-main flex gap-4">
+                <main ref={pageRef} className="w-main flex gap-4 scroll-m-[60px]">
                     <section className="w-[68%]">
                         <div className="border  rounded-lg overflow-hidden bg-white shadow-lg">
                             <div className="w-full p-[20px]">

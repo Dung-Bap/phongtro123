@@ -53,7 +53,7 @@ const DetailPost = ({ dispatch, navigate }) => {
     };
 
     useEffect(() => {
-        currentPageRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        currentPageRef.current.scrollIntoView({ behavior: 'smooth' });
         dispatch(getCategories());
         const fetchApiGetPost = async () => {
             const response = await apiGetPost(id);
@@ -66,7 +66,7 @@ const DetailPost = ({ dispatch, navigate }) => {
 
     return (
         <div className="w-full flex justify-center py-4">
-            <main ref={currentPageRef} className="w-main flex gap-4">
+            <main ref={currentPageRef} className="w-main flex gap-4 scroll-m-[16px]">
                 <section className="w-[68%]">
                     <div className="border p-4 rounded-lg overflow-hidden bg-white shadow-lg w-full">
                         <div className="w-full relative bg-black rounded-t-lg mb-[20px]">

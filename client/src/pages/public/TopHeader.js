@@ -12,22 +12,46 @@ import icons from '../../ultils/icons';
 import { path } from '../../ultils/path';
 import { MENUMANAGE } from '../../ultils/contants';
 import withBaseComp from '../../hocs/withBaseComp';
-import { logout } from '../../store/user/userSlice';
+import { clearMessage, logout } from '../../store/user/userSlice';
 import { getCurrent } from '../../store/user/asyncActions';
 
-const TopHeader = ({ dispatch }) => {
+const TopHeader = ({ dispatch, navigate }) => {
     const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2, BiLogOut } = icons;
-    const { isLoggedIn, dataUser } = useSelector(state => state.user);
+    const { isLoggedIn, dataUser, mess } = useSelector(state => state.user);
     const [isShowMenu, setIsShowMenu] = useState(false);
 
     useEffect(() => {
-        const dispatchUser = setTimeout(() => {
-            dispatch(getCurrent());
-        }, 300);
-        return () => {
-            clearTimeout(dispatchUser);
-        };
-    }, [dispatch]);
+        if (isLoggedIn) {
+            const dispatchUser = setTimeout(() => {
+                dispatch(getCurrent());
+            }, 300);
+            return () => {
+                clearTimeout(dispatchUser);
+            };
+        }
+    }, [dispatch, isLoggedIn]);
+
+    useEffect(() => {
+        if (mess)
+            Swal.fire({
+                title: 'Đăng nhập thất bại',
+                text: mess,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oki',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    navigate(`${path.LOGIN}`);
+                    dispatch(clearMessage());
+                }
+                if (result.isDismissed) {
+                    dispatch(clearMessage());
+                }
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mess]);
 
     const handleLogout = () => {
         setIsShowMenu(false);
@@ -58,13 +82,11 @@ const TopHeader = ({ dispatch }) => {
                         {isLoggedIn && (
                             <div className="flex items-center text-sm mr-[20px]">
                                 <img
-                                    src={
-                                        dataUser?.avatar ||
-                                        'https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2023/10/22/img-1641_1697968197.jpg'
-                                    }
+                                    src={dataUser?.avatar}
                                     className="min-w-[30px] h-[30px] rounded-full object-cover mr-[10px]"
                                     alt=""
                                 />
+
                                 <span>
                                     Xin Chào,
                                     <span className="font-semibold text-[16px] ml-[5px]">{dataUser?.name}</span>

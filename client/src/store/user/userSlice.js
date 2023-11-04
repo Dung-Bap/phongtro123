@@ -8,6 +8,7 @@ export const userSlice = createSlice({
         token: null,
         isLoading: false,
         dataUser: null,
+        mess: '',
     },
 
     reducers: {
@@ -20,6 +21,9 @@ export const userSlice = createSlice({
             state.token = null;
             state.isLoading = false;
         },
+        clearMessage: state => {
+            state.mess = '';
+        },
     },
     extraReducers: builder => {
         // builder.addCase(getPosts.pending, state => {
@@ -30,9 +34,16 @@ export const userSlice = createSlice({
             state.isLoading = false;
             state.dataUser = action.payload.user;
         });
+
+        builder.addCase(actions.getCurrent.rejected, (state, action) => {
+            state.isLoggedIn = false;
+            state.token = null;
+            state.isLoading = false;
+            state.mess = 'Phiên đăng nhập đã hết hạn ,bạn đăng nhập lại nhé !';
+        });
     },
 });
 
-export const { registerUser, logout } = userSlice.actions;
+export const { registerUser, logout, clearMessage } = userSlice.actions;
 
 export default userSlice.reducer;

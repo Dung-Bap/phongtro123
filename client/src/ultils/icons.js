@@ -8,6 +8,7 @@ import {
     AiOutlineStar,
     AiFillStar,
     AiOutlineFieldTime,
+    AiOutlineArrowUp,
 } from 'react-icons/ai';
 import { RiListCheck2, RiDeleteBack2Line } from 'react-icons/ri';
 import { BiSearchAlt, BiUserPin, BiLogOut } from 'react-icons/bi';
@@ -54,6 +55,7 @@ const icons = {
     FiPhoneCall,
     SiZalo,
     GoDotFill,
+    AiOutlineArrowUp,
 };
 
 export default icons;
