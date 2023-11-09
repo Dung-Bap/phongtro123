@@ -2,13 +2,36 @@ import React, { memo } from 'react';
 import icons from '../../ultils/icons';
 import { renderStars } from '../../ultils/helpers';
 import { Link } from 'react-router-dom';
+import withBaseComp from '../../hocs/withBaseComp';
+import { apiAddWishlist } from '../../apis';
 
-const PostItem = ({ post, image }) => {
+const PostItem = ({ post, image, navigate }) => {
     const { AiOutlineHeart } = icons;
+    console.log(post);
+
+    const handleAddWishlist = async e => {
+        e.stopPropagation();
+        const response = await apiAddWishlist({
+            postId: post.id,
+            image: image[0],
+            star: post.star,
+            address: post.address,
+            price: post.attributes.price,
+            acreage: post.attributes.acreage,
+            created: post?.overviews?.created,
+            description: post.description,
+            avatar: post.user.avatar,
+            userPost: post.user.name,
+            userPhone: post.user.phone,
+            userZalo: post.user.zalo,
+        });
+
+        console.log(response);
+    };
     return (
         <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t border-secondary">
-            <Link
-                to={`/${post?.title.replaceAll('/', '')}/${post?.id}`}
+            <div
+                onClick={() => navigate(`/${post?.title.replaceAll('/', '')}/${post?.id}`)}
                 className="relative rounded-lg overflow-hidden w-[40%] h-[240px]"
             >
                 <img
@@ -20,10 +43,13 @@ const PostItem = ({ post, image }) => {
                     }
                 />
                 <span className="absolute bottom-[10px] left-[10px] p-[2px] rounded bg-[rgba(0,0,0,.5)] text-white text-[12px]">{`${image.length} ảnh`}</span>
-                <span className="absolute bottom-[10px] right-[10px] cursor-pointer ">
+                <span
+                    onClick={e => handleAddWishlist(e)}
+                    className="absolute bottom-[10px] right-[10px] cursor-pointer "
+                >
                     <AiOutlineHeart color="white" size={28} />
                 </span>
-            </Link>
+            </div>
             <div className="flex flex-col w-[60%]">
                 <Link
                     to={`/${post?.title.replaceAll('/', '')}/${post?.id}`}
@@ -52,7 +78,7 @@ const PostItem = ({ post, image }) => {
                         <img
                             className="rounded-full w-[30px] h-[30px] object-cover"
                             alt=""
-                            src="https://phongtro123.com/images/default-user.png"
+                            src={post.user.avatar || 'https://phongtro123.com/images/default-user.png'}
                         />
                         <span className="text-gray-500">{post.user.name}</span>
                     </div>
@@ -78,4 +104,4 @@ const PostItem = ({ post, image }) => {
     );
 };
 
-export default memo(PostItem);
+export default withBaseComp(memo(PostItem));

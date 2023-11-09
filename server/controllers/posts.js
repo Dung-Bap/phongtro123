@@ -68,7 +68,7 @@ const getPosts = asyncHandle(async (req, res) => {
             {
                 model: db.User,
                 as: 'user',
-                attributes: ['name', 'phone', 'zalo'],
+                attributes: ['name', 'phone', 'zalo', 'avatar'],
             },
             {
                 model: db.Overview,

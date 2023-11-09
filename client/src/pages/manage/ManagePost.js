@@ -54,7 +54,7 @@ const ManagePost = ({ dispatch }) => {
                         icon: 'success',
                         title: response.message,
                         showConfirmButton: false,
-                        timer: 1000,
+                        timer: 500,
                     });
                     setUpdated(prev => !prev);
                     setSelectedPost([]);
