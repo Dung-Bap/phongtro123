@@ -1,10 +1,10 @@
 const asyncHandler = require('express-async-handler');
 const db = require('../models');
 const { v4 } = require('uuid');
-const chothuecanho = require('../../data/chothuecanho.json');
-const chothuematbang = require('../../data/chothuematbang.json');
-const chothuephongtro = require('../../data/chothuephongtro.json');
-const nhachothue = require('../../data/nhachothue.json');
+const chothuecanho = require('../data/chothuecanho.json');
+const chothuematbang = require('../data/chothuematbang.json');
+const chothuephongtro = require('../data/chothuephongtro.json');
+const nhachothue = require('../data/nhachothue.json');
 const { dataPrice, dataAcreage } = require('../ultils/data');
 const {
     hashPassword,
