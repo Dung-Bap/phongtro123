@@ -117,15 +117,15 @@ const insert = asyncHandler(async (req, res) => {
                 password: hashPassword('123456'),
             });
         });
-        // let categoryId = v4();
+        let categoryId = v4();
 
-        // await db.Category.create({
-        //     id: categoryId,
-        //     code: data?.code,
-        //     value: data.value,
-        //     header: data.header,
-        //     subheader: data.subheader,
-        // });
+        await db.Category.create({
+            id: categoryId,
+            code: data?.code,
+            value: data.value,
+            header: data.header,
+            subheader: data.subheader,
+        });
     });
     label.forEach(async item => {
         await db.Label.create(item);
