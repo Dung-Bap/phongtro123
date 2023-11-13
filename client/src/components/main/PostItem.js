@@ -3,31 +3,10 @@ import icons from '../../ultils/icons';
 import { renderStars } from '../../ultils/helpers';
 import { Link } from 'react-router-dom';
 import withBaseComp from '../../hocs/withBaseComp';
-import { apiAddWishlist } from '../../apis';
 
 const PostItem = ({ post, image, navigate }) => {
     const { AiOutlineHeart } = icons;
-    console.log(post);
 
-    const handleAddWishlist = async e => {
-        e.stopPropagation();
-        const response = await apiAddWishlist({
-            postId: post.id,
-            image: image[0],
-            star: post.star,
-            address: post.address,
-            price: post.attributes.price,
-            acreage: post.attributes.acreage,
-            created: post?.overviews?.created,
-            description: post.description,
-            avatar: post.user.avatar,
-            userPost: post.user.name,
-            userPhone: post.user.phone,
-            userZalo: post.user.zalo,
-        });
-
-        console.log(response);
-    };
     return (
         <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t border-secondary">
             <div
@@ -43,10 +22,7 @@ const PostItem = ({ post, image, navigate }) => {
                     }
                 />
                 <span className="absolute bottom-[10px] left-[10px] p-[2px] rounded bg-[rgba(0,0,0,.5)] text-white text-[12px]">{`${image.length} ảnh`}</span>
-                <span
-                    onClick={e => handleAddWishlist(e)}
-                    className="absolute bottom-[10px] right-[10px] cursor-pointer "
-                >
+                <span className="absolute bottom-[10px] right-[10px] cursor-pointer ">
                     <AiOutlineHeart color="white" size={28} />
                 </span>
             </div>

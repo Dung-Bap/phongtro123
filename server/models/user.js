@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             User.hasOne(models.Post, { foreignKey: 'userId', as: 'user' }); // Do là quan hệ 1/1, và scraping data nên dùng hasOne
-            User.hasOne(models.Wishlist, { foreignKey: 'userId', as: 'wishlistUser' });
         }
     }
     User.init(
