@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
+import { MapContainer, TileLayer } from 'react-leaflet';
 
 import { InputFileds, SelectFileds, TextareaFields } from '../../components/input';
 import Button from '../../components/common/Button';
@@ -15,6 +16,7 @@ import { convertStringToNumberAcreage, convertStringToNumberPrice, convertToBase
 import { showModal } from '../../store/app/appSlice';
 import { Loading } from '../../components/modal';
 import { path } from '../../ultils/path';
+import { DraggableMarker } from '../../components/map';
 
 const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const { categories } = useSelector(state => state.app);
@@ -192,6 +194,8 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
         reset();
     };
 
+    const center = { lat: 21.0229063, lng: 105.8054199 };
+
     return (
         <div className="w-full p-[40px]">
             <p className="py-[10px] border-b text-[30px]">
@@ -364,7 +368,20 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
 
                     <Button primary>{valueEditPost ? 'Cập nhật' : 'Tiếp tục'}</Button>
                 </div>
-                <div className="w-[31%]">Map</div>
+                <div className="w-[31%]">
+                    <MapContainer
+                        style={{ width: '100%', height: '400px' }}
+                        zoom={13}
+                        center={center}
+                        scrollWheelZoom={false}
+                    >
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <DraggableMarker />
+                    </MapContainer>
+                </div>
             </form>
         </div>
     );
