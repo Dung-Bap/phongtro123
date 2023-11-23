@@ -23,6 +23,23 @@ module.exports = {
                 price: '#16c784',
             },
         },
+        keyframes: {
+            'slide-left': {
+                '0%': {
+                    '-webkit-transform': 'translateX(656px);',
+                    opacity: 0,
+                    transform: 'translateX(656px);',
+                },
+                '100%': {
+                    '-webkit-transform': ' translateX(0);',
+                    opacity: 1,
+                    transform: ' translateX(0);',
+                },
+            },
+        },
+        animation: {
+            'slide-left': 'slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
+        },
     },
     plugins: [
         require('@tailwindcss/forms'),

@@ -150,9 +150,9 @@ const Home = ({ dispatch, navigate, location }) => {
             )}
             {state && <Header title={state.title} des={state.des} />}
             <div className="w-full flex justify-center">
-                <main ref={pageRef} className="w-main flex gap-4 scroll-m-[60px]">
-                    <section className="w-[68%]">
-                        <div className="border  rounded-lg overflow-hidden bg-white shadow-lg">
+                <main ref={pageRef} className="w-full lg:w-main lg:flex gap-4 scroll-m-[60px]">
+                    <section className="w-full lg:w-[68%]">
+                        <div className="border rounded-lg overflow-hidden bg-white shadow-lg">
                             <div className="w-full p-[20px]">
                                 <h1 className="mb-[8px] text-[18px] font-semibold">{`Tổng ${posts?.count} kết quả`}</h1>
                                 <div className="flex items-center">
@@ -205,28 +205,32 @@ const Home = ({ dispatch, navigate, location }) => {
                             </div>
                         )}
                     </section>
-                    <section className="w-[32%]">
-                        <AsideItem
-                            setUpdate={setUpdate}
-                            title={'Danh mục cho thuê'}
-                            contents={categories}
-                            categoryCode={categoryCode}
-                        />
-                        <AsideItem
-                            custom
-                            setUpdate={setUpdate}
-                            type="priceCode"
-                            title={'Xem theo giá'}
-                            contents={prices}
-                        />
-                        <AsideItem
-                            custom
-                            setUpdate={setUpdate}
-                            type="acreageCode"
-                            title={'Xem theo diện tích'}
-                            contents={acreages}
-                        />
-                        <News />
+                    <section className="lg:w-[32%]">
+                        <div className="hidden lg:block">
+                            <AsideItem
+                                setUpdate={setUpdate}
+                                title={'Danh mục cho thuê'}
+                                contents={categories}
+                                categoryCode={categoryCode}
+                            />
+                            <AsideItem
+                                custom
+                                setUpdate={setUpdate}
+                                type="priceCode"
+                                title={'Xem theo giá'}
+                                contents={prices}
+                            />
+                            <AsideItem
+                                custom
+                                setUpdate={setUpdate}
+                                type="acreageCode"
+                                title={'Xem theo diện tích'}
+                                contents={acreages}
+                            />
+                        </div>
+                        <div className="w-full">
+                            <News />
+                        </div>
                     </section>
                 </main>
             </div>

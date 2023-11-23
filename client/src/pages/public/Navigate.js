@@ -12,7 +12,7 @@ const Navigate = () => {
     const { categories } = useSelector(state => state.app);
 
     return (
-        <div className={clsx('w-main flex items-center')}>
+        <div className={clsx('hidden w-main lg:flex items-center')}>
             <NavLink
                 to={path.HOME}
                 className={({ isActive }) =>

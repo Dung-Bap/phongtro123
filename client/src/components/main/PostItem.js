@@ -11,7 +11,7 @@ const PostItem = ({ post, image, navigate }) => {
         <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t border-secondary">
             <div
                 onClick={() => navigate(`/${post?.title.replaceAll('/', '')}/${post?.id}`)}
-                className="relative rounded-lg overflow-hidden w-[40%] h-[240px]"
+                className="relative rounded-lg overflow-hidden w-[40%] h-[150px] md:h-[240px]"
             >
                 <img
                     className="w-full h-full object-cover cursor-pointer"

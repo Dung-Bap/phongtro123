@@ -22,6 +22,7 @@ import { LuMapPin } from 'react-icons/lu';
 import { FiPhoneCall } from 'react-icons/fi';
 import { SiZalo } from 'react-icons/si';
 import { GoDotFill } from 'react-icons/go';
+import { IoMdMenu } from 'react-icons/io';
 
 const icons = {
     AiOutlineHeart,
@@ -56,6 +57,7 @@ const icons = {
     SiZalo,
     GoDotFill,
     AiOutlineArrowUp,
+    IoMdMenu,
 };
 
 export default icons;

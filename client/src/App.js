@@ -3,15 +3,26 @@ import { Route, Routes } from 'react-router-dom';
 import { path } from './ultils/path';
 import { DetailPost, Home, Login, Public, Register } from './pages/public';
 import Modal from './components/modal/Modal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ManageLayout, ManagePost, NewPost, Personal, Wishlist } from './pages/manage';
+import { Menu } from './components/modal';
+import withBaseComp from './hocs/withBaseComp';
+import { showMenu } from './store/app/appSlice';
 
 function App() {
-    const { isShowModal, childrenModal } = useSelector(state => state.app);
-
+    const { isShowModal, isShowMenu, childrenModal } = useSelector(state => state.app);
+    const dispatch = useDispatch();
     return (
         <div className="font-main text-[14px] h-full min-h-screen relative bg-[#f5f5f5]">
             {isShowModal && <Modal>{childrenModal}</Modal>}
+            {isShowMenu && (
+                <div
+                    onClick={() => dispatch(showMenu())}
+                    className="absolute z-50 inset-0 bg-[rgba(0,0,0,.8)] flex justify-end"
+                >
+                    <Menu />
+                </div>
+            )}
             <Routes>
                 <Route path={path.PUBLIC} element={<Public />}>
                     <Route path={path.HOME} element={<Home />} />
@@ -34,4 +45,4 @@ function App() {
     );
 }
 
-export default App;
+export default withBaseComp(App);

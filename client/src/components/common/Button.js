@@ -12,6 +12,7 @@ function Button({
     primary = false,
     deleted = false,
     secondary = false,
+    main = false,
     full = false,
     type,
     ...passProps
@@ -44,7 +45,8 @@ function Button({
                 secondary &&
                     `${full ? 'w-full' : 'w-[200px]'} bg-secondary text-white hover:underline rounded-md min-h-[40px]`,
                 deleted &&
-                    `${full ? 'w-full' : 'w-[50px]'} bg-secondary text-white hover:underline rounded-md min-h-[30px]`
+                    `${full ? 'w-full' : 'w-[50px]'} bg-secondary text-white hover:underline rounded-md min-h-[30px]`,
+                main && `${full ? 'w-full' : 'min-w-[50px]'} bg-[#ffc107] hover:underline rounded-md min-h-[30px] p-2`
             )}
             {...props}
         >

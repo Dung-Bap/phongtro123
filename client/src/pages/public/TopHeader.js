@@ -14,9 +14,11 @@ import { MENUMANAGE } from '../../ultils/contants';
 import withBaseComp from '../../hocs/withBaseComp';
 import { clearMessage, logout } from '../../store/user/userSlice';
 import { getCurrent } from '../../store/user/asyncActions';
+import { showMenu } from '../../store/app/appSlice';
 
 const TopHeader = ({ dispatch, navigate }) => {
-    const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2, BiLogOut } = icons;
+    const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2, BiLogOut, IoMdMenu } =
+        icons;
     const { isLoggedIn, dataUser, mess } = useSelector(state => state.user);
     const [isShowMenu, setIsShowMenu] = useState(false);
 
@@ -74,11 +76,15 @@ const TopHeader = ({ dispatch, navigate }) => {
     return (
         <div className="w-full flex justify-center">
             <div className="w-main">
-                <div className="flex justify-between">
+                <div className="px-[10px] lg:px-0 flex justify-between">
                     <Link to={`${path.HOME}`}>
-                        <img className="w-[240px] h-[70px] object-contain" alt="" src={logo}></img>
+                        <img className="w-[240px] h-[50px] lg:h-[70px] object-contain" alt="" src={logo}></img>
                     </Link>
-                    <div className="flex items-center">
+                    <div onClick={() => dispatch(showMenu())} className="flex items-center lg:hidden">
+                        <IoMdMenu size={30} />
+                        <span>Danh mục</span>
+                    </div>
+                    <div className="hidden lg:flex items-center">
                         {isLoggedIn && (
                             <div className="flex items-center text-sm mr-[20px]">
                                 <img
