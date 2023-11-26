@@ -124,7 +124,7 @@ const Home = ({ dispatch, navigate, location }) => {
                             'Kênh thông tin Phòng Trọ số 1 Việt Nam - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng.'
                         }
                     />
-                    <div className="w-full flex justify-center gap-4 mb-[25px]">
+                    <div className="px-[10px] sm:px-0 w-full flex justify-center gap-4 mb-[25px]">
                         <SelectProvinceItem
                             title={'Phòng trọ Hồ Chí Minh'}
                             image={'https://phongtro123.com/images/location_hcm.jpg'}
@@ -190,7 +190,7 @@ const Home = ({ dispatch, navigate, location }) => {
                                 ))}
                         </div>
                         {posts?.count > 0 && (
-                            <div className="w-full flex justify-center p-[20px]">
+                            <div className="w-full flex justify-center p-[20px] overflow-hidden">
                                 <Pagination
                                     className="pagination-data"
                                     showTotal={(total, range) => `Kết quả ${range[0]}-${range[1]} của ${total}`}

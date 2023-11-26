@@ -8,10 +8,10 @@ const PostItem = ({ post, image, navigate }) => {
     const { AiOutlineHeart } = icons;
 
     return (
-        <div className="flex justify-between gap-3 w-full p-[20px] bg-[#fff9f3] border-t border-secondary">
+        <div className="sm:flex justify-between gap-3 w-full p-[10px] sm:p-[20px] bg-[#fff9f3] border-t border-secondary">
             <div
                 onClick={() => navigate(`/${post?.title.replaceAll('/', '')}/${post?.id}`)}
-                className="relative rounded-lg overflow-hidden w-[40%] h-[150px] md:h-[240px]"
+                className="relative rounded-lg overflow-hidden sm:w-[40%] h-[300px] sm:h-[150px] md:h-[240px]"
             >
                 <img
                     className="w-full h-full object-cover cursor-pointer"
@@ -26,12 +26,12 @@ const PostItem = ({ post, image, navigate }) => {
                     <AiOutlineHeart color="white" size={28} />
                 </span>
             </div>
-            <div className="flex flex-col w-[60%]">
+            <div className="flex flex-col sm:w-[60%]">
                 <Link
                     to={`/${post?.title.replaceAll('/', '')}/${post?.id}`}
                     className="uppercase text-[14px] text-secondary font-semibold line-clamp-3 hover:underline mb-[10px] cursor-pointer"
                 >
-                    <span className="flex items-center">
+                    <span className="flex items-center mt-[10px] sm:mt-0">
                         {renderStars(post.star, 15)?.map((el, index) => (
                             <span className="gap-1" key={index}>
                                 {el}

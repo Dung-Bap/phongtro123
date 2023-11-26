@@ -1,11 +1,19 @@
 import React, { memo } from 'react';
 import { renderStars } from '../../ultils/helpers';
-import Button from '../common/Button';
+import { path } from '../../ultils/path';
+import { useSelector } from 'react-redux';
+import withBaseComp from '../../hocs/withBaseComp';
 
-const Whyus = () => {
+const Whyus = ({ navigate }) => {
+    const { isLoggedIn } = useSelector(state => state.user);
+
+    const handleOnclick = () => {
+        navigate(isLoggedIn ? `/${path.MANAGE}/${path.NEW_POST}` : `/${path.LOGIN}`);
+    };
+
     return (
         <div className="w-full flex justify-center">
-            <div className="w-main border py-[40px] px-[70px] rounded-lg shadow-lg bg-white flex flex-col justify-center items-center text-center">
+            <div className="w-main border py-[40px] px-[10px] sm:px-[70px] rounded-lg shadow-lg bg-white flex flex-col justify-center items-center text-center">
                 <h1 className="text-[18px] font-semibold">Tại sao lại chọn PhongTro123.com?</h1>
                 <p className="my-[14px]">
                     Chúng tôi biết bạn có rất nhiều lựa chọn, nhưng Phongtro123.com tự hào là trang web đứng top google
@@ -13,20 +21,20 @@ const Whyus = () => {
                     cho thuê mặt bằng...Vì vậy tin của bạn đăng trên website sẽ tiếp cận được với nhiều khách hàng hơn,
                     do đó giao dịch nhanh hơn, tiết kiệm chi phí hơn
                 </p>
-                <div className="flex items-center justify-between w-full">
-                    <span className="flex flex-col justify-center w-[25%]">
+                <div className="flex items-center justify-between w-full flex-wrap">
+                    <span className="flex flex-col justify-center w-[50%] mb-[14px] sm:w-[25%]">
                         <span className="text-[20px] font-semibold">116.998+</span>
                         <span>Thành viên</span>
                     </span>
-                    <span className="flex flex-col justify-center w-[25%]">
+                    <span className="flex flex-col justify-center w-[50%] mb-[14px] sm:w-[25%]">
                         <span className="text-[20px] font-semibold">1103.348+</span>
                         <span>Tin đăng</span>
                     </span>
-                    <span className="flex flex-col justify-center w-[25%]">
+                    <span className="flex flex-col justify-center w-[50%] mb-[14px] sm:w-[25%]">
                         <span className="text-[20px] font-semibold">300.000+</span>
                         <span>Lượt truy cập/tháng</span>
                     </span>
-                    <span className="flex flex-col justify-center w-[25%]">
+                    <span className="flex flex-col justify-center w-[50%] mb-[14px] sm:w-[25%]">
                         <span className="text-[20px] font-semibold">2.500.000+</span>
                         <span>Lượt xem/tháng</span>
                     </span>
@@ -47,10 +55,15 @@ const Whyus = () => {
                 </p>
                 <h1 className="text-[16px] font-semibold">Bạn đang có phòng trọ / căn hộ cho thuê?</h1>
                 <p className=" my-[14px]">Không phải lo tìm người cho thuê, phòng trống kéo dài</p>
-                <Button secondary>Đăng tin ngay</Button>
+                <div
+                    onClick={handleOnclick}
+                    className="flex items-center text-sm cursor-pointer hover:underline p-3 bg-secondary rounded-lg text-white"
+                >
+                    Đăng tin ngay
+                </div>
             </div>
         </div>
     );
 };
 
-export default memo(Whyus);
+export default withBaseComp(memo(Whyus));
