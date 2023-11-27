@@ -105,7 +105,7 @@ const Search = ({ currentPageRef, dispatch, navigate, location, setUpdate }) => 
 
     return (
         <div ref={currentPageRef} className="w-full flex justify-center">
-            <div className="w-main mt-[10px] mb-[15px] lg:flex items-center justify-around p-[8px] bg-[#febb02] rounded-lg shadow-xl">
+            <div className="w-main pt-[50px] lg:pt-[8px] mt-[10px] mb-[15px] lg:flex items-center justify-around p-[8px] bg-[#febb02] rounded-lg shadow-xl">
                 <div onClick={e => handleClickSearch(e, 'loại bất động sản')}>
                     <Filter
                         iconRight={

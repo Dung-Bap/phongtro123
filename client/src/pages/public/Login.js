@@ -63,7 +63,7 @@ const Login = () => {
     };
     return (
         <div className="w-full flex justify-center">
-            <div className="w-main p-[20px] flex justify-center">
+            <div className="w-main p-[20px] flex justify-center pt-[50px] lg:pt-0">
                 <form
                     method="POST"
                     onSubmit={handleSubmit(onSubmit)}

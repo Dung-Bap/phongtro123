@@ -7,7 +7,7 @@ import { SelectRadio } from '../input';
 const ModalSearch = ({ title, dispatch, contents, setCheckValue, type, checkValue }) => {
     const { MdKeyboardArrowLeft } = icons;
     return (
-        <div onClick={e => e.stopPropagation()} className="min-w-[700px] bg-white rounded-lg shadow-lg">
+        <div onClick={e => e.stopPropagation()} className="w-full lg:w-[700px] mx-5 bg-white rounded-lg shadow-lg">
             <div className="flex justify-center relative border-b">
                 <h1 className="font-semibold p-[12px]">{title}</h1>
                 <span

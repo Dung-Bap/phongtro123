@@ -21,7 +21,7 @@ import { CiSquareRemove, CiEdit, CiHashtag } from 'react-icons/ci';
 import { LuMapPin } from 'react-icons/lu';
 import { FiPhoneCall } from 'react-icons/fi';
 import { SiZalo } from 'react-icons/si';
-import { GoDotFill } from 'react-icons/go';
+import { GoDotFill, GoDot } from 'react-icons/go';
 import { IoMdMenu } from 'react-icons/io';
 
 const icons = {
@@ -58,6 +58,7 @@ const icons = {
     GoDotFill,
     AiOutlineArrowUp,
     IoMdMenu,
+    GoDot,
 };
 
 export default icons;
