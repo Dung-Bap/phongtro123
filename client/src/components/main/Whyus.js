@@ -1,14 +1,17 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { renderStars } from '../../ultils/helpers';
 import { path } from '../../ultils/path';
 import { useSelector } from 'react-redux';
 import withBaseComp from '../../hocs/withBaseComp';
+import { ContextEnvironment } from '../common/ContextProvider';
 
 const Whyus = ({ navigate }) => {
     const { isLoggedIn } = useSelector(state => state.user);
+    const { handleScrollToView } = useContext(ContextEnvironment);
 
     const handleOnclick = () => {
         navigate(isLoggedIn ? `/${path.MANAGE}/${path.NEW_POST}` : `/${path.LOGIN}`);
+        handleScrollToView();
     };
 
     return (

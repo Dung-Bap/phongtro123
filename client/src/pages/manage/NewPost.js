@@ -197,12 +197,12 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const center = { lat: 21.0229063, lng: 105.8054199 };
 
     return (
-        <div className="w-full p-[40px]">
+        <div className="w-full p-[10px] lg:p-[40px]">
             <p className="py-[10px] border-b text-[30px]">
                 {valueEditPost ? `Sửa tin đăng (Mã tin: ${valueEditPost.overviews.code})` : 'Đăng tin mới'}
             </p>
             <form method="POST" onSubmit={handleSubmit(onSubmit)} className="w-full flex">
-                <div className="w-[69%] mr-[30px]">
+                <div className="w-full lg:w-[69%] lg:mr-[30px]">
                     <p className="text-[20px] my-[30px] font-semibold">Địa chỉ cho thuê</p>
                     <div className="w-full flex items-center gap-8 mb-[20px]">
                         <div className="w-[50%]">
@@ -286,7 +286,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                         />
                     </div>
                     <p className="text-[20px] my-[30px] font-semibold">Thông tin mô tả</p>
-                    <div className="w-[50%] mb-[20px]">
+                    <div className="w-full md:w-[50%] mb-[20px]">
                         <SelectFileds
                             registername={register('categoryCode')}
                             errorName={errors.categoryCode?.message}
@@ -312,7 +312,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                             withFull
                         />
                     </div>
-                    <div className="w-[50%]">
+                    <div className="w-full md:w-[50%]">
                         <InputFileds
                             label={'Giá cho thuê'}
                             withFull
@@ -322,7 +322,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                             note={'đồng/tháng'}
                         />
                     </div>
-                    <div className="w-[50%]">
+                    <div className="w-full md:w-[50%]">
                         <InputFileds
                             label={'Diện tích'}
                             withFull
@@ -332,7 +332,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                             note={'m2'}
                         />
                     </div>
-                    <div className="w-[50%]">
+                    <div className="w-full md:w-[50%]">
                         <SelectFileds
                             registername={register('gender')}
                             withFull
@@ -368,7 +368,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
 
                     <Button primary>{valueEditPost ? 'Cập nhật' : 'Tiếp tục'}</Button>
                 </div>
-                <div className="w-[31%]">
+                <div className="hidden lg:block w-[31%]">
                     <MapContainer
                         style={{ width: '100%', height: '400px' }}
                         zoom={13}

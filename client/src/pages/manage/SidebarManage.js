@@ -37,7 +37,7 @@ const SidebarManage = ({ dispatch }) => {
         });
     };
     return (
-        <div className="fixed bg-[#f8f9fa] top-0 left-0 bottom-0 w-[240px] border-l-2 border">
+        <div className="hidden lg:block fixed bg-[#f8f9fa] top-0 left-0 bottom-0 w-[240px] border-l-2 border">
             <div className="flex items-center text-sm  mr-[10px] px-[20px] py-[10px] relative">
                 <img
                     className="min-w-[50px] h-[50px] rounded-full object-cover mr-[5px]"

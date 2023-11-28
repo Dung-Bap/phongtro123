@@ -147,7 +147,7 @@ const getNews = asyncHandle(async (req, res) => {
                 attributes: ['created'],
             },
         ],
-        attributes: ['id', 'title', 'createdAt'],
+        attributes: ['id', 'title', 'createdAt', 'address'],
         order: [['createdAt', 'DESC']],
     });
 

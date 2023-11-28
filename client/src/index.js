@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store/redux';
+import ContextProvider from './components/common/ContextProvider';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -18,7 +19,9 @@ root.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
             <BrowserRouter>
-                <App />
+                <ContextProvider>
+                    <App />
+                </ContextProvider>
             </BrowserRouter>
         </PersistGate>
     </Provider>

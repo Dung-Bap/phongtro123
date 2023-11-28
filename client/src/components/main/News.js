@@ -8,15 +8,15 @@ const News = ({ dispatch }) => {
     const { news } = useSelector(state => state.app);
     useEffect(() => {
         dispatch(getNews());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [dispatch]);
     return (
-        <div className="border rounded-lg overflow-hidden bg-white shadow-lg p-[20px] mb-[20px]">
+        <div className="border rounded-lg overflow-hidden bg-white shadow-lg p-[20px]">
             <h1 className="mb-[8px] text-[18px] font-semibold">Tin mới đăng</h1>
 
             <div className="flex lg:flex-col overflow-x-auto gap-3">
                 {news?.map(item => {
                     const image = JSON.parse(item.images.image);
+
                     return (
                         <Link
                             to={`/${item?.title.replaceAll('/', '')}/${item?.id}`}
@@ -41,6 +41,11 @@ const News = ({ dispatch }) => {
                                         {item?.overviews?.created.split(',')[1]}
                                     </span>
                                 </div>
+                                <span className="lg:hidden text-[12px] text-gray-400 line-clamp-1">
+                                    {item.address.startsWith('Địa chỉ:')
+                                        ? item?.address.replace('Địa chỉ:', '')
+                                        : item?.address}
+                                </span>
                             </div>
                         </Link>
                     );

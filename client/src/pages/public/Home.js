@@ -180,7 +180,7 @@ const Home = ({ dispatch, navigate, location }) => {
                                 </div>
                             </div>
                             {posts?.count <= 0 && (
-                                <span className="flex justify-center items-center min-h-[200px] font-medium text-[16px]">
+                                <span className="w-full text-center flex justify-center items-center min-h-[200px] font-medium text-[16px]">
                                     Hiện tại chưa có bài đăng nào phù hợp với thông tin của bạn !!!
                                 </span>
                             )}
