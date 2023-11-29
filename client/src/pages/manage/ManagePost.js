@@ -75,8 +75,8 @@ const ManagePost = ({ dispatch }) => {
     return (
         <>
             {!valueEditPost && (
-                <div className="w-full p-[40px]">
-                    <p className="py-[10px] border-b text-[30px]">Quản lý tin đăng</p>
+                <div className="w-full p-[10px] lg:p-[40px]">
+                    <p className="py-[10px] border-b text-[22px] font-semibold lg:text-[30px]">Quản lý tin đăng</p>
                     <div className="relative pt-[20px] overflow-x-auto shadow-md sm:rounded-lg">
                         <div className="flex items-center justify-between p-4 bg-white">
                             {selectedPost.length > 0 && (

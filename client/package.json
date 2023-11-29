@@ -11,6 +11,8 @@
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.5.1",
     "clsx": "^2.0.0",
+    "leaflet": "^1.9.4",
+    "leaflet-control-geocoder": "^2.4.0",
     "moment": "^2.29.4",
     "rc-pagination": "^3.6.1",
     "react": "^18.2.0",

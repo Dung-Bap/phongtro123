@@ -13,6 +13,8 @@ import ContextProvider from './components/common/ContextProvider';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

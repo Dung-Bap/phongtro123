@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { InputFileds } from '../../components/input';
-import Button from '../../components/common/Button';
 import icons from '../../ultils/icons';
 import { apiUpdateUser } from '../../apis';
 import withBaseComp from '../../hocs/withBaseComp';
@@ -14,6 +13,7 @@ import { showModal } from '../../store/app/appSlice';
 import { Loading } from '../../components/modal';
 import { getCurrent } from '../../store/user/asyncActions';
 import { convertToBase64 } from '../../ultils/helpers';
+import { ButtonBottom } from '../../components/common';
 
 const Personal = ({ dispatch }) => {
     const { dataUser } = useSelector(state => state.user);
@@ -96,10 +96,14 @@ const Personal = ({ dispatch }) => {
         };
     }, [dispatch, updated]);
     return (
-        <div className="w-full p-[40px]">
-            <p className="py-[10px] border-b text-[30px]">Cập nhật thông tin cá nhân</p>
-            <div className="w-full flex justify-center p-10">
-                <form method="POST" onSubmit={handleSubmit(onSubmit)} className="w-[730px] justify-center items-center">
+        <div className="w-full p-[10px] lg:p-[40px]">
+            <p className="py-[10px] border-b text-[22px] font-semibold lg:text-[30px]">Cập nhật thông tin cá nhân</p>
+            <div className="w-full flex justify-center p-[10px] lg:p-10">
+                <form
+                    method="POST"
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="w-full lg:w-[730px] justify-center items-center"
+                >
                     <div className="w-full flex justify-center pb-10  ">
                         <div className="relative overflow-hidden">
                             <img
@@ -121,31 +125,31 @@ const Personal = ({ dispatch }) => {
                         </div>
                         <input {...register('avatar')} type="file" id="image" hidden />
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="lg:flex items-center justify-between">
                         <span>Số điện thoại</span>
                         <div>
                             <InputFileds registername={register('phone')} errorName={errors.phone?.message} />
                         </div>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="lg:flex items-center justify-between">
                         <span>Tên hiển thị</span>
                         <div>
                             <InputFileds registername={register('name')} errorName={errors.name?.message} />
                         </div>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="lg:flex items-center justify-between">
                         <span>Số Zalo</span>
                         <div>
                             <InputFileds registername={register('zalo')} />
                         </div>
                     </div>
-                    <div className="flex items-center justify-between mb-10">
+                    <div className="lg:flex items-center justify-between mb-10">
                         <span>Facebook</span>
                         <div>
                             <InputFileds registername={register('fbUrl')} />
                         </div>
                     </div>
-                    <Button primary>Lưu & Cập nhật</Button>
+                    <ButtonBottom update />
                 </form>
             </div>
         </div>

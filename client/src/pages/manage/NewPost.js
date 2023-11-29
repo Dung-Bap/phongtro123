@@ -4,10 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
-import { MapContainer, TileLayer } from 'react-leaflet';
 
 import { InputFileds, SelectFileds, TextareaFields } from '../../components/input';
-import Button from '../../components/common/Button';
 import { apiCreatePost, apiUpdatePost, getDistricts, getProvinces } from '../../apis';
 import withBaseComp from '../../hocs/withBaseComp';
 import { getCategories } from '../../store/app/asyncActions';
@@ -16,7 +14,8 @@ import { convertStringToNumberAcreage, convertStringToNumberPrice, convertToBase
 import { showModal } from '../../store/app/appSlice';
 import { Loading } from '../../components/modal';
 import { path } from '../../ultils/path';
-import { DraggableMarker } from '../../components/map';
+import { ButtonBottom } from '../../components/common';
+import Map from '../../components/map/Map';
 
 const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const { categories } = useSelector(state => state.app);
@@ -29,6 +28,9 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const [previewImage, setPreviewImage] = useState({
         images: [],
     });
+    const [positionInfos, setPositionInfos] = useState([{ address: '' }]);
+
+    console.log(positionInfos);
 
     const newPostSchema = yup.object({
         province: yup.string().required('Chưa chọn Tỉnh/Thành Phố'),
@@ -194,11 +196,9 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
         reset();
     };
 
-    const center = { lat: 21.0229063, lng: 105.8054199 };
-
     return (
         <div className="w-full p-[10px] lg:p-[40px]">
-            <p className="py-[10px] border-b text-[30px]">
+            <p className="py-[10px] border-b text-[22px] font-semibold lg:text-[30px]">
                 {valueEditPost ? `Sửa tin đăng (Mã tin: ${valueEditPost.overviews.code})` : 'Đăng tin mới'}
             </p>
             <form method="POST" onSubmit={handleSubmit(onSubmit)} className="w-full flex">
@@ -365,22 +365,10 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                             ))}
                         </div>
                     </div>
-
-                    <Button primary>{valueEditPost ? 'Cập nhật' : 'Tiếp tục'}</Button>
+                    <ButtonBottom valueEditPost={valueEditPost} />
                 </div>
                 <div className="hidden lg:block w-[31%]">
-                    <MapContainer
-                        style={{ width: '100%', height: '400px' }}
-                        zoom={13}
-                        center={center}
-                        scrollWheelZoom={false}
-                    >
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <DraggableMarker />
-                    </MapContainer>
+                    <Map positionInfos={positionInfos} />
                 </div>
             </form>
         </div>

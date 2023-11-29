@@ -8,7 +8,9 @@ export const convertStringToNumberAcreage = string => {
 
 export const convertStringToNumberPrice = string => {
     if (string.search('triệu/tháng') !== -1)
+        // eslint-disable-next-line no-useless-escape
         return Math.ceil(parseFloat(string.replace(/[^\d\.]*/g, ''))) * Math.pow(10, 6);
+    // eslint-disable-next-line no-useless-escape
     return Math.ceil(parseFloat(string.replace(/[^\d\.]*/g, '')));
 };
 
