@@ -28,9 +28,16 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const [previewImage, setPreviewImage] = useState({
         images: [],
     });
-    const [positionInfos, setPositionInfos] = useState([{ address: '' }]);
+    const [positionInfos, setPositionInfos] = useState(null);
 
-    console.log(positionInfos);
+    useEffect(() => {
+        setPositionInfos(
+            `${address ? `${address},` : ''} ${
+                district ? `${districts?.find(item => item.district_id === district)?.district_name},` : ''
+            } ${province ? `${provinces?.find(item => item.province_id === province)?.province_name}` : ''}`
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [address, district, province]);
 
     const newPostSchema = yup.object({
         province: yup.string().required('Chưa chọn Tỉnh/Thành Phố'),
