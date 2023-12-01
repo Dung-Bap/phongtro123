@@ -9,7 +9,7 @@ import L from 'leaflet';
 
 export default function LeafletControlGeocoder(props) {
     const map = useMap();
-    const { address } = props;
+    const { address = '' } = props;
     const iconMarker = L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/9356/9356230.png',
         iconSize: [38, 38], // size of the icon
@@ -38,7 +38,8 @@ export default function LeafletControlGeocoder(props) {
                 }
             });
         }
-    }, [address, iconMarker, map]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [address]);
 
     return null;
 }

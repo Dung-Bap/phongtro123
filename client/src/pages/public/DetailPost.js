@@ -9,6 +9,7 @@ import { getCategories } from '../../store/app/asyncActions';
 import { News } from '../../components/main';
 import { ProfileBox } from '../../pages/public';
 import { path } from '../../ultils/path';
+import { MapInDetailPost } from '../../components/map';
 
 const DetailPost = ({ dispatch, navigate }) => {
     const { LuMapPin, IoPricetagsOutline, BsTextareaResize, AiOutlineFieldTime, CiHashtag } = icons;
@@ -195,6 +196,7 @@ const DetailPost = ({ dispatch, navigate }) => {
                                     </tbody>
                                 </table>
                             </div>
+                            <MapInDetailPost address={post?.address} title={post?.title} code={post?.overviews?.code} />
                         </div>
                     </div>
                 </section>

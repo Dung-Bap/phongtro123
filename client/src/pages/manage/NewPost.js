@@ -16,6 +16,7 @@ import { Loading } from '../../components/modal';
 import { path } from '../../ultils/path';
 import { ButtonBottom } from '../../components/common';
 import Map from '../../components/map/Map';
+import useDebouce from '../../hooks/useDebouce';
 
 const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const { categories } = useSelector(state => state.app);
@@ -28,16 +29,8 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     const [previewImage, setPreviewImage] = useState({
         images: [],
     });
-    const [positionInfos, setPositionInfos] = useState(null);
-
-    useEffect(() => {
-        setPositionInfos(
-            `${address ? `${address},` : ''} ${
-                district ? `${districts?.find(item => item.district_id === district)?.district_name},` : ''
-            } ${province ? `${provinces?.find(item => item.province_id === province)?.province_name}` : ''}`
-        );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [address, district, province]);
+    const [positionInfos, setPositionInfos] = useState('');
+    const debouceAddress = useDebouce(address, 500);
 
     const newPostSchema = yup.object({
         province: yup.string().required('Chưa chọn Tỉnh/Thành Phố'),
@@ -63,9 +56,16 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     });
 
     useEffect(() => {
+        setPositionInfos(
+            `${debouceAddress ? `${debouceAddress},` : ''} ${
+                district ? `${districts?.find(item => item.district_id === district)?.district_name},` : ''
+            } ${province ? `${provinces?.find(item => item.province_id === province)?.province_name}` : ''}`
+        );
+    }, [debouceAddress, district, districts, province, provinces]);
+
+    useEffect(() => {
         dispatch(getCategories());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         const fechApiProvince = async () => {
@@ -154,7 +154,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     }, [watch('images')]);
 
     const onSubmit = async data => {
-        data.address = `${address || valueEditPost?.address?.split(',')[0].trim()}, ${
+        data.address = `${debouceAddress || valueEditPost?.address?.split(',')[0].trim()}, ${
             districts?.find(item => item.district_id === district)?.district_name ||
             valueEditPost?.address?.split(',')[valueEditPost?.address?.split(',').length - 2].trim()
         }, ${
@@ -255,7 +255,11 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                             hidden
                             value={
                                 valueEditPost
-                                    ? `${address ? `${address}` : `${valueEditPost?.address?.split(',')[0].trim()},`} ${
+                                    ? `${
+                                          debouceAddress
+                                              ? `${debouceAddress}`
+                                              : `${valueEditPost?.address?.split(',')[0].trim()},`
+                                      } ${
                                           district
                                               ? `${
                                                     districts?.find(item => item.district_id === district)
@@ -274,7 +278,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                                                     ?.split(',')
                                                     [valueEditPost?.address?.split(',').length - 1].trim()}`
                                       }`
-                                    : `${address ? `${address},` : ''} ${
+                                    : `${debouceAddress ? `${debouceAddress},` : ''} ${
                                           district
                                               ? `${
                                                     districts?.find(item => item.district_id === district)
