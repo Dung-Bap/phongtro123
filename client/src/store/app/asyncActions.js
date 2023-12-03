@@ -25,12 +25,6 @@ export const getAcreages = createAsyncThunk('app/getAcreages', async (data, { re
     return response;
 });
 
-export const getNews = createAsyncThunk('app/getNews', async (data, { rejectWithValue }) => {
-    const response = await apis.apiGetNews();
-    if (!response.success) return rejectWithValue(response);
-    return response;
-});
-
 export const getProvinces = createAsyncThunk('app/getProvinces', async (data, { rejectWithValue }) => {
     const response = await apis.apiGetProvinces();
     if (!response.success) return rejectWithValue(response);

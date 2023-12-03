@@ -7,12 +7,12 @@ export const appSlice = createSlice({
         isShowModal: false,
         isShowMenu: false,
         childrenModal: null,
-        posts: null,
+        posts: [],
         categories: [],
         prices: [],
         acreages: [],
-        news: [],
         provinces: [],
+        isLoading: false,
     },
 
     reducers: {
@@ -25,9 +25,9 @@ export const appSlice = createSlice({
         },
     },
     extraReducers: builder => {
-        // builder.addCase(getPosts.pending, state => {
-        //     state.isLoading = true;
-        // });
+        builder.addCase(actions.getPosts.pending, state => {
+            state.isLoading = true;
+        });
 
         builder.addCase(actions.getPosts.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -53,18 +53,9 @@ export const appSlice = createSlice({
             });
         });
 
-        builder.addCase(actions.getNews.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.news = action.payload.result;
-        });
-
         builder.addCase(actions.getProvinces.fulfilled, (state, action) => {
             state.isLoading = false;
             state.provinces = action.payload.result;
-        });
-
-        builder.addCase(actions.getPosts.rejected, (state, action) => {
-            state.isLoading = false;
         });
     },
 });

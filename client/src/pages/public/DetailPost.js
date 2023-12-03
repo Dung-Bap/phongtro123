@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { createSearchParams, useParams } from 'react-router-dom';
 import { apiGetPost } from '../../apis';
 import { renderStars } from '../../ultils/helpers';
 import icons from '../../ultils/icons';
 import Slider from 'react-slick';
-import withBaseComp from '../../hocs/withBaseComp';
 import { getCategories } from '../../store/app/asyncActions';
 import { News } from '../../components/main';
 import { ProfileBox } from '../../pages/public';
 import { path } from '../../ultils/path';
 import { MapInDetailPost } from '../../components/map';
+import LoadingDetailPost from '../../components/loading/LoadingDetailPost';
+import withBaseComp from '../../hocs/withBaseComp';
 
 const DetailPost = ({ dispatch, navigate }) => {
     const { LuMapPin, IoPricetagsOutline, BsTextareaResize, AiOutlineFieldTime, CiHashtag } = icons;
@@ -19,6 +20,7 @@ const DetailPost = ({ dispatch, navigate }) => {
     const images = post?.images?.image ? JSON.parse(post?.images?.image) : [];
     const description = post?.description ? JSON.parse(post?.description) : [];
     const currentPageRef = useRef();
+    const [loading, setLoading] = useState(true);
 
     const settings = {
         infinite: true,
@@ -51,10 +53,14 @@ const DetailPost = ({ dispatch, navigate }) => {
     };
 
     useEffect(() => {
-        currentPageRef.current.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+            currentPageRef?.current?.scrollIntoView({ behavior: 'smooth' });
+        }, [200]);
         dispatch(getCategories());
         const fetchApiGetPost = async () => {
+            setLoading(true);
             const response = await apiGetPost(id);
+            setLoading(false);
             if (response?.success) setPost(response.post);
         };
         setCount(1);
@@ -62,7 +68,9 @@ const DetailPost = ({ dispatch, navigate }) => {
         fetchApiGetPost();
     }, [dispatch, id]);
 
-    return (
+    return loading ? (
+        <LoadingDetailPost />
+    ) : (
         <div ref={currentPageRef} className="w-full flex justify-center pt-[50px] pb-[16px] lg:py-4">
             <main className="w-full lg:w-main lg:flex gap-4 scroll-m-[16px]">
                 <section className="w-full lg:w-[68%]">
@@ -212,4 +220,4 @@ const DetailPost = ({ dispatch, navigate }) => {
     );
 };
 
-export default withBaseComp(DetailPost);
+export default withBaseComp(memo(DetailPost));

@@ -1,12 +1,11 @@
-import React, { memo } from 'react';
 import icons from '../../ultils/icons';
 import { renderStars } from '../../ultils/helpers';
-import { Link } from 'react-router-dom';
-import withBaseComp from '../../hocs/withBaseComp';
+import { Link, useNavigate } from 'react-router-dom';
+import LoadingSkeleton from '../loading/LoadingSkeleton';
 
-const PostItem = ({ post, image, navigate }) => {
+const PostItem = ({ post, image }) => {
     const { AiOutlineHeart } = icons;
-
+    const navigate = useNavigate();
     return (
         <div className="sm:flex justify-between gap-3 w-full p-[10px] sm:p-[20px] bg-[#fff9f3] border-t border-secondary">
             <div
@@ -80,4 +79,39 @@ const PostItem = ({ post, image, navigate }) => {
     );
 };
 
-export default withBaseComp(memo(PostItem));
+const Loading = () => {
+    return (
+        <div className="sm:flex justify-between gap-3 w-full p-[10px] sm:p-[20px] bg-[#fff9f3] border-t border-secondary">
+            <div className="relative rounded-lg overflow-hidden sm:w-[40%] h-[300px] sm:h-[150px] md:h-[240px]">
+                <LoadingSkeleton className={'w-full h-full '} />
+            </div>
+            <div className="flex flex-col sm:w-[60%]">
+                <div className="uppercase text-[14px] text-secondary font-semibold line-clamp-3 hover:underline mb-[10px] cursor-pointer">
+                    <LoadingSkeleton className={'w-full h-[60px]'} />
+                </div>
+                <div className="flex items-center mb-[10px]">
+                    <LoadingSkeleton className={'w-full h-[20px] mr-[20px]'} />
+                    <LoadingSkeleton className={'w-full h-[20px]'} />
+                </div>
+                <div className="flex justify-between items-center mb-[10px]">
+                    <LoadingSkeleton className={'w-full h-[20px]'} />
+                </div>
+                <LoadingSkeleton className={'w-full h-[50px] mb-[10px]'} />
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                        <LoadingSkeleton className={'w-[30px] h-[30px]'} />
+                        <LoadingSkeleton className={'w-[60px] h-[30px]'} />
+                    </div>
+                    <div className="flex items-center gap-2 whitespace-nowrap">
+                        <LoadingSkeleton className={'w-[100px] h-[30px]'} />
+                        <LoadingSkeleton className={'w-[100px] h-[30px]'} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+PostItem.Loading = Loading;
+
+export default PostItem;

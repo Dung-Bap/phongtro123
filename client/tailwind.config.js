@@ -36,9 +36,18 @@ module.exports = {
                     transform: ' translateX(0);',
                 },
             },
+            pulse: {
+                '0%,100%': {
+                    opacity: 1,
+                },
+                '50%': {
+                    opacity: 0.5,
+                },
+            },
         },
         animation: {
             'slide-left': 'slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
+            pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;',
         },
     },
     plugins: [

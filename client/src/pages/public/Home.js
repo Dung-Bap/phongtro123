@@ -17,7 +17,7 @@ import { path } from '../../ultils/path';
 
 const Home = ({ dispatch, navigate, location }) => {
     const { MdKeyboardArrowRight, MdKeyboardArrowLeft } = icons;
-    const { posts, categories, prices, acreages } = useSelector(state => state.app);
+    const { posts, categories, prices, acreages, isLoading } = useSelector(state => state.app);
     const { state } = useLocation();
     const currentPageRef = useRef();
     const pageRef = useRef();
@@ -85,7 +85,9 @@ const Home = ({ dispatch, navigate, location }) => {
     }, [categories, location.pathname]);
 
     useEffect(() => {
-        currentPageRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        setTimeout(() => {
+            currentPageRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }, 200);
 
         const queries = Object.fromEntries([...params]);
         queries.order = [created, 'DESC'];
@@ -105,7 +107,9 @@ const Home = ({ dispatch, navigate, location }) => {
     }, [categoryCode, params, update]);
 
     useEffect(() => {
-        pageRef.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+        setTimeout(() => {
+            pageRef.current.scrollIntoView({ behavior: 'smooth' });
+        }, 200);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.get('page'), update]);
 
@@ -185,9 +189,17 @@ const Home = ({ dispatch, navigate, location }) => {
                                 </span>
                             )}
                             {posts?.count > 0 &&
-                                posts?.rows?.map(post => (
-                                    <PostItem key={post.id} post={post} image={JSON.parse(post.images.image)} />
-                                ))}
+                                posts?.rows?.map(post =>
+                                    isLoading ? (
+                                        <PostItem.Loading
+                                            key={post.id}
+                                            post={post}
+                                            image={JSON.parse(post.images.image)}
+                                        />
+                                    ) : (
+                                        <PostItem key={post.id} post={post} image={JSON.parse(post.images.image)} />
+                                    )
+                                )}
                         </div>
                         {posts?.count > 0 && (
                             <div className="w-full flex justify-center p-[20px] overflow-hidden">
