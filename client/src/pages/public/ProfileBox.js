@@ -8,6 +8,7 @@ const ProfileBox = ({ dataUser }) => {
         <div className=" border rounded-lg overflow-hidden bg-[#febb00] shadow-lg p-[20px] w-full felx flex-col justify-center mb-[18px]">
             <div className="flex flex-col items-center">
                 <img
+                    loading="lazy"
                     className="min-w-[80px] h-[80px] object-cover rounded-full mb-[10px]"
                     alt=""
                     src={dataUser?.user?.avatar || 'https://phongtro123.com/images/default-user.png'}

@@ -91,7 +91,12 @@ const TopHeader = ({ dispatch, navigate }) => {
                 <div className="w-main">
                     <div className="px-[10px] lg:px-0 flex justify-between">
                         <Link to={`${path.HOME}`}>
-                            <img className="w-[240px] h-[50px] lg:h-[70px] object-contain" alt="" src={logo}></img>
+                            <img
+                                loading="lazy"
+                                className="w-[240px] h-[50px] lg:h-[70px] object-contain"
+                                alt=""
+                                src={logo}
+                            ></img>
                         </Link>
                         <div onClick={() => dispatch(showMenu())} className="flex items-center lg:hidden">
                             <IoMdMenu size={30} />
@@ -101,6 +106,7 @@ const TopHeader = ({ dispatch, navigate }) => {
                             {isLoggedIn && (
                                 <div className="flex items-center text-sm mr-[20px]">
                                     <img
+                                        loading="lazy"
                                         src={dataUser?.avatar}
                                         className="min-w-[30px] h-[30px] rounded-full object-cover mr-[10px]"
                                         alt=""

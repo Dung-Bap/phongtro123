@@ -13,6 +13,7 @@ const PostItem = ({ post, image }) => {
                 className="relative rounded-lg overflow-hidden sm:w-[40%] h-[300px] sm:h-[150px] md:h-[240px]"
             >
                 <img
+                    loading="lazy"
                     className="w-full h-full object-cover cursor-pointer"
                     alt=""
                     src={
@@ -51,6 +52,7 @@ const PostItem = ({ post, image }) => {
                 <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
                         <img
+                            loading="lazy"
                             className="rounded-full w-[30px] h-[30px] object-cover"
                             alt=""
                             src={post.user.avatar || 'https://phongtro123.com/images/default-user.png'}

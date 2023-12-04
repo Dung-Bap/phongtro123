@@ -171,6 +171,7 @@ const ManagePost = ({ dispatch }) => {
                                                     to={`/${managePost?.title.replaceAll('/', '')}/${managePost?.id}`}
                                                 >
                                                     <img
+                                                        loading="lazy"
                                                         className="min-w-[100px] h-[100px] object-cover"
                                                         alt=""
                                                         src={imagePost[0]}

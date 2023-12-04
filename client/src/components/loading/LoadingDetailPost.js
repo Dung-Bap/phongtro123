@@ -3,9 +3,9 @@ import LoadingSkeleton from './LoadingSkeleton';
 import { News } from '../main';
 import { ProfileBox } from '../../pages/public';
 
-const LoadingDetailPost = () => {
+const LoadingDetailPost = ({ currentPageRef }) => {
     return (
-        <div className="w-full flex justify-center pt-[50px] pb-[16px] lg:py-4">
+        <div ref={currentPageRef} className="w-full flex justify-center pt-[50px] pb-[16px] lg:py-4">
             <main className="w-full lg:w-main lg:flex gap-4 scroll-m-[16px]">
                 <section className="w-full lg:w-[68%]">
                     <div className="border lg:p-4 lg:rounded-lg bg-white shadow-lg">

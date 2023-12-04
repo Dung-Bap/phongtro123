@@ -53,9 +53,7 @@ const DetailPost = ({ dispatch, navigate }) => {
     };
 
     useEffect(() => {
-        setTimeout(() => {
-            currentPageRef?.current?.scrollIntoView({ behavior: 'smooth' });
-        }, [200]);
+        currentPageRef?.current?.scrollIntoView({ behavior: 'smooth' });
         dispatch(getCategories());
         const fetchApiGetPost = async () => {
             setLoading(true);
@@ -69,7 +67,7 @@ const DetailPost = ({ dispatch, navigate }) => {
     }, [dispatch, id]);
 
     return loading ? (
-        <LoadingDetailPost />
+        <LoadingDetailPost currentPageRef={currentPageRef} />
     ) : (
         <div ref={currentPageRef} className="w-full flex justify-center pt-[50px] pb-[16px] lg:py-4">
             <main className="w-full lg:w-main lg:flex gap-4 scroll-m-[16px]">

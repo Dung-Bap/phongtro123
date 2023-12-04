@@ -107,6 +107,7 @@ const Personal = ({ dispatch }) => {
                     <div className="w-full flex justify-center pb-10  ">
                         <div className="relative overflow-hidden">
                             <img
+                                loading="lazy"
                                 className="object-cover min-w-[100px] h-[100px] rounded-full "
                                 alt=""
                                 src={

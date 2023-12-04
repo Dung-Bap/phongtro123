@@ -41,6 +41,7 @@ const Menu = ({ navigate, dispatch }) => {
             {isLoggedIn ? (
                 <div className="flex items-center text-sm  mr-[10px] px-[20px] py-[10px] relative">
                     <img
+                        loading="lazy"
                         className="min-w-[50px] h-[50px] rounded-full object-cover mr-[5px]"
                         alt=""
                         src={`${

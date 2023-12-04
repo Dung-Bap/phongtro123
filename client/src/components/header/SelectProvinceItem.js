@@ -12,7 +12,7 @@ const SelectProvinceItem = ({ title, image, setSearchProvince, cateCode }) => {
                 'w-[220px] shadow-lg rounded-lg overflow-hidden hover:shadow-xl bg-white cursor-pointer text-main hover:text-secondary'
             )}
         >
-            <img className="w-full h-[110px] object-cover" alt="" src={image} />
+            <img loading="lazy" className="w-full h-[110px] object-cover" alt="" src={image} />
             <span className="flex justify-center w-full p-[8px] font-semibold text-[14px]">{title}</span>
         </div>
     );

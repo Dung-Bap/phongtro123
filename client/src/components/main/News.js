@@ -1,9 +1,10 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { apiGetNews } from '../../apis';
 import LoadingSkeleton from '../loading/LoadingSkeleton';
 
 const News = () => {
+    const navigate = useNavigate();
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -42,12 +43,13 @@ const News = () => {
                 {news?.map(item => {
                     const image = JSON.parse(item.images.image);
                     return (
-                        <Link
-                            to={`/${item?.title.replaceAll('/', '')}/${item?.id}`}
+                        <div
+                            onClick={() => navigate(`/${item?.title.replaceAll('/', '')}/${item?.id}`)}
                             key={item.id}
-                            className="lg:flex gap-4 py-2 border-gray-200 border-b cursor-pointer "
+                            className={`lg:flex gap-4 py-2 border-gray-200 border-b cursor-pointer`}
                         >
                             <img
+                                loading="lazy"
                                 className="w-full lg:w-[65px] h-[120px] lg:h-[65px] rounded-md overflow-hidden object-cover"
                                 alt=""
                                 src={
@@ -66,12 +68,12 @@ const News = () => {
                                     </span>
                                 </div>
                                 <span className="lg:hidden text-[12px] text-gray-400 line-clamp-1">
-                                    {item.address.startsWith('Địa chỉ:')
-                                        ? item?.address.replace('Địa chỉ:', '')
+                                    {item?.address?.startsWith('Địa chỉ:')
+                                        ? item?.address?.replace('Địa chỉ:', '')
                                         : item?.address}
                                 </span>
                             </div>
-                        </Link>
+                        </div>
                     );
                 })}
             </div>

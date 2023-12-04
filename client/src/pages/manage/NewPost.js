@@ -361,6 +361,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
                         >
                             <div className="flex flex-col justify-center items-center cursor-pointer">
                                 <img
+                                    loading="lazy"
                                     className="w-[90px] mb-[10px]"
                                     alt=""
                                     src="https://phongtro123.com/dashboard_resource/images/upload-image.png"
@@ -372,7 +373,13 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
 
                         <div className="flex gap-3 flex-wrap mt-[10px]">
                             {previewImage?.images?.map((image, index) => (
-                                <img key={index} src={image} alt="" className="h-[200px] object-contain"></img>
+                                <img
+                                    loading="lazy"
+                                    key={index}
+                                    src={image}
+                                    alt=""
+                                    className="h-[200px] object-contain"
+                                ></img>
                             ))}
                         </div>
                     </div>
