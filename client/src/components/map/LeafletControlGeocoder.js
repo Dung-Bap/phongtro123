@@ -9,7 +9,7 @@ import L from 'leaflet';
 
 export default function LeafletControlGeocoder(props) {
     const map = useMap();
-    const { address } = props;
+    const { address = '' } = props;
     const iconMarker = L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/9356/9356230.png',
         iconSize: [38, 38], // size of the icon
@@ -30,9 +30,9 @@ export default function LeafletControlGeocoder(props) {
 
         if (address) {
             geocoder.geocode(address, resultArray => {
-                if (resultArray.length > 0) {
+                if (resultArray?.length > 0) {
                     const result = resultArray[0];
-                    const latlng = result.center;
+                    const latlng = result?.center;
                     L.marker(latlng, { icon: iconMarker }).addTo(map).bindPopup(result.name);
                     map.fitBounds(result.bbox);
                 }

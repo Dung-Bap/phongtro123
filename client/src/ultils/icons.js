@@ -12,7 +12,7 @@ import {
 } from 'react-icons/ai';
 import { RiListCheck2, RiDeleteBack2Line } from 'react-icons/ri';
 import { BiSearchAlt, BiUserPin, BiLogOut } from 'react-icons/bi';
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdOutlineManageSearch } from 'react-icons/md';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdOutlineManageSearch, MdFlag } from 'react-icons/md';
 import { BsHouseHeart, BsTextareaResize, BsPostcardHeart, BsBalloonHeart, BsFillCameraFill } from 'react-icons/bs';
 import { IoLocationOutline, IoPricetagsOutline } from 'react-icons/io5';
 import { FcHome } from 'react-icons/fc';
@@ -61,6 +61,7 @@ const icons = {
     GoDot,
     IoMdArrowRoundBack,
     IoMdPin,
+    MdFlag,
 };
 
 export default icons;

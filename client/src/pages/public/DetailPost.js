@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import { createSearchParams, useParams } from 'react-router-dom';
 import { apiGetPost } from '../../apis';
 import { renderStars } from '../../ultils/helpers';
@@ -11,9 +11,13 @@ import { path } from '../../ultils/path';
 import { MapInDetailPost } from '../../components/map';
 import LoadingDetailPost from '../../components/loading/LoadingDetailPost';
 import withBaseComp from '../../hocs/withBaseComp';
+import moment from 'moment';
+import 'moment/locale/vi';
+import { ContextEnvironment } from '../../components/common/ContextProvider';
 
 const DetailPost = ({ dispatch, navigate }) => {
-    const { LuMapPin, IoPricetagsOutline, BsTextareaResize, AiOutlineFieldTime, CiHashtag } = icons;
+    const { handleScrollToView } = useContext(ContextEnvironment);
+    const { LuMapPin, IoPricetagsOutline, BsTextareaResize, AiOutlineFieldTime, CiHashtag, MdFlag } = icons;
     const [count, setCount] = useState(1);
     const { id } = useParams();
     const [post, setPost] = useState();
@@ -109,7 +113,7 @@ const DetailPost = ({ dispatch, navigate }) => {
                                 </span>
                                 <span className="capitalize">{post?.address}</span>
                             </div>
-                            <div className="flex items-center gap-8">
+                            <div className="flex items-center gap-2 sm:gap-8 flex-wrap">
                                 <div className="flex items-center">
                                     <span className="mr-[5px]">
                                         <IoPricetagsOutline />
@@ -128,7 +132,7 @@ const DetailPost = ({ dispatch, navigate }) => {
                                     <span className="mr-[5px]">
                                         <AiOutlineFieldTime />
                                     </span>
-                                    <span>{post?.overviews?.created}</span>
+                                    <span>{moment(post?.overviews?.createdAt).fromNow()}</span>
                                 </div>
                                 <div className="flex items-center">
                                     <span className="mr-[5px]">
@@ -182,7 +186,6 @@ const DetailPost = ({ dispatch, navigate }) => {
                                     </tbody>
                                 </table>
                             </div>
-
                             <h1 className="text-[18px] font-semibold py-3">Thông tin liên hệ</h1>
                             <div>
                                 <table className="table-auto w-full">
@@ -203,6 +206,18 @@ const DetailPost = ({ dispatch, navigate }) => {
                                 </table>
                             </div>
                             <MapInDetailPost address={post?.address} title={post?.title} code={post?.overviews?.code} />
+                            <span
+                                onClick={() => {
+                                    navigate(`/${path.CONTACT}`);
+                                    handleScrollToView();
+                                }}
+                                className="w-full lg:w-[130px] p-[10px] flex items-center justify-center border border-main rounded-md lg:ml-[10px] text-main cursor-pointer mb-[20px]"
+                            >
+                                <span>
+                                    <MdFlag size={20} />
+                                </span>
+                                Gửi phản hồi
+                            </span>
                         </div>
                     </div>
                 </section>

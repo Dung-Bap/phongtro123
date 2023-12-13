@@ -158,7 +158,9 @@ const Home = ({ dispatch, navigate, location }) => {
                     <section className="w-full lg:w-[68%]">
                         <div className="border rounded-lg overflow-hidden bg-white shadow-lg">
                             <div className="w-full p-[20px]">
-                                <h1 className="mb-[8px] text-[18px] font-semibold">{`Tổng ${posts?.count} kết quả`}</h1>
+                                <h1 className="mb-[8px] text-[18px] font-semibold">{`Tổng ${
+                                    posts?.count || 0
+                                } kết quả`}</h1>
                                 <div className="flex items-center">
                                     <span className="mr-[10px] text-[14px]">Sắp xếp:</span>
                                     <div className="flex items-center gap-2">
@@ -205,7 +207,7 @@ const Home = ({ dispatch, navigate, location }) => {
                             <div className="w-full flex justify-center p-[20px] overflow-hidden">
                                 <Pagination
                                     className="pagination-data"
-                                    showTotal={(total, range) => `Kết quả ${range[0]}-${range[1]} của ${total}`}
+                                    // showTotal={(total, range) => `Kết quả ${range[0]}-${range[1]} của ${total}`}
                                     onChange={PaginationChange}
                                     total={posts?.count}
                                     current={current}

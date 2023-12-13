@@ -13,14 +13,14 @@ const News = () => {
             setLoading(true);
             const response = await apiGetNews();
             setLoading(false);
-            if (response.success) setNews(response.result);
+            if (response?.success) setNews(response?.result);
         };
 
         fetchGetNews();
     }, []);
 
     return (
-        <div className="border rounded-lg overflow-hidden bg-white shadow-lg p-[20px]">
+        <div className="border lg:rounded-lg overflow-hidden bg-white shadow-lg p-[20px]">
             <h1 className="mb-[8px] text-[18px] font-semibold">Tin mới đăng</h1>
 
             <div className="flex lg:flex-col overflow-x-auto gap-3">
@@ -46,7 +46,7 @@ const News = () => {
                         <div
                             onClick={() => navigate(`/${item?.title.replaceAll('/', '')}/${item?.id}`)}
                             key={item.id}
-                            className={`lg:flex gap-4 py-2 border-gray-200 border-b cursor-pointer`}
+                            className={`lg:flex gap-4 py-2 border-gray-200 lg:border-b cursor-pointer`}
                         >
                             <img
                                 loading="lazy"

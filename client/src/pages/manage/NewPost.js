@@ -204,7 +204,7 @@ const NewPost = ({ dispatch, navigate, valueEditPost }) => {
     };
 
     return (
-        <div className="w-full p-[10px] lg:p-[40px]">
+        <div className="w-full p-[10px] lg:p-[40px] pt-[50px] lg:pt-0">
             <p className="py-[10px] border-b text-[22px] font-semibold lg:text-[30px]">
                 {valueEditPost ? `Sửa tin đăng (Mã tin: ${valueEditPost.overviews.code})` : 'Đăng tin mới'}
             </p>

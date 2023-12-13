@@ -10,6 +10,8 @@ import { apiLogin } from '../../apis';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../store/user/userSlice';
+import { showModal } from '../../store/app/appSlice';
+import { Loading } from '../../components/modal';
 
 const Login = () => {
     const loginSchema = yup.object({
@@ -55,7 +57,9 @@ const Login = () => {
     });
 
     const onSubmit = async data => {
+        dispatch(showModal({ isShowModal: true, childrenModal: <Loading /> }));
         const response = await apiLogin(data);
+        dispatch(showModal({ isShowModal: false, childrenModal: null }));
         if (response?.success) {
             dispatch(registerUser({ isLoggedIn: true, token: response.token }));
             searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`${path.HOME}`);
@@ -72,14 +76,12 @@ const Login = () => {
                     <h1 className="text-[28px] mb-[15px] font-medium">Đăng nhập</h1>
                     <InputFileds
                         label={'Số điện thoại'}
-                        placeholder={'Số điện thoại'}
                         registername={register('phone')}
                         errorName={errors.phone?.message}
                         withFull
                     />
                     <InputFileds
                         label={'Mật khẩu'}
-                        placeholder={'Mật khẩu'}
                         registername={register('password')}
                         errorName={errors.password?.message}
                         withFull

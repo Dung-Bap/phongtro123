@@ -2,6 +2,8 @@ import icons from '../../ultils/icons';
 import { renderStars } from '../../ultils/helpers';
 import { Link, useNavigate } from 'react-router-dom';
 import LoadingSkeleton from '../loading/LoadingSkeleton';
+import moment from 'moment';
+import 'moment/locale/vi';
 
 const PostItem = ({ post, image }) => {
     const { AiOutlineHeart } = icons;
@@ -46,7 +48,7 @@ const PostItem = ({ post, image }) => {
                 </div>
                 <div className="flex justify-between items-center mb-[10px]">
                     <span>{post.address.split(',').splice(-2).join(',')}</span>
-                    <span className="text-gray-400">{post?.overviews?.created.split(',')[1]}</span>
+                    <span className="text-gray-400">{moment(post?.createdAt).fromNow()}</span>
                 </div>
                 <p className="line-clamp-3 text-gray-500 mb-[10px]">{JSON.parse(post.description)}</p>
                 <div className="flex justify-between items-center">

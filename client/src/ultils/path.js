@@ -5,6 +5,7 @@ export const path = {
     HOME: '/',
     LOGIN: 'login',
     REGISTER: 'register',
+    CONTACT: 'contact',
 
     MOTEL_ROOM: 'cho-thue-phong-tro',
     RENT_HOUSE: 'nha-cho-thue',

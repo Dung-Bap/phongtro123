@@ -78,21 +78,18 @@ const Register = () => {
                     <h1 className="text-[28px] mb-[15px] font-medium">Tạo tài khoản mới</h1>
                     <InputFileds
                         label={'Họ tên'}
-                        placeholder={'Họ tên'}
                         registername={register('name')}
                         errorName={errors.name?.message}
                         withFull
                     />
                     <InputFileds
                         label={'Số điện thoại'}
-                        placeholder={'Số điện thoại'}
                         registername={register('phone')}
                         errorName={errors.phone?.message}
                         withFull
                     />
                     <InputFileds
                         label={'Tạo mật khẩu'}
-                        placeholder={'Tạo mật khẩu'}
                         registername={register('password')}
                         errorName={errors.password?.message}
                         withFull

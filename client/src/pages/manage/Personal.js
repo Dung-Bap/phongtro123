@@ -96,7 +96,7 @@ const Personal = ({ dispatch }) => {
         };
     }, [dispatch, updated]);
     return (
-        <div className="w-full p-[10px] lg:p-[40px]">
+        <div className="w-full p-[10px] lg:p-[40p] pt-[50px] lg:pt-0">
             <p className="py-[10px] border-b text-[22px] font-semibold lg:text-[30px]">Cập nhật thông tin cá nhân</p>
             <div className="w-full flex justify-center p-[10px] lg:p-10">
                 <form

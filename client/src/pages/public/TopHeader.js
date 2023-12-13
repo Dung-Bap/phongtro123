@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -15,24 +15,14 @@ import { clearMessage, logout } from '../../store/user/userSlice';
 import { getCurrent } from '../../store/user/asyncActions';
 import { showMenu } from '../../store/app/appSlice';
 import { clsx } from 'clsx';
+import { ContextEnvironment } from '../../components/common/ContextProvider';
 
 const TopHeader = ({ dispatch, navigate }) => {
     const { AiOutlineHeart, AiOutlineUserAdd, AiOutlineLogout, AiOutlinePlusCircle, RiListCheck2, BiLogOut, IoMdMenu } =
         icons;
     const { isLoggedIn, dataUser, mess } = useSelector(state => state.user);
     const [isShowMenu, setIsShowMenu] = useState(false);
-    const [resize, setResize] = useState(false);
-    const [deviceSize, changeDeviceSize] = useState(window.innerWidth);
-
-    useEffect(() => {
-        deviceSize <= 1024 ? setResize(true) : setResize(false);
-    }, [deviceSize]);
-
-    useEffect(() => {
-        const resizeW = () => changeDeviceSize(window.innerWidth);
-        window.addEventListener('resize', resizeW); // Update the width on resize
-        return () => window.removeEventListener('resize', resizeW);
-    }, []);
+    const { resize } = useContext(ContextEnvironment);
 
     useEffect(() => {
         if (isLoggedIn) {

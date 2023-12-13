@@ -28,7 +28,7 @@ const getPost = asyncHandle(async (req, res) => {
             {
                 model: db.Overview,
                 as: 'overviews',
-                attributes: ['code', 'area', 'type', 'target', 'bonus', 'created'],
+                attributes: ['code', 'area', 'type', 'target', 'bonus', 'created', 'createdAt'],
             },
             {
                 model: db.Label,

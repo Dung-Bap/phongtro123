@@ -1,7 +1,12 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import Button from '../common/Button';
+import withBaseComp from '../../hocs/withBaseComp';
+import { path } from '../../ultils/path';
+import { ContextEnvironment } from '../common/ContextProvider';
 
-const Support = () => {
+const Support = ({ navigate }) => {
+    const { handleScrollToView } = useContext(ContextEnvironment);
+
     return (
         <div className="w-full flex justify-center mt-[30px]">
             <div className="w-main border-dashed border-8 border-[#e8eefc] py-[40px] px-[10px] sm:px-[70px] rounded-lg shadow-lg bg-white flex flex-col justify-center items-center text-center">
@@ -31,10 +36,18 @@ const Support = () => {
                     </span>
                 </div>
 
-                <Button primary>Gửi liên hệ</Button>
+                <Button
+                    onClick={() => {
+                        navigate(`/${path.CONTACT}`);
+                        handleScrollToView();
+                    }}
+                    primary
+                >
+                    Gửi liên hệ
+                </Button>
             </div>
         </div>
     );
 };
 
-export default memo(Support);
+export default withBaseComp(memo(Support));

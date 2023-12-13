@@ -75,10 +75,10 @@ const ManagePost = ({ dispatch }) => {
     return (
         <>
             {!valueEditPost && (
-                <div className="w-full p-[10px] lg:p-[40px]">
+                <div className="w-full p-[10px] lg:p-[40px] pt-[50px] lg:pt-0">
                     <p className="py-[10px] border-b text-[22px] font-semibold lg:text-[30px]">Quản lý tin đăng</p>
                     <div className="relative pt-[20px] overflow-x-auto shadow-md sm:rounded-lg">
-                        <div className="flex items-center justify-between p-4 bg-white">
+                        <div className="flex items-center justify-between p-4 bg-white gap-8">
                             {selectedPost.length > 0 && (
                                 <Button onClick={handleDestroyPost} deleted>
                                     Xoá
@@ -106,7 +106,7 @@ const ManagePost = ({ dispatch }) => {
                                 <input
                                     type="text"
                                     id="table-search-users"
-                                    className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 -500-500"
+                                    className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg min-w-[80px] bg-gray-50 focus:ring-blue-500 focus:border-blue-500 -500-500"
                                     placeholder="Tìm kiếm..."
                                 />
                             </div>
